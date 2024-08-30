@@ -1,1 +1,25 @@
 <h1>Welcome to Staticfy</h1>
+<h2> Diagramatics 101</h2>
+<!-- Contenedor donde ira el svg -->
+<svg id="diagram-svg" width="800" height="600"></svg>
+
+<!-- Script con Diagramatics -->
+<script type="module">
+      import {rectangle, draw_to_svg, diagram_combine, align_horizontal, V2} from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const mysvg = document.getElementById('diagram-svg');
+
+        // define the `draw` function
+        let draw = (...diagrams) => {
+            draw_to_svg(mysvg, diagram_combine(...diagrams));
+        };
+
+        // build the diagram objects
+        let r1 = rectangle(3, 2).fill('blue' ).position(V2( 1,  1));
+        let r2 = rectangle(2, 3).fill('white').position(V2( 0,  0));
+        let r3 = rectangle(2, 2).fill('red'  ).position(V2(-1, -1));
+        let rs = align_horizontal([r1, r2, r3], 'right');
+        draw(rs);
+      });
+</script>
