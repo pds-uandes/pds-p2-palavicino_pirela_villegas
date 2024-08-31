@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_31_213021) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_31_214705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "multi_choice_answers", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "multi_choice_questions_id"
+    t.bigint "multi_choice_question_id"
     t.string "selected_choice", null: false
     t.boolean "is_correct", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["multi_choice_questions_id"], name: "index_multi_choice_answers_on_multi_choice_questions_id"
+    t.index ["multi_choice_question_id"], name: "index_multi_choice_answers_on_multi_choice_question_id"
     t.index ["user_id"], name: "index_multi_choice_answers_on_user_id"
   end
 
@@ -41,12 +41,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_31_213021) do
 
   create_table "numeric_answers", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "numeric_questions_id"
+    t.bigint "numeric_question_id"
     t.string "content", null: false
     t.boolean "is_correct", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["numeric_questions_id"], name: "index_numeric_answers_on_numeric_questions_id"
+    t.index ["numeric_question_id"], name: "index_numeric_answers_on_numeric_question_id"
     t.index ["user_id"], name: "index_numeric_answers_on_user_id"
   end
 
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_31_213021) do
     t.integer "difficulty", default: 0, null: false
     t.string "question", null: false
     t.string "correct_answer", null: false
-    t.float "toleranc", null: false
+    t.float "tolerance", null: false
     t.string "unit", null: false
     t.string "hint_1", null: false
     t.string "hint_2", null: false
@@ -66,13 +66,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_31_213021) do
   end
 
   create_table "numeric_templates", force: :cascade do |t|
-    t.bigint "numeric_questions_id"
+    t.bigint "numeric_question_id"
     t.string "diagram_data", null: false
     t.string "values", null: false
     t.string "magnitudes", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["numeric_questions_id"], name: "index_numeric_templates_on_numeric_questions_id"
+    t.index ["numeric_question_id"], name: "index_numeric_templates_on_numeric_question_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -98,12 +98,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_31_213021) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "multi_choice_answers", "multi_choice_questions", column: "multi_choice_questions_id"
+  add_foreign_key "multi_choice_answers", "multi_choice_questions"
   add_foreign_key "multi_choice_answers", "users"
   add_foreign_key "multi_choice_questions", "tasks"
-  add_foreign_key "numeric_answers", "numeric_questions", column: "numeric_questions_id"
+  add_foreign_key "numeric_answers", "numeric_questions"
   add_foreign_key "numeric_answers", "users"
   add_foreign_key "numeric_questions", "tasks"
-  add_foreign_key "numeric_templates", "numeric_questions", column: "numeric_questions_id"
+  add_foreign_key "numeric_templates", "numeric_questions"
   add_foreign_key "tasks", "users"
 end
