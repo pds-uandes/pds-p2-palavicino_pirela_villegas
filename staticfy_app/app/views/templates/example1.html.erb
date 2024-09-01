@@ -1,0 +1,96 @@
+<h1>Diagrama de Fuerzas Dinámico</h1>
+
+  <!-- Inputs para el ángulo y el tamaño de las barras -->
+  <label for="angle-input">Ángulo (grados):</label>
+  <input type="number" id="angle-input" value="45" min="0" max="90">
+  <br>
+  <label for="length-input">Longitud de la Barra Inclinada:</label>
+  <input type="number" id="length-input" value="10" min="1">
+  <br>
+  <label for="top-bar-length-input">Longitud de la Barra Horizontal:</label>
+  <input type="number" id="top-bar-length-input" value="3" min="1">
+  <br><br>
+
+  <!-- Contenedor SVG para el diagrama con viewBox para escala proporcional -->
+  <svg id="diagram-svg" width="800" height="600"></svg>
+
+  <!-- Importar todo Diagramatics como módulo -->
+  <script type="module">
+    import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const mysvg = document.getElementById('diagram-svg');
+      const angleInput = document.getElementById('angle-input');
+      const lengthInput = document.getElementById('length-input');
+      const topBarLengthInput = document.getElementById('top-bar-length-input');
+
+      // Función para actualizar el diagrama dinámicamente
+      function updateDiagram() {
+        // Obtener valores dinámicos
+        const angle = Diagramatics.to_radian(parseFloat(angleInput.value));
+        const length = parseFloat(lengthInput.value);
+        const topBarLength = parseFloat(topBarLengthInput.value);
+
+        // Limpiar el contenido SVG antes de dibujar
+        mysvg.innerHTML = '';
+
+        let draw = (...diagrams) => {
+        Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+      };
+
+        // Calcular posiciones dinámicamente
+        const basePosition = Diagramatics.V2(0, 0); // Punto de inicio de la barra
+        const endPoint = Diagramatics.Vdir(angle).scale(length); // Punto final de la barra inclinada
+
+        // Crear la barra inclinada como un rectángulo delgado
+        const inclined_bar = Diagramatics.rectangle(length, 0.2) // Longitud de la barra y 0.2 de alto
+          .move_origin('bottom-left')
+          .rotate(angle)
+          .position(basePosition)
+          .fill('gray');
+
+        // Crear la barra horizontal en la parte superior como un rectángulo delgado
+        const top_bar = Diagramatics.rectangle(topBarLength, 0.2) // Longitud de la barra horizontal y 0.2 de alto
+          .move_origin('bottom-left')
+          .position(Diagramatics.V2(endPoint.x, endPoint.y)) // Colocar en el extremo de la barra inclinada
+          .fill('gray');
+
+        // Crear pequeños círculos en las uniones
+        const circle_radius = 0.17; // Radio de los círculos
+        const joint_circle_base = Diagramatics.circle(circle_radius)
+          .position(basePosition)
+          .fill('white').strokewidth(5); // Círculo en la base de la barra inclinada
+
+        const joint_circle_top = Diagramatics.circle(circle_radius)
+          .position(Diagramatics.V2(endPoint.x, endPoint.y))
+          .fill('white').strokewidth(5); // Círculo en la unión de la barra inclinada con la barra horizontal
+
+        // Fuerzas en la barra
+        const arrow_head_size = 0.12;
+        const Va = Diagramatics.annotation.vector(Diagramatics.V2(0, 1).scale(2), 'VA', Diagramatics.V2(-0.5, 0), arrow_head_size)
+          .position(basePosition);
+        const Ha = Diagramatics.annotation.vector(Diagramatics.V2(1, 0).scale(2), 'HA', Diagramatics.V2(0, -0.5), arrow_head_size)
+          .position(basePosition);
+        const Vc = Diagramatics.annotation.vector(Diagramatics.V2(0, 1).scale(2), 'VC', Diagramatics.V2(-0.5, 0), arrow_head_size)
+          .position(Diagramatics.V2(endPoint.x, endPoint.y));
+        const Hc = Diagramatics.annotation.vector(Diagramatics.V2(-1, 0).scale(2), 'HC', Diagramatics.V2(0, -0.5), arrow_head_size)
+          .position(Diagramatics.V2(endPoint.x, endPoint.y));
+        const Fr = Diagramatics.annotation.vector(Diagramatics.V2(0, -1).scale(2), 'FR', Diagramatics.V2(-0.5, -1.5), arrow_head_size)
+          .position(Diagramatics.V2(endPoint.x + topBarLength, endPoint.y));
+
+        // Anotación del ángulo θ
+        const angle_annotation = Diagramatics.annotation.angle([Diagramatics.V2(1, 0), basePosition, Diagramatics.Vdir(angle)], `${angleInput.value}°`, 1, 1.5);
+
+        // Dibujar el diagrama
+        draw(inclined_bar, top_bar, joint_circle_base, joint_circle_top, Va, Ha, Vc, Hc, Fr, angle_annotation);
+      }
+
+      // Inicializar el diagrama con los valores por defecto
+      updateDiagram();
+
+      // Agregar listeners a los inputs para actualizar el diagrama
+      angleInput.addEventListener('input', updateDiagram);
+      lengthInput.addEventListener('input', updateDiagram);
+      topBarLengthInput.addEventListener('input', updateDiagram);
+    });
+  </script>

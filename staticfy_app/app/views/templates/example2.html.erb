@@ -1,0 +1,78 @@
+<h1>Diagramatics en Rails</h1>
+
+  <!-- Inputs para el ángulo y el tamaño del cuadrado -->
+  <label for="angle-input">Ángulo (grados):</label>
+  <input type="number" id="angle-input" value="30">
+  <br>
+  <label for="size-input">Tamaño del cuadrado:</label>
+  <input type="number" id="size-input" value="4">
+  <br><br>
+
+  <!-- Contenedor SVG para el diagrama -->
+  <svg id="diagram-svg" width="800" height="600"></svg>
+
+  <!-- Importar todo Diagramatics como módulo -->
+  <script type="module">
+    import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const mysvg = document.getElementById('diagram-svg');
+      const angleInput = document.getElementById('angle-input');
+      const sizeInput = document.getElementById('size-input');
+
+      // Definir la función `draw`
+      let draw = (...diagrams) => {
+        Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+      };
+
+      // Función para actualizar el diagrama
+      function updateDiagram() {
+        const angle = Diagramatics.to_radian(parseFloat(angleInput.value));
+        const size = parseFloat(sizeInput.value);
+
+        // Limpiar el SVG antes de dibujar
+        mysvg.innerHTML = '';
+
+        // Crear el nuevo diagrama con los valores actualizados
+        let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(8, 0))
+          .stroke('gray').strokedasharray([5, 5]);
+
+        let plane = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.Vdir(angle).scale(10)).stroke('gray');
+
+        let sq = Diagramatics.square(size).move_origin('bottom-center')
+          .position(plane.parametric_point(0.5)).rotate(angle)
+          .fill('lightblue').stroke('none');
+
+        let csq = sq.get_anchor('center-center');
+
+        let arrow_head_size = 0.12;
+
+        let vx = Diagramatics.V2(1, 0);
+        let vy = Diagramatics.V2(0, 1);
+        let vnx = Diagramatics.V2(-1, 0);
+        let vny = Diagramatics.V2(0, -1);
+
+        let forces_annotation = Diagramatics.diagram_combine(
+          Diagramatics.annotation.vector(vny.scale(3.5), 'Mg', Diagramatics.V2(0.6, 0.2), arrow_head_size)
+            .position(csq),
+          Diagramatics.annotation.vector(Diagramatics.Vdir(angle + Math.PI / 2).scale(5), 'N', Diagramatics.V2(0.6, 0.2), arrow_head_size)
+            .position(plane.parametric_point(0.6)),
+          Diagramatics.annotation.vector(Diagramatics.Vdir(angle).scale(1.2), 'f', Diagramatics.V2(0.0, -0.6), arrow_head_size)
+            .position(plane.parametric_point(0.6)),
+          Diagramatics.annotation.vector(Diagramatics.Vdir(angle).scale(2), 'F', Diagramatics.V2(-0.5, -1.0), arrow_head_size)
+            .move_origin(Diagramatics.Vdir(angle).scale(2)).position(sq.parametric_point(0.5, 3))
+        );
+
+        let angle_annotation = Diagramatics.annotation.angle([Diagramatics.V2(1, 0), Diagramatics.V2(0, 0), Diagramatics.Vdir(angle)], '\\theta', 1, 1.5);
+
+        draw(horizontal, sq, plane, forces_annotation, angle_annotation);
+      }
+
+      // Inicializar el diagrama con los valores por defecto
+      updateDiagram();
+
+      // Agregar listeners a los inputs para actualizar el diagrama
+      angleInput.addEventListener('input', updateDiagram);
+      sizeInput.addEventListener('input', updateDiagram);
+    });
+  </script>
