@@ -62,7 +62,7 @@
               <% if !user_signed_in? %>
                 <%= link_to 'Log in', new_user_session_path, class: 'nav-link', style: 'color: #004d00; font-weight: 500;' %>
               <% else %>
-                <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+                <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link', style: 'color: #004d00; font-weight: 500;'%>
               <% end %>
             </li>
           </ul>          
