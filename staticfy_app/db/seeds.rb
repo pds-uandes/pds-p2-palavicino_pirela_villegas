@@ -1,8 +1,8 @@
-User.destroy_all
 NumericTemplate.destroy_all
 NumericQuestion.destroy_all
 MultiChoiceQuestion.destroy_all
 Task.destroy_all
+User.destroy_all
 
 teacher = User.create(
   name: 'Profesor Crocker',
@@ -39,7 +39,7 @@ task1 = Task.create(
   user_id: teacher.id,
   task_type: 'multi_choice',
   status: 'in_progress',
-  name: 'Tarea 1',
+  name: 'Conexiones y Apoyos',
   is_finished: false,
   wrong_counter: 0
 )

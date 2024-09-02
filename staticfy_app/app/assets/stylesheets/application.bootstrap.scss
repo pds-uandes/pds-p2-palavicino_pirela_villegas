@@ -15,6 +15,7 @@
 body {
     // Light Mode
     background-color: rgb(249, 255, 249);
+    font-family: 'Assistant', 'Valera Round', sans-serif;
 
     // Dark Mode
     // background-color: rgb(18, 18, 18);
@@ -35,6 +36,10 @@ body {
 .nav-link:hover{
     color: #004d00;
     font-weight: 500;
+}
+
+.nav-link {
+    font-weight: 400;
 }
 
 .navbar-brand:hover{
@@ -63,3 +68,65 @@ body {
     top: 0.5rem;
     right: 0.5rem;
 }
+
+
+.btn-custom {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary {
+    background-color: #004d00;
+    border: 2px solid #004d00;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #003300;
+    border-color: #003300;
+    color: #e0e0e0;
+}
+  
+  
+
+/* Acordeón general */
+.accordion-item {
+    background-color: #f8f9fa;
+    border: 1px solid #d1d1d1;
+  }
+  
+  .accordion-header .accordion-button {
+    background-color: #e9ecef;
+    color: #343a40;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .accordion-header .accordion-button:focus {
+    box-shadow: none;
+    border-color: #d1d1d1;
+  }
+  
+  /* Cuerpo del acordeón */
+  .accordion-body {
+    padding: 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #d1d1d1;
+  }
+    
+  .text-primary {
+    color: #000000 !important;
+  }
+  
+  .text-success {
+    color: #28a745 !important;
+  }
+  
+
+
+  
