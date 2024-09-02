@@ -6,7 +6,19 @@ class TasksController < ApplicationController
     # GET /tasks.json
     def index
       @tasks = Task.all
+
+      # Para que en el Home funcionen los botones ->
+      # La idea es que el index cambie dependiendo si se quieren tareas pendientes (status 'in_progress')
+      # y de alternativas (task_type 'multi_choice') o numericas (task_type 'multi_choice')
+      if params[:status].present?
+        @tasks = @tasks.where(status: params[:status])
+      end
+
+      if params[:task_type].present?
+        @tasks = @tasks.where(task_type: params[:task_type])
+      end
     end
+
 
     # GET /tasks/1
     # GET /tasks/1.json

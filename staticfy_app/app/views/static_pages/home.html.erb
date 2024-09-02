@@ -23,7 +23,7 @@
       <p class="text-muted">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. 
       </p>
-        <%= link_to 'Empezar', '#', class: 'btn btn-outline-dark' %>
+        <%= link_to 'Tareas de alternativa pendientes', tasks_path(status: 'in_progress', task_type: 'multi_choice'), class: 'btn btn-outline-dark' %>
     </div>
   </div>
 </div>
@@ -37,7 +37,7 @@
       <p class="text-muted">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. 
       </p>
-        <%= link_to 'Empezar', '#', class: 'btn btn-outline-dark me-2' %>
+        <%= link_to 'Tareas numéricas pendientes', tasks_path(status: 'in_progress', task_type: 'numeric'), class: 'btn btn-outline-dark' %>
     </div>
 
     <!-- Columna para el SVG -->
