@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :multi_choice_questions do
     post 'submit_answer', on: :member
   end
-  
+  resources :numeric_questions
 
-  get 'static_pages/home'
+  get '/home', to: 'static_pages#home'
   get 'templates/example1'
   get 'templates/example2'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,29 +1,62 @@
-<h1>Welcome to Staticfy</h1>
-<h2> Diagramatics 101</h2>
-<!-- Contenedor donde ira el svg -->
-<svg id="diagram-svg" width="800" height="600"></svg>
+<div style="padding: 50px 0; text-align: center;">
+  <h1 style="color: #004d00; font-size: 3rem; font-weight: bold;">
+    <%= "Bienvenido, #{current_user.name}!" %>
+  </h1>
+  <p style="color: #666; font-size: 1.25rem;">Tu plataforma favorita para aprender sobre Estática.</p>
 
-<% if user_signed_in? %>
-    <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-navbar btn-outline-secondary', style:"color: red"%>
-<% end %>
+  <div class="text-center" style="margin-top: 30px;">
+    <img src="/welcome-image.png" alt="Descripción del SVG" class="img-fluid" style="max-width: 50%;">
+  </div>
+</div>
 
-<!-- Script con Diagramatics -->
-<script type="module">
-      import {rectangle, draw_to_svg, diagram_combine, align_horizontal, V2} from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
 
-      document.addEventListener('DOMContentLoaded', function() {
-        const mysvg = document.getElementById('diagram-svg');
+<div class="container my-5">
+  <div class="row align-items-center">
+    <!-- Columna para el SVG -->
+    <div class="col-md-6 text-center">
+      <img src="/image2.png" alt="Descripción del SVG" class="img-fluid" style="max-width: 80%;">
+    </div>
+    
+    <!-- Columna para el texto -->
+    <div class="col-md-6">
+      <h2 class="text-dark font-weight-bold">Tareas de alternativa</h2>
+      <p class="text-muted">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. 
+      </p>
+        <%= link_to 'Empezar', '#', class: 'btn btn-outline-dark' %>
+    </div>
+  </div>
+</div>
 
-        // define the `draw` function
-        let draw = (...diagrams) => {
-            draw_to_svg(mysvg, diagram_combine(...diagrams));
-        };
+<div class="container my-5">
+  <div class="row align-items-center">
 
-        // build the diagram objects
-        let r1 = rectangle(3, 2).fill('blue' ).position(V2( 1,  1));
-        let r2 = rectangle(2, 3).fill('yellow').position(V2( 0,  0));
-        let r3 = rectangle(2, 2).fill('red'  ).position(V2(-1, -1));
-        let rs = align_horizontal([r1, r2, r3], 'right');
-        draw(rs);
-      });
-</script>
+    <!-- Columna para el texto -->
+    <div class="col-md-6">
+      <h2 class="text-dark font-weight-bold">Tareas de cálculo numérico</h2>
+      <p class="text-muted">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. 
+      </p>
+        <%= link_to 'Empezar', '#', class: 'btn btn-outline-dark me-2' %>
+    </div>
+
+    <!-- Columna para el SVG -->
+    <div class="col-md-6 text-center">
+      <img src="/image3.png" alt="Descripción del SVG" class="img-fluid" style="max-width: 80%;">
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 
+<div class="container">
+  <div class="current-module text-align-center">
+    <h2>Módulo Actual: Vínculos externos e internos</h2>
+    <div class="mt-3">
+      <%= link_to 'Tarea de alternativas', '#', class: 'btn btn-outline-dark me-2' %>
+      <%= link_to 'Tarea de Cálculo Numérico', '#', class: 'btn btn-outline-dark' %>
+    </div>
+  </div>
+</div>
+!-->
