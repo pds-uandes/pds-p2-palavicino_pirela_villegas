@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  get 'static_pages/home'
+  get '/home', to: 'static_pages#home'
   get 'templates/example1'
   get 'templates/example2'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

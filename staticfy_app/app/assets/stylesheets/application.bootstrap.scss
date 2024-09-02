@@ -24,18 +24,19 @@ body {
     font-family: 'Assistant', sans-serif;
 }
 
-// .btn:hover, .btn:focus {
-//     background-color: #003300;
-//     color: white;
-//     transition: background-color 0.3s ease;
-// }
-  
-// .login-link a {
-//     color: #004d00; 
-//     text-decoration: none;
-//   }
-  
-// .login-link a:hover {
-//     text-decoration: underline;
-// }
-  
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar{
+    border-bottom: 1px solid #949494;
+}
+
+.nav-link:hover{
+    color: #004d00;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #004d00;
+}
