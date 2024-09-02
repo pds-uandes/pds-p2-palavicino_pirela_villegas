@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users
+  resources :numeric_questions
 
   get 'static_pages/home'
   get 'templates/example1'

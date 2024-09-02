@@ -1,0 +1,62 @@
+<svg id="diagram-svg" width="500" height="500"></svg>
+
+<script type="module">
+  import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mysvg = document.getElementById('diagram-svg');
+    const angle = <%= @angle %>;
+    const radian = Diagramatics.to_radian(angle);
+    const forceMagnitude = <%= @force_magnitude %>;
+    const length = 10; 
+
+    function updateDiagram() {
+      // Limpiar el contenido SVG antes de dibujar
+      mysvg.innerHTML = '';
+
+      let draw = (...diagrams) => {
+        Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+      };
+
+      // Posiciones dinámicas
+      const basePosition = Diagramatics.V2(0, 0); 
+      const endPoint = Diagramatics.Vdir(radian).scale(length); 
+      
+      const r1 = Diagramatics.rectangle(length, 0.2)
+        .move_origin('bottom-left')
+        .rotate(radian)
+        .position(basePosition)
+        .fill('blue');
+
+      let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(10, 0))
+        .stroke('black').strokedasharray([5, 5]).strokewidth(2);
+
+      let vertical = Diagramatics.line(Diagramatics.V2(endPoint.x, 0), Diagramatics.V2(endPoint.x, 10))
+        .stroke('black').strokedasharray([5, 5]).strokewidth(2);
+
+      const triangle_base = Diagramatics.polygon([
+        Diagramatics.V2(-0.2, 0),    
+        Diagramatics.V2(0.2, 0),     
+        Diagramatics.V2(0, (Math.sqrt(3)/2)*0.4)
+      ])
+        .position(basePosition)
+        .fill('black').strokewidth(3); 
+
+      const joint_circle = Diagramatics.circle(0.17)
+        .position(Diagramatics.V2(endPoint.x, endPoint.y))
+        .fill('white').strokewidth(5); 
+
+      // Fuerzas en la barra
+      const arrow_head_size = 0.15;
+      const F_direction = Diagramatics.Vdir(radian - Math.PI / 2).scale(forceMagnitude); 
+      const F = Diagramatics.annotation.vector(F_direction, `${forceMagnitude} N`, Diagramatics.V2(1, 1), arrow_head_size)
+        .position(Diagramatics.V2(length / 2 * Math.cos(radian), length / 2 * Math.sin(radian))).stroke('red').strokewidth(2).fill('red');
+
+      const angle_annotation = Diagramatics.annotation.angle([Diagramatics.V2(1, 0), basePosition, Diagramatics.Vdir(radian)], `${angle}°`, 1, 1.5);
+
+      draw(horizontal, r1, vertical, triangle_base, joint_circle, F, angle_annotation);
+    }
+
+    updateDiagram();
+  });
+</script>
