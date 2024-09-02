@@ -1,2 +1,41 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+// @font-face {
+    //     font-family: 'Virgil';
+    //     src: url(asset-path('virgil.woff2')) format('woff2');
+    //     font-weight: normal; 
+    //     font-style: normal;
+    // } 
+    
+// .virgil-font {
+//     font-family: 'Virgil', sans-serif;
+// }
+
+body {
+    // Light Mode
+    background-color: rgb(249, 255, 249);
+
+    // Dark Mode
+    // background-color: rgb(18, 18, 18);
+}
+
+.assistant-font {
+    font-family: 'Assistant', sans-serif;
+}
+
+// .btn:hover, .btn:focus {
+//     background-color: #003300;
+//     color: white;
+//     transition: background-color 0.3s ease;
+// }
+  
+// .login-link a {
+//     color: #004d00; 
+//     text-decoration: none;
+//   }
+  
+// .login-link a:hover {
+//     text-decoration: underline;
+// }
+  

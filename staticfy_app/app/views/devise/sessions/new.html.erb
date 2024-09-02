@@ -1,26 +1,36 @@
-<h2>Log in</h2>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow" style="width: 24rem; border-radius: 10px; border: none;">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4" style="color: #004d00;">Iniciar sesión en Staticfy</h2>
+      <p class="text-center mb-4" style="color: #666;">¡Accede a tu cuenta para continuar aprendiendo sobre Estática!</p>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+        <div class="mb-3">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Correo electrónico' %>
+        </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+        <div class="mb-3">
+          <%= f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: 'Contraseña' %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="mb-3 form-check">
+            <%= f.check_box :remember_me, class: 'form-check-input' %>
+            <%= f.label :remember_me, class: 'form-check-label' %>
+          </div>
+        <% end %>
+
+        <div class="d-grid">
+          <%= f.submit "Iniciar sesión", class: 'btn', style: 'background-color: #004d00; color: white;' %>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-2">
+        <span style="color: #666; font-size: 16px; margin-top: 50px">¿No tienes una cuenta?</span>
+        <%= link_to 'Sign up', new_registration_path(resource_name), style: 'color: #004d00; text-decoration: none;' %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

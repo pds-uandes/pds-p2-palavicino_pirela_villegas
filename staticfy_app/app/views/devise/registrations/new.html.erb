@@ -1,34 +1,42 @@
-<h2>Sign up holaaaa</h2>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow" style="width: 24rem; border-radius: 10px; border: none;">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4" style="color: #004d00;">Bienvenido a Staticfy</h2>
+      <p class="text-center mb-4" style="color: #666;">¡Regístrate para aprender sobre Estática!</p>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        <div class="mb-3">
+          <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', placeholder: 'Nombre' %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.email_field :email, autocomplete: "email", class: 'form-control', placeholder: 'Correo electrónico' %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'Contraseña' %>
+          <div class="d-flex justify-content-center align-items-center mt-2">
+            <% if @minimum_password_length %>
+              <em class="text-muted mb-2">(<%= @minimum_password_length %> caracteres como mínimo)</em>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Confirmar contraseña' %>
+        </div>
+
+        <div class="d-grid">
+          <%= f.submit "Regístrate", class: 'btn', style: 'background-color: #004d00; color: white;' %>
+        </div>
+      <% end %>
+      
+      <div class="text-center mt-2 ">
+        <span style="color: #666; font-size: 16px; margin-top: 50px">¿Ya tienes una cuenta?</span>
+        <%= link_to 'Log in', new_session_path(resource_name), style: 'color: #004d00; text-decoration: none;' %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

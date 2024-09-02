@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   before_action :authenticate_user!
 
-  def index
+  def home
   end
 end

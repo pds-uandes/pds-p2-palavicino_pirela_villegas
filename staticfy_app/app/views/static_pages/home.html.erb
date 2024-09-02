@@ -3,6 +3,10 @@
 <!-- Contenedor donde ira el svg -->
 <svg id="diagram-svg" width="800" height="600"></svg>
 
+<% if user_signed_in? %>
+    <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-navbar btn-outline-secondary', style:"color: red"%>
+<% end %>
+
 <!-- Script con Diagramatics -->
 <script type="module">
       import {rectangle, draw_to_svg, diagram_combine, align_horizontal, V2} from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
