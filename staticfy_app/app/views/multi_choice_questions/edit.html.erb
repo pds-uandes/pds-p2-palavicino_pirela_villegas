@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Edit Multi Choice Question</h1>
+
+  <%= form_with(model: @multi_choice_question, local: true, html: { class: 'form' }) do |form| %>
+    <div class="form-group">
+      <%= form.label :question, class: 'form-label' %>
+      <%= form.text_field :question, class: 'form-control', placeholder: 'Edit the question' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :choice_1, class: 'form-label' %>
+      <%= form.text_field :choice_1, class: 'form-control', placeholder: 'Edit the first choice', id: 'choice_1' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :choice_2, class: 'form-label' %>
+      <%= form.text_field :choice_2, class: 'form-control', placeholder: 'Edit the second choice', id: 'choice_2' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :choice_3, class: 'form-label' %>
+      <%= form.text_field :choice_3, class: 'form-control', placeholder: 'Edit the third choice', id: 'choice_3' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :choice_4, class: 'form-label' %>
+      <%= form.text_field :choice_4, class: 'form-control', placeholder: 'Edit the fourth choice', id: 'choice_4' %>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :correct_answer, class: 'form-label' %>
+        <%= form.text_field :correct_answer, class: 'form-control', placeholder: 'Edit the correct answer' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :task_id, class: 'form-label' %>
+      <%= form.collection_select :task_id, Task.all, :id, :task_type, { include_blank: 'Select a task' }, { class: 'form-control' } %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :difficulty, class: 'form-label' %>
+      <%= form.select :difficulty, options_for_select([['Low', 0], ['Medium', 1], ['High', 2]], @multi_choice_question.difficulty), { include_blank: 'Select difficulty' }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit 'Update Question', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', multi_choice_questions_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>

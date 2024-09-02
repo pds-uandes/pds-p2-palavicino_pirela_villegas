@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users
+  resources :multi_choice_questions
+  resources :tasks
+  resources :multi_choice_questions do
+    post 'submit_answer', on: :member
+  end
+  
 
   get 'static_pages/home'
   get 'templates/example1'

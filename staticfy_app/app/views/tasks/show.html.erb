@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Task Details</h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">Task Type</h6>
+      <p class="card-text"><%= @task.task_type %></p>
+
+      <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+      <p class="card-text"><%= @task.status %></p>
+
+      <% if @task.task_type == 'multi_choice' %>
+        <h6 class="card-subtitle mb-2 text-muted">Multi Choice Questions</h6>
+
+        <div id="question-container">
+          <% @multi_choice_questions.each_with_index do |question, index| %>
+            <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>">
+              <h5 class="mb-3"><%= question.question %></h5>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="choice" id="choice1_<%= index %>" value="<%= question.choice_1 %>">
+                <label class="form-check-label" for="choice1_<%= index %>">
+                  <%= question.choice_1 %>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="choice" id="choice2_<%= index %>" value="<%= question.choice_2 %>">
+                <label class="form-check-label" for="choice2_<%= index %>">
+                  <%= question.choice_2 %>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="choice" id="choice3_<%= index %>" value="<%= question.choice_3 %>">
+                <label class="form-check-label" for="choice3_<%= index %>">
+                  <%= question.choice_3 %>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="choice" id="choice4_<%= index %>" value="<%= question.choice_4 %>">
+                <label class="form-check-label" for="choice4_<%= index %>">
+                  <%= question.choice_4 %>
+                </label>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <button id="prev-btn" class="btn btn-secondary" style="display:none;">Previous</button>
+        <button id="next-btn" class="btn btn-primary">Next</button>
+
+      <% end %>
+
+      <%= link_to 'Edit Task', edit_task_path(@task), class: 'btn btn-primary' %>
+      <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const questions = document.querySelectorAll('.question-item');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let currentIndex = 0;
+
+    function showQuestion(index) {
+      questions.forEach((q, i) => {
+        q.classList.toggle('d-none', i !== index);
+      });
+      prevBtn.style.display = index === 0 ? 'none' : 'inline';
+      nextBtn.style.display = index === questions.length - 1 ? 'none' : 'inline';
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion(currentIndex);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion(currentIndex);
+      }
+    });
+
+    // Initial display
+    showQuestion(currentIndex);
+  });
+</script>
