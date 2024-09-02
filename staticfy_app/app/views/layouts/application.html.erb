@@ -20,7 +20,9 @@
   <body>
     <div class="container m-lg-0 m-md-0">
       <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/home" style="font-size: 30px; margin-left: 10px; margin-right: 30px">Staticfy</a>
+        <a class="navbar-brand" href="/home" style="font-size: 30px; margin-left: 10px; margin-right: 30px">
+          <img src="<%= asset_path('logo.png') %>" alt="Staticfy" style="height: 45px;">
+        </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -47,7 +49,7 @@
           
             <li class="nav-item">
               <% if !user_signed_in? %>
-                <%= link_to 'Log in', new_user_session_path, class: 'nav-link' %>
+                <%= link_to 'Log in', new_user_session_path, class: 'nav-link', style: 'color: #004d00; font-weight: 500;' %>
               <% else %>
                 <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link'%>
               <% end %>
