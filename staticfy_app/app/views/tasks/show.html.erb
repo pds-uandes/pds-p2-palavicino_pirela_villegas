@@ -1,57 +1,58 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title">Task Details</h5>
-    </div>
-    <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-muted">Task Type</h6>
-      <p class="card-text"><%= @task.task_type %></p>
-
-      <h6 class="card-subtitle mb-2 text-muted">Status</h6>
-      <p class="card-text"><%= @task.status %></p>
-
+<div class="container mt-4" style="max-width: 800px; margin: auto;">
+  <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="card-body" style="padding: 2rem;">
+      
       <% if @task.task_type == 'multi_choice' %>
-        <h6 class="card-subtitle mb-2 text-muted">Multi Choice Questions</h6>
-
         <div id="question-container">
           <% @multi_choice_questions.each_with_index do |question, index| %>
-            <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>">
-              <h5 class="mb-3"><%= question.question %></h5>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice" id="choice1_<%= index %>" value="<%= question.choice_1 %>">
-                <label class="form-check-label" for="choice1_<%= index %>">
+            <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>" style="padding: 1rem; background-color: #f8fafc; border-radius: 8px; margin-bottom: 1rem; text-align: left;">
+              <h5 class="mb-3" style="font-weight: 700;"><%= question.question %></h5>
+              
+              <div class="form-check" style="margin-bottom: 0.75rem;">
+                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice1_<%= index %>" value="<%= question.choice_1 %>">
+                <label class="form-check-label" for="choice1_<%= index %>" style="font-size: 1rem;">
                   <%= question.choice_1 %>
                 </label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice" id="choice2_<%= index %>" value="<%= question.choice_2 %>">
-                <label class="form-check-label" for="choice2_<%= index %>">
+              
+              <div class="form-check" style="margin-bottom: 0.75rem;">
+                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice2_<%= index %>" value="<%= question.choice_2 %>">
+                <label class="form-check-label" for="choice2_<%= index %>" style="font-size: 1rem;">
                   <%= question.choice_2 %>
                 </label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice" id="choice3_<%= index %>" value="<%= question.choice_3 %>">
-                <label class="form-check-label" for="choice3_<%= index %>">
+              
+              <div class="form-check" style="margin-bottom: 0.75rem;">
+                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice3_<%= index %>" value="<%= question.choice_3 %>">
+                <label class="form-check-label" for="choice3_<%= index %>" style="font-size: 1rem;">
                   <%= question.choice_3 %>
                 </label>
               </div>
+              
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice" id="choice4_<%= index %>" value="<%= question.choice_4 %>">
-                <label class="form-check-label" for="choice4_<%= index %>">
+                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice4_<%= index %>" value="<%= question.choice_4 %>">
+                <label class="form-check-label" for="choice4_<%= index %>" style="font-size: 1rem;">
                   <%= question.choice_4 %>
                 </label>
               </div>
+            
             </div>
           <% end %>
         </div>
 
-        <button id="prev-btn" class="btn btn-secondary" style="display:none;">Previous</button>
-        <button id="next-btn" class="btn btn-primary">Next</button>
-
+        <div style="text-align: center; margin-top: 2rem;">
+          <button id="prev-btn" class="btn btn-secondary" style="display:none; margin-right: 1rem;">Retroceder</button>
+          <button id="next-btn" class="btn btn-primary">Avanzar</button>
+        </div>
       <% end %>
 
-      <%= link_to 'Edit Task', edit_task_path(@task), class: 'btn btn-primary' %>
-      <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
+
+      <!-- 
+      <div style="margin-top: 2rem; text-align: center;">
+        <%= link_to 'Edit Task', edit_task_path(@task), class: 'btn btn-primary', style: 'margin-right: 1rem;' %>
+        <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
+      </div>
+      -->
     </div>
   </div>
 </div>
@@ -67,8 +68,8 @@
       questions.forEach((q, i) => {
         q.classList.toggle('d-none', i !== index);
       });
-      prevBtn.style.display = index === 0 ? 'none' : 'inline';
-      nextBtn.style.display = index === questions.length - 1 ? 'none' : 'inline';
+      prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+      nextBtn.style.display = index === questions.length - 1 ? 'none' : 'inline-block';
     }
 
     prevBtn.addEventListener('click', () => {
