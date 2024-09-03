@@ -1,11 +1,13 @@
+<meta name="turbo-cache-control" content="no-cache">
+
 <div class="container mt-4" style="max-width: 800px; margin: auto;">
   <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="card-body" style="padding: 2rem;">
-      
-      <% if @task.task_type == 'multi_choice' %>
+
+      <% if @task.task_type == 'multi_choice' && !@task.is_finished %>
         <div id="question-container">
           <% @multi_choice_questions.each_with_index do |question, index| %>
-            <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>" style="padding: 1rem; background-color: #f8fafc; border-radius: 8px; margin-bottom: 1rem; text-align: left;">
+            <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>" data-id="<%= question.id %>" data-correct-answer="<%= question.correct_answer %>" style="padding: 1rem; background-color: #f8fafc; border-radius: 8px; margin-bottom: 1rem;">
               <h5 class="mb-3" style="font-weight: 700;"><%= question.question %></h5>
               
               <div class="form-check" style="margin-bottom: 0.75rem;">
@@ -35,58 +37,150 @@
                   <%= question.choice_4 %>
                 </label>
               </div>
-            
             </div>
           <% end %>
         </div>
 
         <div style="text-align: center; margin-top: 2rem;">
-          <button id="prev-btn" class="btn btn-secondary" style="display:none; margin-right: 1rem;">Retroceder</button>
-          <button id="next-btn" class="btn btn-primary">Avanzar</button>
+          <button id="next-btn" class="btn btn-primary">Siguiente</button>
+          <button id="skip-btn" class="btn btn-danger">Saltar</button>
+        </div>
+      <% elsif @task.is_finished %>
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title">Resultados de la Tarea</h5>
+            <% total_questions = @multi_choice_questions.count %>
+            <% incorrect_answers = @task.wrong_counter %>
+            <% correct_answers = total_questions - incorrect_answers %>
+            <% success_rate = (correct_answers.to_f / total_questions * 100).round(2) %>
+
+            <p class="card-text">
+              <strong>Correctas:</strong> <%= correct_answers %><br>
+              <strong>Incorrectas:</strong> <%= incorrect_answers %><br>
+              <strong>Porcentaje de acierto:</strong> <%= success_rate %>%
+            </p>
+
+            <div class="text-center mt-4">
+              <a href="/tasks" class="btn btn-secondary">Volver al índice de tareas</a>
+            </div>
+          </div>
         </div>
       <% end %>
-
-
-      <!-- 
-      <div style="margin-top: 2rem; text-align: center;">
-        <%= link_to 'Edit Task', edit_task_path(@task), class: 'btn btn-primary', style: 'margin-right: 1rem;' %>
-        <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
-      </div>
-      -->
+      
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const questions = document.querySelectorAll('.question-item');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    let currentIndex = 0;
+document.addEventListener('turbo:load', () => {
+  const questions = document.querySelectorAll('.question-item');
+  const nextBtn = document.getElementById('next-btn');
+  const skipBtn = document.getElementById('skip-btn');
+  let currentIndex = 0;
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let taskFinished = false;
 
-    function showQuestion(index) {
-      questions.forEach((q, i) => {
-        q.classList.toggle('d-none', i !== index);
-      });
-      prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
-      nextBtn.style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+  function showQuestion(index) {
+    questions.forEach((q, i) => {
+      q.classList.toggle('d-none', i !== index);
+    });
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (taskFinished) return;
+
+    const selectedOption = document.querySelector(`input[name="choice_${currentIndex}"]:checked`);
+
+    if (!selectedOption) {
+      alert('Por favor, selecciona una respuesta.');
+      return;
     }
 
-    prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        showQuestion(currentIndex);
-      }
-    });
+    const questionElement = questions[currentIndex];
+    const selectedChoice = selectedOption.value;
+    const correctAnswer = questionElement.dataset.correctAnswer;
 
-    nextBtn.addEventListener('click', () => {
-      if (currentIndex < questions.length - 1) {
-        currentIndex++;
-        showQuestion(currentIndex);
-      }
-    });
+    if (selectedChoice === correctAnswer) {
+      correctAnswers++;
+    } else {
+      wrongAnswers++;
+      fetch(`/tasks/${<%= @task.id %>}/increment_wrong_counter`, { 
+        method: 'POST' 
+      });
+    }
 
-    // Initial display
-    showQuestion(currentIndex);
+    currentIndex++;
+
+    if (currentIndex < questions.length) {
+      showQuestion(currentIndex);
+      nextBtn.textContent = 'Siguiente';
+    } else {
+      taskFinished = true;
+      fetch(`/tasks/${<%= @task.id %>}/finish`, { 
+        method: 'POST', 
+        body: JSON.stringify({ correctAnswers, wrongAnswers }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then(() => {
+        nextBtn.style.display = 'none';
+        skipBtn.style.display = 'none';
+
+        if (!document.querySelector('.card.mt-4')) {
+          const resultCard = document.createElement('div');
+          resultCard.className = 'card mt-4';
+          resultCard.innerHTML = `
+            <div class="card-body">
+              <h5 class="card-title">Resultados de la Tarea</h5>
+              <p class="card-text">
+                <strong>Correctas:</strong> ${correctAnswers}<br>
+                <strong>Incorrectas:</strong> ${wrongAnswers}<br>
+                <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
+              </p>
+              <div class="text-center mt-4">
+                <a href="/tasks" class="btn btn-secondary">Volver al índice de tareas</a>
+              </div>
+            </div>
+          `;
+          document.querySelector('.card-body').appendChild(resultCard);
+        }
+      });
+    }
   });
+
+  skipBtn.addEventListener('click', () => {
+    if (taskFinished) return;
+
+    const totalQuestions = questions.length;
+    wrongAnswers += totalQuestions;
+
+    fetch(`/tasks/${<%= @task.id %>}/skip`, { 
+      method: 'POST' 
+    }).then(() => {
+      taskFinished = true;
+      nextBtn.style.display = 'none';
+      skipBtn.style.display = 'none';
+
+      if (!document.querySelector('.card.mt-4')) {
+        const resultCard = document.createElement('div');
+        resultCard.className = 'card mt-4';
+        resultCard.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">Resultados de la Tarea</h5>
+            <p class="card-text">
+              <strong>Correctas:</strong> 0<br>
+              <strong>Incorrectas:</strong> ${wrongAnswers}<br>
+              <strong>Porcentaje de acierto:</strong> 0%
+            </p>
+            <div class="text-center mt-4">
+              <a href="/tasks" class="btn btn-secondary">Volver al índice de tareas</a>
+            </div>
+          </div>
+        `;
+        document.querySelector('.card-body').appendChild(resultCard);
+      }
+    });
+  });
+
+  showQuestion(currentIndex);
+});
 </script>
