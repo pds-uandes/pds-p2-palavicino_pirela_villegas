@@ -6,12 +6,20 @@ class NumericQuestionsController < ApplicationController
     @task = @numeric_question.task
     @numeric_template = @numeric_question.numeric_template
 
-    if @numeric_template&.values.present?
-      @parsed_values = JSON.parse(@numeric_template.values)
-      template1
-      session[:attempts] ||= 0
+    if @numeric_template
+      @diagram = @numeric_template.diagram_data
+
+      if @numeric_template.values.present?
+        @parsed_values = JSON.parse(@numeric_template.values)
+        template1
+        template2
+        session[:attempts] ||= 0
+      else
+        flash[:alert] = "No hay Diagramas disponibles"
+        redirect_to root_path
+      end
     else
-      flash[:alert] = "No hay Diagramas disponibles"
+      flash[:alert] = "No se encontró una plantilla numérica para esta pregunta."
       redirect_to root_path
     end
   end
@@ -45,15 +53,27 @@ class NumericQuestionsController < ApplicationController
   private
 
   def template1
-    @angle = @parsed_values['angle'].sample
-    @force_magnitude = @parsed_values['forceMagnitude'].sample
+    @angle_1 = @parsed_values['angle'].sample
+    @force_magnitude_1 = @parsed_values['forceMagnitude'].sample
 
-    @question_text = @numeric_question.question.gsub('{A}', @angle.to_s).gsub('{B}', @force_magnitude.to_s)
+    @question_text_1 = @numeric_question.question.gsub('{A}', @angle_1.to_s).gsub('{B}', @force_magnitude_1.to_s)
 
-    va = @force_magnitude * Math.cos(@angle * Math::PI / 180)
+    va = @force_magnitude_1 * Math.cos(@angle_1 * Math::PI / 180)
     @answer_template1 = va.round(2)
 
     @numeric_question.update(correct_answer: @answer_template1)
+  end
+
+  def template2
+    @angle_2 = @parsed_values['angle'].sample
+    @force_magnitude_2 = @parsed_values['forceMagnitude'].sample
+
+    @question_text = @numeric_question.question.gsub('{A}', @angle_2.to_s).gsub('{B}', @force_magnitude_2.to_s)
+
+    va = @force_magnitude_2 * Math.cos(@angle_2 * Math::PI / 180)
+    @answer_template2 = va.round(2)
+
+    @numeric_question.update(correct_answer: @answer_template2)
   end
 
   def get_hint(counter)
