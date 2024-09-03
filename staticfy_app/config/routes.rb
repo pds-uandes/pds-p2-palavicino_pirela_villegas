@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :multi_choice_questions do
     post 'submit_answer', on: :member
   end
-  resources :numeric_questions
+  resources :numeric_questions do
+    post 'submit_answer', on: :member
+  end
 
   get '/home', to: 'static_pages#home'
   get 'templates/example1'

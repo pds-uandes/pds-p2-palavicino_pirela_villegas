@@ -1,4 +1,12 @@
-<h1>Pregunta Numerica 1</h1>
+<h1>Pregunta Numérica</h1>
 <p><%= @question_text %></p>
+
 <%= render 'templates/template1' %>
 
+<%= form_with url: submit_answer_numeric_question_path(@numeric_question), method: :post do %>
+  <div>
+    <%= label_tag :user_answer, "Ingresa tu respuesta:" %>
+    <%= text_field_tag :user_answer %>
+  </div>
+  <%= submit_tag "Enviar Respuesta" %>
+<% end %>
