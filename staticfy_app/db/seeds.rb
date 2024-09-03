@@ -126,7 +126,17 @@ task2 = Task.create(
   wrong_counter: 0
 )
 
-numeric_question = NumericQuestion.create!(
+task3 = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 3',
+  is_finished: false,
+  wrong_counter: 0
+)
+
+# Crear Numeric Questions
+numeric_question_2 = NumericQuestion.create!(
   task: task2,
   difficulty: 1,
   question: '¿Calcule el valor de la fuerza vertical aplicada por el apoyo fijo, dado que el ángulo de inclinación es {A}° y se le está aplicando una fuerza de {B} N perpendicular a la viga?',
@@ -140,10 +150,34 @@ numeric_question = NumericQuestion.create!(
   updated_at: Time.now
 )
 
+numeric_question_3 = NumericQuestion.create!(
+  task: task3,
+  difficulty: 1,
+  question: '¿Calcule el valor de la fuerza vertical aplicada por el apoyo fijo, dado que el ángulo de inclinación es {A}° y se le está aplicando una fuerza de {B} N perpendicular a la viga?',
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: 'Hint 1',
+  hint_2: 'Hint 2',
+  hint_3: 'Hint 3',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+# Crear Numeric Templates
 NumericTemplate.create!(
-  numeric_question: numeric_question,
-  diagram_data: '',
+  numeric_question: numeric_question_2, # Asocia al numeric_question_2
+  diagram_data: 'template1',
   values: '{"angle": [15, 30, 45, 60], "forceMagnitude": [3, 4, 5, 6]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: numeric_question_3, # Asocia al numeric_question_3
+  diagram_data: 'template2',
+  values: '{"angle": [10, 20], "forceMagnitude": [3, 4]}',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
