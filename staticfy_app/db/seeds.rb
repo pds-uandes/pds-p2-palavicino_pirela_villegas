@@ -44,6 +44,33 @@ task1 = Task.create(
   wrong_counter: 0
 )
 
+test_game_path = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'Conexiones y Apoyos',
+  is_finished: true,
+  wrong_counter: 0
+)
+
+test_game_path_2 = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'Conexiones y Apoyos',
+  is_finished: false,
+  wrong_counter: 0
+)
+
+test_game_path_3 = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'Conexiones y Apoyos',
+  is_finished: false,
+  wrong_counter: 0
+)
+
 # ------------------ Preguntas para la Task 1 ------------------
 multi_choice_question_1 = MultiChoiceQuestion.create(
   task_id: task1.id,

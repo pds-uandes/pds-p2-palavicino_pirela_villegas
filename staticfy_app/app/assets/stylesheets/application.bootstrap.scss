@@ -92,41 +92,87 @@ body {
     color: #e0e0e0;
 }
   
-  
 
-/* Acordeón general */
-.accordion-item {
-    background-color: #f8f9fa;
-    border: 1px solid #d1d1d1;
+
+.game-path {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
   }
   
-  .accordion-header .accordion-button {
-    background-color: #e9ecef;
-    color: #343a40;
+  .task-node {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .task-link {
+    text-decoration: none;
+  }
+  
+  .task-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
     font-weight: bold;
-    font-size: 1.1rem;
+    background-color: #ddd;
+    border: 3px solid #aaa;
   }
   
-  .accordion-header .accordion-button:focus {
-    box-shadow: none;
-    border-color: #d1d1d1;
+  .task-in-progress {
+    background-color: #00d400;
+    border-color: #00b400;
+    color: white;
   }
   
-  /* Cuerpo del acordeón */
-  .accordion-body {
-    padding: 15px;
-    background-color: #ffffff;
-    border-top: 1px solid #d1d1d1;
-  }
-    
-  .text-primary {
-    color: #000000 !important;
+  .task-completed {
+    background-color: #ccc;
+    border-color: #aaa;
   }
   
-  .text-success {
-    color: #28a745 !important;
+  .task-connector {
+    width: 5px;
+    height: 40px;
+    background-color: #ddd;
+    position: absolute;
+    top: 60px; /* Colocar el conector justo debajo del nodo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
   }
   
+  .task-node:last-child .task-connector {
+    display: none;
+  }
+  
+  .task-in-progress:hover{
+    background-color: #00b400;
+    border-color: #009600;
+  }
 
-
+  .hero-section-tasks {
+    padding: 60px 20px;
+    text-align: center;
+  }
   
+  .hero-content-tasks {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-title-tasks {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #004d00;
+    margin-bottom: 20px;
+  }
+  
+  .hero-subtitle-tasks {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: -10px;
+  }
