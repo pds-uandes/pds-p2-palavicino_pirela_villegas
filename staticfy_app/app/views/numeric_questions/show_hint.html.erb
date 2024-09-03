@@ -1,4 +1,12 @@
 <h1>Hint para la Pregunta</h1>
 <p><%= @current_hint %></p>
 
-<%= link_to 'Volver a Intentar', numeric_question_path(@numeric_question), class: 'btn btn-primary' %>
+<%= button_to "Volver a la Pregunta", numeric_question_path(@numeric_question), method: :get, id: "retry_button" %>
+
+<script>
+  document.getElementById('retry_button').onclick = function() {
+    setTimeout(function() {
+      window.location.reload();
+    }, 100);
+  };
+</script>
