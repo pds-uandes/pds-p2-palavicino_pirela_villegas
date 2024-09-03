@@ -10,7 +10,9 @@
     <% @tasks.each_with_index do |task, index| %>
       <div class="task-node">
         <div class="task-connector"></div>
-        <%= link_to task_path(task), class: 'task-link' do %>
+        <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
+        <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
+        <%= link_to link_path, class: 'task-link', id: numeric_questions.first.present? ? 'numeric_question_button' : nil do %>
           <div class="task-circle <%= task.is_finished ? 'task-completed' : 'task-in-progress' %>">
             <%= task.is_finished ? '✓' : index + 1 %>
           </div>

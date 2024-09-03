@@ -27,27 +27,27 @@ class NumericQuestionsController < ApplicationController
   def submit_answer
     @user_answer = params[:user_answer].to_f
     correct_answer = @numeric_question.correct_answer.to_f
-  
+
     if (@user_answer - correct_answer).abs <= @numeric_question.tolerance
       flash[:notice] = "¡Respuesta correcta! Tu respuesta fue: #{@user_answer}. La respuesta correcta es: #{correct_answer}"
-      session[:attempts] = 0 
+      session[:attempts] = 0
       redirect_to task_path(@numeric_question.task)
     else
-      session[:attempts] += 1 
+      session[:attempts] += 1
       # flash[:reload] = true
       if session[:attempts] < 3
         flash[:alert] = "Respuesta incorrecta. Hint: #{@current_hint}."
         redirect_to show_hint_numeric_question_path(@numeric_question)
       else
         flash[:alert] = "Has agotado los intentos. La respuesta correcta era: #{correct_answer}."
-        session[:attempts] = 0 
-        redirect_to task_path(@numeric_question.task) 
+        session[:attempts] = 0
+        redirect_to task_path(@numeric_question.task)
       end
     end
-  end  
+  end
 
   def show_hint
-    @current_hint = get_hint(session[:attempts])  
+    @current_hint = get_hint(session[:attempts])
   end
 
   private
