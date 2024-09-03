@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :numeric_questions do
     post 'submit_answer', on: :member
     get 'show_hint', on: :member
+    get 'show_result', on: :member
   end
 
   get '/home', to: 'static_pages#home'

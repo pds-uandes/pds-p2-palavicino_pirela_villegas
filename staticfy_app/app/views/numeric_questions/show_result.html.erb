@@ -1,0 +1,17 @@
+<% if @is_correct %>
+  <div class="container mt-4" style="max-width: 800px; margin: auto;">
+    <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+      <div class="card-body" style="padding: 2rem;">
+        <h1 class="hero-title-tasks">¡Felicidades!</h1>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="container mt-4" style="max-width: 800px; margin: auto;">
+    <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+      <div class="card-body" style="padding: 2rem;">
+        <h1 class="hero-title-tasks">Lo lamento, la respuesta fue incorrecta.</h1>
+      </div>
+    </div>
+  </div>
+<% end %>

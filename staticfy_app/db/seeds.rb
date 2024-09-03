@@ -116,9 +116,9 @@ numeric_question_2 = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: 'Hint 1',
-  hint_2: 'Hint 2',
-  hint_3: 'Hint 3',
+  hint_1: 'Hint 1 de la 1',
+  hint_2: 'Hint 2 de la 1',
+  hint_3: 'Hint 3 de la 1',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -126,13 +126,13 @@ numeric_question_2 = NumericQuestion.create!(
 numeric_question_3 = NumericQuestion.create!(
   task: task3,
   difficulty: 1,
-  question: '¿Calcule el valor de la fuerza vertical aplicada por el apoyo fijo, dado que el ángulo de inclinación es {A}° y se le está aplicando una fuerza de {B} N perpendicular a la viga?',
+  question: '¿Calcule el valor de la fuerza horizontal aplicada por el apoyo fijo, dado que se aplica una fuerza de {B} N a un ángulo de inclinación de {A}° respecto a la viga?',
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: 'Hint 1',
-  hint_2: 'Hint 2',
-  hint_3: 'Hint 3',
+  hint_1: 'Hint 1 de la 2',
+  hint_2: 'Hint 2 de la 2',
+  hint_3: 'Hint 3 de la 2',
   created_at: Time.now,
   updated_at: Time.now
 )
