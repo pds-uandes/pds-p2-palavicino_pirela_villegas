@@ -12,7 +12,7 @@
         <div class="task-connector"></div>
         <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
         <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
-        <%= link_to link_path, class: 'task-link', id: numeric_questions.first.present? ? 'numeric_question_button' : nil do %>
+        <%= link_to link_path, class: 'task-link numeric-question-button' do %>
           <div class="task-circle <%= task.is_finished ? 'task-completed' : 'task-in-progress' %>">
             <%= task.is_finished ? '✓' : index + 1 %>
           </div>
@@ -21,3 +21,14 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  // Selecciona todos los elementos con la clase 'numeric-question-button'
+  document.querySelectorAll('.numeric-question-button').forEach(function(button) {
+    button.onclick = function() {
+      setTimeout(function() {
+        window.location.reload();
+      }, 100);
+    };
+  });
+</script>

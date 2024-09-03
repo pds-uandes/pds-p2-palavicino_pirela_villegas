@@ -14,9 +14,6 @@
   </div>
 <% end %>
 
-
-
-
 <div class="d-flex justify-content-center align-items-center mb-5">
   <%= form_with url: submit_answer_numeric_question_path(@numeric_question), method: :post do %>
   <div class="d-flex align-items-center">
@@ -31,16 +28,3 @@
   </div>
   <% end %>
 </div>
-
-
-
-
-
-
-<% if flash[:reload] %>
-  <script>
-    window.onload = function() {
-      window.location.reload();
-    }
-  </script>
-<% end %>

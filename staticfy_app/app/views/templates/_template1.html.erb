@@ -5,9 +5,9 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     const mysvg = document.getElementById('diagram-svg');
-    const angle = <%= @angle_2 %>;
+    const angle = <%= @angle_1 %>;
     const radian = Diagramatics.to_radian(angle);
-    const forceMagnitude = <%= @force_magnitude_2 %>;
+    const forceMagnitude = <%= @force_magnitude_1 %>;
     const length = 10; 
 
     function updateDiagram() {
