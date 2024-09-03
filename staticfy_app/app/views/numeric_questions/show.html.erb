@@ -10,3 +10,11 @@
   </div>
   <%= submit_tag "Enviar Respuesta" %>
 <% end %>
+
+<% if flash[:reload] %>
+  <script>
+    window.onload = function() {
+      window.location.reload();
+    }
+  </script>
+<% end %>

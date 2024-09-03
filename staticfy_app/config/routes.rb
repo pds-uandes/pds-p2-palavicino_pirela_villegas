@@ -8,11 +8,10 @@ Rails.application.routes.draw do
   end
   resources :numeric_questions do
     post 'submit_answer', on: :member
+    get 'show_hint', on: :member
   end
 
   get '/home', to: 'static_pages#home'
-  get 'templates/example1'
-  get 'templates/example2'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
