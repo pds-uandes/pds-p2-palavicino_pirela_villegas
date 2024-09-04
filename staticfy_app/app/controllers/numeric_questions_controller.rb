@@ -28,12 +28,12 @@ class NumericQuestionsController < ApplicationController
     correct_answer = @numeric_question.correct_answer.to_f
 
     if (@user_answer - correct_answer).abs <= @numeric_question.tolerance
-      flash[:is_correct] = true
+      session[:is_correct] = true
       flash[:notice] = "¡Respuesta correcta! Tu respuesta fue: #{@user_answer}. La respuesta correcta es: #{correct_answer}"
       session[:attempts] = 0
       redirect_to show_result_numeric_question_path(@numeric_question)
     else
-      flash[:is_correct] = false 
+      session[:is_correct] = false
       session[:attempts] += 1
       if session[:attempts] <= 3
         flash[:alert] = "Respuesta incorrecta. Hint: #{@current_hint}."
@@ -51,8 +51,8 @@ class NumericQuestionsController < ApplicationController
   end
 
   def show_result
-    @is_correct = flash[:is_correct]
-  end  
+    @is_correct = session.delete(:is_correct) 
+  end
 
   private
 
