@@ -77,4 +77,4 @@ class MultiChoiceQuestionsController < ApplicationController
       def multi_choice_question_params
         params.require(:multi_choice_question).permit(:task_id, :difficulty, :question, :choice_1, :choice_2, :choice_3, :choice_4, :correct_answer)
       end
-  end
+end

@@ -49,10 +49,10 @@ multi_choice_question_1 = MultiChoiceQuestion.create(
   task_id: task1.id,
   difficulty: 0,
   question: 'Un vínculo es una restricción al ______ de un cuerpo, que impide su movimiento respecto de algún grado de libertad.',
-  choice_1: 'Equilibrio',
-  choice_2: 'Movimiento',
-  choice_3: 'Peso',
-  choice_4: 'Fuerza',
+  choice_1: '{"value": "Equilibrio", "why_not": "buenas"}',
+  choice_2: '{"value": "Movimiento", "why_not": ""}',
+  choice_3: '{"value": "Peso", "why_not": "bla bla"}',
+  choice_4: '{"value": "Fuerza", "why_not": "bla bla"}',
   correct_answer: 'Movimiento',
 )
 
@@ -60,10 +60,10 @@ multi_choice_question_2 = MultiChoiceQuestion.create(
   task_id: task1.id,
   difficulty: 0,
   question: 'Un apoyo deslizante restringe el desplazamiento en la dirección ______.',
-  choice_1: 'Horizontal',
-  choice_2: 'Vertical',
-  choice_3: 'De giro',
-  choice_4: 'Axial',
+  choice_1: '{"value": "Horizontal", "why_not": "bla bla"}',
+  choice_2: '{"value": "Vertical", "why_not": ""}',
+  choice_3: '{"value": "De giro", "why_not": "bla bla"}',
+  choice_4: '{"value": "Axial", "why_not": "bla bla"}',
   correct_answer: 'Vertical',
 )
 
@@ -71,10 +71,10 @@ multi_choice_question_3 = MultiChoiceQuestion.create(
   task_id: task1.id,
   difficulty: 0,
   question: '¿Cuál de las siguientes opciones define mejor un apoyo empotrado?',
-  choice_1: 'Restricción del giro, pero no de los desplazamientos.',
-  choice_2: 'Restricción de los desplazamientos en ambas direcciones y del giro.',
-  choice_3: 'Permite el giro, pero restringe el desplazamiento en una dirección.',
-  choice_4: 'Restringe el giro y el desplazamiento.',
+  choice_1: '{"value": "Restricción del giro, pero no de los desplazamientos.", "why_not": "bla bla"}',
+  choice_2: '{"value": "Restricción de los desplazamientos en ambas direcciones y del giro.", "why_not": ""}',
+  choice_3: '{"value": "Permite el giro, pero restringe el desplazamiento en una dirección.", "why_not": "bla bla"}',
+  choice_4: '{"value": "Restringe el giro y el desplazamiento.", "why_not": "bla bla"}',
   correct_answer: 'Restricción de los desplazamientos en ambas direcciones y del giro.',
 )
 
@@ -82,10 +82,10 @@ multi_choice_question_4 = MultiChoiceQuestion.create(
   task_id: task1.id,
   difficulty: 0,
   question: '¿Qué tipo de conexión permite la transmisión de fuerza axial, pero no permite la transmisión de momento ni de fuerza de corte cuando está orientada en la dirección horizontal?',
-  choice_1: 'Conexión rígida',
-  choice_2: 'Conexión rotulada',
-  choice_3: 'Biela',
-  choice_4: 'Apoyo deslizante',
+  choice_1: '{"value": "Conexión rígida", "why_not": "bla bla"}',
+  choice_2: '{"value": "Conexión rotulada", "why_not": ""}',
+  choice_3: '{"value": "Biela", "why_not": "bla bla"}',
+  choice_4: '{"value": "Apoyo deslizante", "why_not": "bla bla"}',
   correct_answer: 'Biela',
 )
 
