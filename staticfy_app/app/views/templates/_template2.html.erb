@@ -26,6 +26,9 @@
       let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(10, 0))
         .stroke('black').strokedasharray([5, 5]).strokewidth(2);
 
+      let vertical = Diagramatics.line(Diagramatics.V2(5, 0), Diagramatics.V2(5, 10))
+        .stroke('black').strokedasharray([5, 5]).strokewidth(1);
+
       const triangle_base = Diagramatics.polygon([
         Diagramatics.V2(-0.25, 0),    
         Diagramatics.V2(0.25, 0),     
@@ -50,7 +53,7 @@
       //   1.5
       // );
 
-      draw(horizontal, r1, F, triangle_base, joint_circle);
+      draw(horizontal, r1, F, triangle_base, joint_circle, vertical);
     }
 
     updateDiagram();

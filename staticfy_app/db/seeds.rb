@@ -116,9 +116,9 @@ numeric_question_2 = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: 'Hint 1 de la 1',
-  hint_2: 'Hint 2 de la 1',
-  hint_3: 'Hint 3 de la 1',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -130,16 +130,15 @@ numeric_question_3 = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: 'Hint 1 de la 2',
-  hint_2: 'Hint 2 de la 2',
-  hint_3: 'Hint 3 de la 2',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
   created_at: Time.now,
   updated_at: Time.now
 )
 
-# Crear Numeric Templates
 NumericTemplate.create!(
-  numeric_question: numeric_question_2, # Asocia al numeric_question_2
+  numeric_question: numeric_question_2, 
   diagram_data: 'template1',
   values: '{"angle": [15, 30, 45, 60], "forceMagnitude": [3, 4, 5, 6]}',
   magnitudes: '{"force": "N"}',
@@ -148,9 +147,9 @@ NumericTemplate.create!(
 )
 
 NumericTemplate.create!(
-  numeric_question: numeric_question_3, # Asocia al numeric_question_3
+  numeric_question: numeric_question_3, 
   diagram_data: 'template2',
-  values: '{"angle": [10, 20], "forceMagnitude": [3, 4]}',
+  values: '{"angle": [15, 30, 45, 60], "forceMagnitude": [3, 4, 5, 6]}',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
