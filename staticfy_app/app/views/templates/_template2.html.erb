@@ -45,15 +45,16 @@
       const F_direction = Diagramatics.Vdir(radian).scale(forceMagnitude); 
       const F = Diagramatics.annotation.vector(F_direction, `${forceMagnitude} N`, Diagramatics.V2(1, 1), arrow_head_size)
         .position(Diagramatics.V2(length / 2, 0.8)).stroke('red').strokewidth(2).fill('red');
+        
 
-      //   const angle_annotation = Diagramatics.annotation.angle(
-      //   [Diagramatics.V2(1, 0), Diagramatics.V2(length / 2, 0.8), Diagramatics.Vdir(radian)], 
-      //   `${angle}°`, 
-      //   1, 
-      //   1.5
-      // );
+        const angle_annotation = Diagramatics.annotation.angle(
+        [Diagramatics.V2(0, 0), Diagramatics.V2(7, 1.2), Diagramatics.Vdir(0)], 
+        `${angle}°`, 
+        0, 
+        0
+      );
 
-      draw(horizontal, r1, F, triangle_base, joint_circle, vertical);
+      draw(horizontal, r1, F, triangle_base, joint_circle, vertical, angle_annotation);
     }
 
     updateDiagram();
