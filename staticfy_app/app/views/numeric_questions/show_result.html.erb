@@ -3,6 +3,10 @@
     <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
       <div class="card-body" style="padding: 2rem;">
         <h1 class="hero-title-tasks">¡Felicidades!</h1>
+        <h5 class="mb-3" style="font-weight: 700;">¡Correcto! 🎉 La respuesta es: <%= @numeric_question.correct_answer %> N. ¡Buen trabajo! 🚀</h5>
+        <div class="d-flex justify-content-center mt-4">
+          <%= button_to "Volver al Modulo", tasks_path, method: :get, class: "btn btn-primary me-2" %>
+        </div> 
       </div>
     </div>
   </div>
@@ -10,7 +14,9 @@
   <div class="container mt-4" style="max-width: 800px; margin: auto;">
     <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
       <div class="card-body" style="padding: 2rem;">
-        <h1 class="hero-title-tasks">Lo lamento, la respuesta fue incorrecta.</h1>
+        <h1 class="hero-title-tasks">¡Oh no! 😅 La respuesta fue incorrecta.</h1>
+        <h5 class="mb-3" style="font-weight: 700;"> ¡Te quedaste sin hints! 🎯 La respuesta correcta es: <%= @numeric_question.correct_answer %> N. ¡No te desanimes, sigue intentándolo! 💪</h5>  
+        <%= button_to "Volver al Modulo", tasks_path, method: :get, class: "btn btn-primary me-2" %>      
       </div>
     </div>
   </div>
