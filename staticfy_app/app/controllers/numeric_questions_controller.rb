@@ -36,10 +36,10 @@ class NumericQuestionsController < ApplicationController
       session[:is_correct] = false
       session[:attempts] += 1
       if session[:attempts] <= 3
-        flash[:alert] = "Respuesta incorrecta. Hint: #{@current_hint}."
+        flash[:alert] = "Respuesta incorrecta."
         redirect_to show_hint_numeric_question_path(@numeric_question)
       else
-        flash[:alert] = "Has agotado los intentos. La respuesta correcta era: #{correct_answer}."
+        flash[:alert] = "Has agotado los hints!"
         session[:attempts] = 0
         redirect_to show_result_numeric_question_path(@numeric_question)
       end
