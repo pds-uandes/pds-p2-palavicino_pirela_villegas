@@ -1,8 +1,6 @@
 <div class="container mt-4" style="max-width: 800px; margin: auto;">
   <div class="card" style="border: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
     <div class="card-body" style="padding: 2rem;">
-      <%= @questions_with_choices %>
-
       <% if @task.task_type == 'multi_choice' && !@task.is_finished %>
         <div id="question-container">
           <% @multi_choice_questions.each_with_index do |question, index| %>
@@ -60,7 +58,7 @@
             </p>
 
             <div class="text-center mt-4">
-              <a href="/tasks" class="btn btn-secondary">Volver al índice de tareas</a>
+              <a href="/tasks" class="btn" style="background-color: #004d00;">Volver al índice de tareas</a>
             </div>
           </div>
         </div>
@@ -70,6 +68,19 @@
 </div>
 
 <script>
+
+function showCustomAlert(message) {
+    const alertContainer = document.createElement('div');
+    alertContainer.classList.add('alert-js'); 
+    alertContainer.textContent = message;
+
+    document.body.appendChild(alertContainer);
+
+    setTimeout(() => {
+        alertContainer.remove();
+    }, 6000); 
+}
+
 document.addEventListener('turbo:load', () => {
   const questions = document.querySelectorAll('.question-item');
   const nextBtn = document.getElementById('next-btn');
@@ -91,7 +102,7 @@ document.addEventListener('turbo:load', () => {
     const selectedOption = document.querySelector(`input[name="choice_${currentIndex}"]:checked`);
 
     if (!selectedOption) {
-      alert('Por favor, selecciona una respuesta.');
+      showCustomAlert('Por favor, selecciona una respuesta.');
       return;
     }
 
@@ -99,21 +110,20 @@ document.addEventListener('turbo:load', () => {
     const selectedChoice = selectedOption.value;
     const correctAnswer = questionElement.dataset.correctAnswer;
 
-    // Obtener el conjunto de opciones del servidor
     const choices = <%= @questions_with_choices.to_json.html_safe %>;
 
     if (selectedChoice === correctAnswer) {
       correctAnswers++;
+      showCustomAlert("Respuesta correcta! ✅");  
     } else {
       wrongAnswers++;
       
-      // Recorrer todas las opciones para encontrar la que coincide con la selección del usuario
       Object.keys(choices).forEach(questionId => {
         const questionChoices = choices[questionId];
         
         for (const choiceKey in questionChoices) {
           if (questionChoices[choiceKey]['value'] === selectedChoice) {
-            alert(questionChoices[choiceKey]['why_not']);  
+            showCustomAlert(questionChoices[choiceKey]['why_not']);  
             break;
           }
         }
@@ -151,7 +161,7 @@ document.addEventListener('turbo:load', () => {
                 <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
               </p>
               <div class="text-center mt-4">
-                <a href="/tasks" class="btn btn-secondary">Volver al índice de tareas</a>
+                <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
               </div>
             </div>
           `;
