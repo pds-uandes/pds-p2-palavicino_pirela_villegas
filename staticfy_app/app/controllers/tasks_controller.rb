@@ -28,6 +28,7 @@ class TasksController < ApplicationController
       # Solo cargamos las preguntas de opción múltiple si el tipo de tarea es 'Multi Choice'
       if @task.task_type == 'multi_choice'
         @multi_choice_questions = MultiChoiceQuestion.where(task_id: @task.id)
+        @multi_choice_questions_len = @multi_choice_questions.size
         
         # Crear un hash para almacenar las opciones de cada pregunta
         @questions_with_choices = {}

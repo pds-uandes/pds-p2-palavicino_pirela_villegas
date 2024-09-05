@@ -5,6 +5,11 @@
         <div id="question-container">
           <% @multi_choice_questions.each_with_index do |question, index| %>
             <div class="question-item <%='d-none' unless index == 0 %>" data-index="<%= index %>" data-id="<%= question.id %>" data-correct-answer="<%= question.correct_answer %>" style="padding: 1rem; background-color: #f4f6f6; border-radius: 8px; margin-bottom: 1rem;">
+              <div class="question-header" style="margin-bottom: 1rem; text-align: center;">
+                <h6 style="font-weight: bold; color: #004d00;">
+                  Pregunta <%= index + 1 %> de <%= @multi_choice_questions.length %>
+                </h6>
+              </div>
               <h5 class="mb-3" style="font-weight: 700;"><%= question.question %></h5>
               
               <div class="form-check" style="margin-bottom: 0.75rem;">
