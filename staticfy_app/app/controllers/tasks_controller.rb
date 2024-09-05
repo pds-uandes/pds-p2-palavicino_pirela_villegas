@@ -23,14 +23,27 @@ class TasksController < ApplicationController
     # GET /tasks/1
     # GET /tasks/1.json
     def show
-        @task = Task.find(params[:id])
-
-        # Solo cargamos las preguntas de opción múltiple si el tipo de tarea es 'Multi Choice'
-        if @task.task_type == 'multi_choice'
-          @multi_choice_questions = MultiChoiceQuestion.where(task_id: @task.id)
-        else
-          @multi_choice_questions = []
+      @task = Task.find(params[:id])
+    
+      # Solo cargamos las preguntas de opción múltiple si el tipo de tarea es 'Multi Choice'
+      if @task.task_type == 'multi_choice'
+        @multi_choice_questions = MultiChoiceQuestion.where(task_id: @task.id)
+        
+        # Crear un hash para almacenar las opciones de cada pregunta
+        @questions_with_choices = {}
+    
+        # Parsear las alternativas de cada pregunta
+        @multi_choice_questions.each do |question|
+          @questions_with_choices[question.id] = {
+            choice1: JSON.parse(question.choice_1),
+            choice2: JSON.parse(question.choice_2),
+            choice3: JSON.parse(question.choice_3),
+            choice4: JSON.parse(question.choice_4)
+          }
         end
+      else
+        @multi_choice_questions = []
+      end
     end
 
     # GET /tasks/new

@@ -63,6 +63,22 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) inset;
 }
 
+.alert-js {
+  position: fixed;
+  bottom: 1rem; 
+  right: 1rem;  
+  z-index: 1050;
+  margin-bottom: 1rem;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #004d00;
+  font-weight: bold;
+  font-family: 'Assistant', sans-serif;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) inset;
+  padding: 1rem;
+}
+
 .btn-close-md {
     position: absolute;
     top: 0.5rem;
