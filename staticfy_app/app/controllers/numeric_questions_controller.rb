@@ -29,6 +29,7 @@ class NumericQuestionsController < ApplicationController
 
     if (@user_answer - correct_answer).abs <= @numeric_question.tolerance
       session[:is_correct] = true
+      @numeric_question.task.update(is_finished: true)
       flash[:notice] = "¡Respuesta correcta! Tu respuesta fue: #{@user_answer}. La respuesta correcta es: #{correct_answer}"
       session[:attempts] = 0
       redirect_to show_result_numeric_question_path(@numeric_question)
