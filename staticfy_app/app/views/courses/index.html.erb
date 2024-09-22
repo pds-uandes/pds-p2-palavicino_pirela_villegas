@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="container" style="display: flex; flex-direction: column; align-items: center">
+    
+    <% @courses.each_with_index do |course, index| %>
+      <div class="course-card" style="background-color: #28a745; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" onclick="toggleTasks(<%= index %>)">
+        <div class="course-header" style="flex: 1;">
+          <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
+          <p class="course-description" style="font-size: 1rem; margin-bottom: 15px; margin-right: 10px"><%= course.description %></p>
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+              <path d="M1.5 5.5l7 7 7-7H1.5z"/>
+          </svg>
+        </div>
+        
+        <%= link_to 'CONTINUE', course_path(course), style: "background-color: white; color: #28a745; font-weight: bold; border-radius: 20px; padding: 10px 20px; border: none; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" %>
+      </div>
+
+      <div id="tasks-<%= index %>" class="game-path" style="display: block; margin-bottom: 20px;">
+        <% course.tasks.each_with_index do |task, task_index| %>
+          <div class="task-node">
+            <div class="task-connector"></div>
+
+            <!-- Aqui se usa la nueva tabla para marcarle solo al current_user.id sus tasks finalizadas-->
+            <% user_task = UserTask.find_by(user_id: current_user.id, task_id: task.id) %>
+            <% is_finished = user_task.present? && user_task.is_finished %>
+            <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
+            <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
+            <!-- La actualizacion a is_finished se hace en submit_answer del controlador de numeric_questions -->
+            <!-- HACER LO MISMO PARA LAS MULTI_CHOICE!!! -->
+
+
+            <% if is_finished %>
+              <div class="task-circle task-completed" style="pointer-events: none;">
+                ✓
+              </div>
+            <% else %>
+              <%= link_to link_path, class: 'task-link numeric-question-button' do %>
+                <div class="task-circle task-in-progress">
+                  <%= task_index + 1 %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function toggleTasks(index) {
+    var tasksDiv = document.getElementById('tasks-' + index);
+    if (tasksDiv.style.display === 'none') {
+      tasksDiv.style.display = 'block';
+    } else {
+      tasksDiv.style.display = 'none';
+    }
+  }
+</script>

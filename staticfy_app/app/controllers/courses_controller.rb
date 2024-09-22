@@ -1,5 +1,4 @@
 class CoursesController < ApplicationController
-  before_action :find_course
 
   def new
     @course = Course.new
@@ -21,9 +20,11 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    @course = Course.find(params[:id])
   end
 
   def update
+    @course = Course.find(params[:id])
     if @course.update(course_params)
       flash[:notice] = "Course updated successfully"
       redirect_to courses_path
@@ -40,15 +41,12 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @course = Course.find(params[:id])
   end
 
   private
 
-  def find_course
-    @course = Course.find(params[:id])
-  end
-
   def course_params
-    params.require(:course).permit(:name, :difficulty, :status)
+    params.require(:course).permit(:name, :difficulty, :status, :description)
   end
 end

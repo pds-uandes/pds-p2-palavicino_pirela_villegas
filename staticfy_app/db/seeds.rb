@@ -8,33 +8,37 @@ Course.destroy_all
 course1 = Course.create(
   name: 'Diagramas de Cuerpo Libre',
   difficulty: 0,
-  status: 'in_progress'
+  status: 'in_progress',
+  description: '📊 Aprende a representar las fuerzas en un cuerpo en equilibrio con claridad y precisión.'
 )
 
 course2 = Course.create(
   name: 'Vínculos Externos e Internos',
   difficulty: 0,
-  status: 'in_progress'
+  status: 'in_progress',
+  description: '🔗 Conoce los tipos de apoyos y conexiones que afectan el análisis estructural.'
 )
 
 course3 = Course.create(
   name: 'Condiciones de Equilibrio y Estabilidad',
   difficulty: 1,
-  status: 'in_progress'
+  status: 'in_progress',
+  description: '⚖️ Estudia cómo se mantienen los cuerpos en equilibrio y cuándo se desestabilizan.'
 )
 
 course4 = Course.create(
   name: 'Tipos de fuerzas más comunes',
   difficulty: 2,
-  status: 'in_progress'
+  status: 'in_progress',
+  description: '💪 Explora las fuerzas más frecuentes en los sistemas estructurales: peso, tensión, compresión y más.'
 )
 
 course5 = Course.create(
   name: 'Rozamiento y Poleas',
   difficulty: 3,
-  status: 'in_progress'
+  status: 'in_progress',
+  description: '🛞 Aprende sobre la importancia del rozamiento y cómo funcionan las poleas en los sistemas físicos.'
 )
-
 
 teacher = User.create(
   name: 'Profesor Crocker',

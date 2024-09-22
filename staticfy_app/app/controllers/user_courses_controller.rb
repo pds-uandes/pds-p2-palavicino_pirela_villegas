@@ -1,6 +1,4 @@
 class UserCoursesController < ApplicationController
-  before_action :find_user_course
-
   def new
     @user_course = UserCourse.new
   end
@@ -21,9 +19,12 @@ class UserCoursesController < ApplicationController
   end
 
   def edit
+    @user_course = UserCourse.find(params[:id])
   end
 
   def update
+    @user_course = UserCourse.find(params[:id])
+
     if @user_course.update(user_course_params)
       flash[:notice] = "User course updated successfully"
       redirect_to user_courses_path
@@ -34,19 +35,17 @@ class UserCoursesController < ApplicationController
   end
 
   def destroy
+    @user_course = UserCourse.find(params[:id])
     @user_course.destroy
     flash[:notice] = "User course deleted successfully"
     redirect_to user_courses_path
   end
 
   def show
+    @user_course = UserCourse.find(params[:id])
   end
 
   private
-
-  def find_user_course
-    @user_course = UserCourse.find(params[:id])
-  end
 
   def user_course_params
     params.require(:user_course).permit(:user_id, :course_id, :progress)

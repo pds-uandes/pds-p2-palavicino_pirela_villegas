@@ -4,4 +4,7 @@ class Task < ApplicationRecord
 
   has_many :multi_choice_questions
   has_one :numeric_question
+
+  has_many :user_tasks, dependent: :destroy
+  has_many :users, through: :user_tasks
 end
