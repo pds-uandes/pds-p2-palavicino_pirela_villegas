@@ -3,9 +3,15 @@ Rails.application.routes.draw do
   resources :users
   resources :multi_choice_questions
   resources :tasks
+
+  resources :courses do
+    resources :tasks
+  end
+
   resources :multi_choice_questions do
     post 'submit_answer', on: :member
   end
+
   resources :numeric_questions do
     post 'submit_answer', on: :member
     get 'show_hint', on: :member

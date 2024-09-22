@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_02_133508) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_22_004426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "courses", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "difficulty", default: 0, null: false
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "multi_choice_answers", force: :cascade do |t|
     t.bigint "user_id"
@@ -84,7 +92,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_02_133508) do
     t.string "name", null: false
     t.boolean "is_finished", default: false, null: false
     t.integer "wrong_counter"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_tasks_on_course_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "user_courses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "course_id", null: false
+    t.integer "progress", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_user_courses_on_course_id"
+    t.index ["user_id"], name: "index_user_courses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -108,5 +128,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_02_133508) do
   add_foreign_key "numeric_answers", "users"
   add_foreign_key "numeric_questions", "tasks"
   add_foreign_key "numeric_templates", "numeric_questions"
+  add_foreign_key "tasks", "courses"
   add_foreign_key "tasks", "users"
+  add_foreign_key "user_courses", "courses"
+  add_foreign_key "user_courses", "users"
 end

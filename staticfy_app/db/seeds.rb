@@ -3,6 +3,38 @@ NumericQuestion.destroy_all
 MultiChoiceQuestion.destroy_all
 Task.destroy_all
 User.destroy_all
+Course.destroy_all
+
+course1 = Course.create(
+  name: 'Diagramas de Cuerpo Libre',
+  difficulty: 0,
+  status: 'in_progress'
+)
+
+course2 = Course.create(
+  name: 'Vínculos Externos e Internos',
+  difficulty: 0,
+  status: 'in_progress'
+)
+
+course3 = Course.create(
+  name: 'Condiciones de Equilibrio y Estabilidad',
+  difficulty: 1,
+  status: 'in_progress'
+)
+
+course4 = Course.create(
+  name: 'Tipos de fuerzas más comunes',
+  difficulty: 2,
+  status: 'in_progress'
+)
+
+course5 = Course.create(
+  name: 'Rozamiento y Poleas',
+  difficulty: 3,
+  status: 'in_progress'
+)
+
 
 teacher = User.create(
   name: 'Profesor Crocker',
@@ -32,16 +64,14 @@ student3 = User.create(
   password: '123456'
 )
 
-# Aunque aún no está implementado, pondré acá que las Tasks y Questions
-# sean creadas solo por el Profesor Crocker (un user.role = teacher)
-
 task1 = Task.create(
   user_id: teacher.id,
   task_type: 'multi_choice',
   status: 'in_progress',
   name: 'Conexiones y Apoyos',
   is_finished: false,
-  wrong_counter: 0
+  wrong_counter: 0,
+  course_id: course2.id
 )
 
 # ------------------ Preguntas para la Task 1 ------------------
@@ -96,7 +126,8 @@ task2 = Task.create(
   status: 'in_progress',
   name: 'Tarea 2',
   is_finished: false,
-  wrong_counter: 0
+  wrong_counter: 0,
+  course_id: course2.id
 )
 
 task3 = Task.create(
@@ -105,7 +136,8 @@ task3 = Task.create(
   status: 'in_progress',
   name: 'Tarea 3',
   is_finished: false,
-  wrong_counter: 0
+  wrong_counter: 0,
+  course_id: course2.id
 )
 
 # Crear Numeric Questions
@@ -138,7 +170,7 @@ numeric_question_3 = NumericQuestion.create!(
 )
 
 NumericTemplate.create!(
-  numeric_question: numeric_question_2, 
+  numeric_question: numeric_question_2,
   diagram_data: 'template1',
   values: '{"angle": [15, 30, 45, 60], "forceMagnitude": [3, 4, 5, 6]}',
   magnitudes: '{"force": "N"}',
@@ -147,10 +179,19 @@ NumericTemplate.create!(
 )
 
 NumericTemplate.create!(
-  numeric_question: numeric_question_3, 
+  numeric_question: numeric_question_3,
   diagram_data: 'template2',
   values: '{"angle": [15, 30, 45, 60], "forceMagnitude": [3, 4, 5, 6]}',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
 )
+
+# Para que los 3 estudiantes inicialmente tengan progreso 0 en los courses.
+# Esto se hace también cada vez que se crea un nuevo user en su modelo.
+
+[student1, student2, student3].each do |student|
+  Course.all.each do |crs|
+    UserCourse.create(user: student, course: crs, progress: 0)
+  end
+end
