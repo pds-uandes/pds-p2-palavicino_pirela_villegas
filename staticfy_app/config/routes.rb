@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     get 'show_result', on: :member
   end
 
+  resources :user_progresses
+
   get '/home', to: 'static_pages#home'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

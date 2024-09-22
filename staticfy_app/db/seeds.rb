@@ -47,12 +47,16 @@ teacher = User.create(
   password: '123456'
 )
 
+UserProgress.create(user: teacher, score: 0)
+
 student1 = User.create(
   name: 'Pedro Villegas',
   email: 'ppvillegas@miuandes.cl',
   role: 'student',
   password: '123456'
 )
+
+UserProgress.create(user: student1, score: 0)
 
 student2 = User.create(
   name: 'Franco Palavicino',
@@ -61,12 +65,16 @@ student2 = User.create(
   password: '123456'
 )
 
+UserProgress.create(user: student2, score: 0)
+
 student3 = User.create(
   name: 'Andrés Pirela',
   email: 'aepirela@miuandes.cl',
   role: 'student',
   password: '123456'
 )
+
+UserProgress.create(user: student3, score: 0)
 
 task1 = Task.create(
   user_id: teacher.id,

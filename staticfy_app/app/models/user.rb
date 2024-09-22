@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   has_many :user_courses, dependent: :destroy
   has_many :courses, through: :user_courses
+  has_one :user_progress, dependent: :destroy
 
-  after_create :assign_default_courses
+  after_create :assign_default_courses, :create_user_progress
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -23,5 +24,9 @@ class User < ApplicationRecord
     Course.find_each do |crs|
       user_courses.create(course: crs, progress: 0)
     end
+  end
+
+  def create_user_progress
+    UserProgress.create(user: self, score: 0)
   end
 end

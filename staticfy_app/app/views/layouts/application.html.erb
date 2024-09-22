@@ -59,14 +59,20 @@
               </ul>
             </li>
             -->
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to 'Cursos', courses_path, class: 'nav-link' %>
+              </li>
 
-            <li class="nav-item">
-              <%= link_to 'Cursos', courses_path, class: 'nav-link' %>
-            </li>
-            
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Progreso</a>
-            </li>
+              <li class="nav-item">
+                <% if current_user.user_progress.present? %>
+                  <%= link_to 'Progreso', user_progress_path(current_user.user_progress), class: 'nav-link' %>
+                <% else %>
+                  <span class="nav-link disabled">Progreso no disponible</span>
+                <% end %>
+              </li>
+            <% end %>
+
           
             <li class="nav-item">
               <% if !user_signed_in? %>
