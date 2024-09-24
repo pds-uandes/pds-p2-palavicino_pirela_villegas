@@ -5,7 +5,7 @@
         <h1 class="hero-title-tasks">¡Felicidades!</h1>
         <h5 class="mb-3" style="font-weight: 700;">¡Correcto! 🎉 La respuesta es: <%= @numeric_question.correct_answer %> N. ¡Buen trabajo! 🚀</h5>
         <div class="d-flex justify-content-center mt-4">
-          <%= button_to "Volver al Modulo", tasks_path, method: :get, class: "btn btn-primary me-2" %>
+          <%= button_to "Volver al Modulo", courses_path, method: :get, class: "btn btn-primary me-2" %>
         </div> 
       </div>
     </div>
@@ -22,7 +22,7 @@
 
         <div class="d-flex justify-content-center mt-4">
           <%= button_to "Volver a la Pregunta", numeric_question_path(@numeric_question), method: :get, id: "retry_button", class: "btn btn-primary me-2" %>
-          <%= button_to "Saltar Tarea", tasks_path, method: :get, class: "btn btn-danger" %>
+          <%= button_to "Saltar Tarea", courses_path, method: :get, class: "btn btn-danger" %>
         </div>    
       </div>
     </div>

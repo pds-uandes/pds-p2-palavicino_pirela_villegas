@@ -48,6 +48,16 @@
 </div>
 
 <script>
+  // Selecciona todos los elementos con la clase 'numeric-question-button'
+  document.querySelectorAll('.numeric-question-button').forEach(function(button) {
+    button.onclick = function() {
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000);
+    };
+  });
+
+
   function toggleTasks(index) {
     var tasksDiv = document.getElementById('tasks-' + index);
     if (tasksDiv.style.display === 'none') {
