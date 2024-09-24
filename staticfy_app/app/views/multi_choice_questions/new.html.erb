@@ -1,51 +1,58 @@
 <div class="container mt-4">
-  <h1 class="mb-4">New Multi Choice Question</h1>
+  <h1 class="mb-4 text-center">Crear Pregunta de Opción Múltiple</h1>
 
   <%= form_with(model: @multi_choice_question, local: true, html: { class: 'form' }) do |form| %>
     <div class="form-group">
-      <%= form.label :question, class: 'form-label' %>
-      <%= form.text_field :question, class: 'form-control', placeholder: 'Enter the question' %>
+      <%= form.label :question, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :question, class: 'form-control mb-3', placeholder: 'Escribe la pregunta aquí' %>
     </div>
 
     <div class="form-group">
-      <%= form.label :choice_1, class: 'form-label' %>
-      <%= form.text_field :choice_1, class: 'form-control', placeholder: 'Enter the first choice', id: 'choice_1' %>
+      <%= form.label :choice_1_value, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :choice_1_value, class: 'form-control mb-3', placeholder: 'Escribe la alternativa 1' %>
+      <%= form.label :choice_1_why_not, class: 'form-label text-secondary text-center' %>
+      <%= form.text_area :choice_1_why_not, class: 'form-control mb-3', placeholder: '¿Por qué no es la respuesta correcta?' %>
     </div>
 
     <div class="form-group">
-      <%= form.label :choice_2, class: 'form-label' %>
-      <%= form.text_field :choice_2, class: 'form-control', placeholder: 'Enter the second choice', id: 'choice_2' %>
+      <%= form.label :choice_2_value, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :choice_2_value, class: 'form-control mb-3', placeholder: 'Escribe la alternativa 2' %>
+      <%= form.label :choice_2_why_not, class: 'form-label text-secondary text-center' %>
+      <%= form.text_area :choice_2_why_not, class: 'form-control mb-3', placeholder: '¿Por qué no es la respuesta correcta?' %>
     </div>
 
     <div class="form-group">
-      <%= form.label :choice_3, class: 'form-label' %>
-      <%= form.text_field :choice_3, class: 'form-control', placeholder: 'Enter the third choice', id: 'choice_3' %>
+      <%= form.label :choice_3_value, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :choice_3_value, class: 'form-control mb-3', placeholder: 'Escribe la alternativa 3' %>
+      <%= form.label :choice_3_why_not, class: 'form-label text-secondary text-center' %>
+      <%= form.text_area :choice_3_why_not, class: 'form-control mb-3', placeholder: '¿Por qué no es la respuesta correcta?' %>
     </div>
 
     <div class="form-group">
-      <%= form.label :choice_4, class: 'form-label' %>
-      <%= form.text_field :choice_4, class: 'form-control', placeholder: 'Enter the fourth choice', id: 'choice_4' %>
+      <%= form.label :choice_4_value, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :choice_4_value, class: 'form-control mb-3', placeholder: 'Escribe la alternativa 4' %>
+      <%= form.label :choice_4_why_not, class: 'form-label text-secondary text-center' %>
+      <%= form.text_area :choice_4_why_not, class: 'form-control mb-3', placeholder: '¿Por qué no es la respuesta correcta?' %>
     </div>
 
     <div class="form-group">
-        <%= form.label :correct_answer, class: 'form-label' %>
-        <%= form.text_field :correct_answer, class: 'form-control', placeholder: 'Enter the correct answer' %>
-    </div>
-  
-
-    <div class="form-group">
-      <%= form.label :task_id, class: 'form-label' %>
-      <%= form.collection_select :task_id, Task.all, :id, :task_type, { include_blank: 'Select a task' }, { class: 'form-control' } %>
+      <%= form.label :correct_answer, class: 'form-label text-secondary text-center' %>
+      <%= form.text_field :correct_answer, class: 'form-control mb-3', placeholder: 'Escribe la respuesta correcta aquí' %>
     </div>
 
     <div class="form-group">
-      <%= form.label :difficulty, class: 'form-label' %>
-      <%= form.select :difficulty, options_for_select([['Low', 0], ['Medium', 1], ['High', 2]]), { include_blank: 'Select difficulty' }, class: 'form-control' %>
+      <%= form.label :task_id, class: 'form-label text-secondary text-center' %>
+      <%= form.collection_select :task_id, Task.where(task_type: 'multi_choice'), :id, :name_with_course, { include_blank: 'Selecciona una tarea' }, { class: 'form-control mb-3' } %>
     </div>
 
     <div class="form-group">
-      <%= form.submit 'Create Question', class: 'btn btn-primary' %>
-      <%= link_to 'Cancel', multi_choice_questions_path, class: 'btn btn-secondary' %>
+      <%= form.label :difficulty, class: 'form-label text-secondary text-center' %>
+      <%= form.select :difficulty, options_for_select([['Baja', 0], ['Media', 1], ['Alta', 2]]), { include_blank: 'Selecciona dificultad' }, class: 'form-control mb-3' %>
+    </div>
+
+    <div class="form-group text-center">
+      <%= form.submit 'Crear Pregunta', class: 'btn btn-primary' %>
+      <%= link_to 'Cancelar', multi_choice_questions_path, class: 'btn btn-secondary ml-2' %>
     </div>
   <% end %>
 </div>

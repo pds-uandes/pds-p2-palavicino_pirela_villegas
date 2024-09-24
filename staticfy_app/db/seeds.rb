@@ -82,7 +82,7 @@ TASK1_VEI = Task.create(
   user_id: teacher.id,
   task_type: 'multi_choice',
   status: 'in_progress',
-  name: 'Conexiones y Apoyos',
+  name: 'Tarea 1',
   is_finished: false,
   wrong_counter: 0,
   course_id: COURSE2.id
