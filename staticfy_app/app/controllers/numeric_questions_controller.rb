@@ -25,9 +25,11 @@ class NumericQuestionsController < ApplicationController
 
   def submit_answer
     @user_answer = params[:user_answer].to_f
+    @unit_of_measurement = params[:unit_of_measurement].to_s.upcase
     correct_answer = @numeric_question.correct_answer.to_f
+    correct_unit = @numeric_question.unit.to_s.upcase
 
-    if (@user_answer - correct_answer).abs <= @numeric_question.tolerance
+    if (@user_answer - correct_answer).abs <= @numeric_question.tolerance && @unit_of_measurement == correct_unit
       session[:is_correct] = true
 
       # Aqui se marca como finalizada la tarea con la nueva tabla user_task
