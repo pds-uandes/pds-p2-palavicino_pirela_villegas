@@ -28,12 +28,17 @@
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Confirmar contraseña' %>
         </div>
 
+        <div class="mt-2 mb-3 text-center">
+          <%= f.label :role, "Registrarse como:", style: "color: #666; display: block; text-align: center;" %>
+          <%= f.select :role, options_for_select([['Estudiante', 'student'], ['Profesor', 'teacher']], 'student'), {}, class: 'form-control' %>
+        </div>
+
         <div class="d-grid mt-5 mb-3">
           <%= f.submit "Regístrate", class: 'btn', style: 'background-color: #004d00; color: white;' %>
         </div>
       <% end %>
-      
-      <div class="text-center mt-2 ">
+
+      <div class="text-center mt-2">
         <span style="color: #666; font-size: 16px; margin-top: 50px">¿Ya tienes una cuenta?</span>
         <%= link_to 'Log in', new_session_path(resource_name), style: 'color: #004d00; text-decoration: none;' %>
       </div>

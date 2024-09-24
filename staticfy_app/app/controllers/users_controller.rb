@@ -31,6 +31,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+
     if current_user.id == @user.id
       if @user.update user_params
         flash[:notice] = "User updated successfully"
@@ -60,6 +61,26 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+  end
+
+  def promote_to_teacher
+    if current_user.role == 'student'
+      current_user.update(role: 'teacher')
+      flash[:notice] = "Has cambiado tu rol a Profesor."
+    else
+      flash[:error] = "No puedes cambiar tu rol."
+    end
+    redirect_to root_path
+  end
+
+  def promote_to_student
+    if current_user.role == 'teacher'
+      current_user.update(role: 'student')
+      flash[:notice] = "Has cambiado tu rol a Alumno."
+    else
+      flash[:error] = "No puedes cambiar tu rol."
+    end
+    redirect_to root_path
   end
 
   private

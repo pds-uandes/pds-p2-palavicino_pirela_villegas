@@ -47,18 +47,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto gap-3">
             
-            <!-- 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="tareasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Tareas
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="tareasDropdown">
-                <li><%= link_to 'Tareas de alternativas', tasks_path(status: 'in_progress', task_type: 'multi_choice'), class: 'dropdown-item' %></li>
-                <li><%= link_to 'Tareas de cálculo numérico', tasks_path(status: 'in_progress', task_type: 'numeric'), class: 'dropdown-item' %></li>
-                <li><a class="dropdown-item" href="/tasks">Todas</a></li>
-              </ul>
-            </li>
-            -->
             <% if user_signed_in? %>
               <li class="nav-item">
                 <%= link_to 'Cursos', courses_path, class: 'nav-link' %>
@@ -73,17 +61,38 @@
               </li>
             <% end %>
 
-          
-            <li class="nav-item">
+          <li class="nav-item">
               <% if !user_signed_in? %>
                 <%= link_to 'Log in', new_user_session_path, class: 'nav-link', style: 'color: #004d00; font-weight: 500;' %>
               <% else %>
                 <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link', style: 'color: #004d00; font-weight: 500;'%>
               <% end %>
             </li>
-          </ul>          
+          </ul>      
+
+          <% if user_signed_in? && current_user.role == 'student' %>
+            <%= button_to 'Convertirse en Profesor', promote_to_teacher_user_path(current_user.id), method: :patch, class: 'btn btn-link', style: 'color: #004d00; text-decoration: none;' %>
+          <% end %>
+
+
+          <% if user_signed_in? && current_user.role == 'teacher' %>
+            <%= button_to 'Convertirse en Alumno', promote_to_student_user_path(current_user.id), method: :patch, class: 'btn btn-link', style: 'color: #004d00; text-decoration: none;' %>
+          <% end %>
+
+          <% if user_signed_in? && current_user.role == 'teacher' %>
+            <li class="nav-item dropdown" style="list-style: none;">
+              <a class="nav-link dropdown-toggle" href="#" id="teacherDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dashboard
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
+                <li><%= link_to 'Crear preguntas de opción múltiple', new_multi_choice_question_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Tareas de cálculo numérico', tasks_path(status: 'in_progress', task_type: 'numeric'), class: 'dropdown-item' %></li>
+                <li><%= link_to 'Estado de los alumnos', user_progresses_path, class: 'dropdown-item' %></li>
+              </ul>
+            </li>
+          <% end %>
+
         
-        </div>
       </nav>
     </div>
 
