@@ -1,4 +1,6 @@
 class UserProgressesController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @user_progress = UserProgress.new
   end

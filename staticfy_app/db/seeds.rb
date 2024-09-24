@@ -874,6 +874,8 @@ MCQ7_TASK2_RZP = MultiChoiceQuestion.create(
 
 [student1, student2, student3].each do |student|
   Course.all.each do |crs|
-    UserCourse.create(user: student, course: crs, progress: 0)
+    unless UserCourse.exists?(user: student, course: crs)
+      UserCourse.create(user: student, course: crs, progress: 0)
+    end
   end
 end
