@@ -1,6 +1,6 @@
 class NumericQuestionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_teacher
+  before_action :authenticate_teacher, only: %i[index]
   before_action :set_numeric_question, only: %i[show show_hint show_result submit_answer]
 
   def index
