@@ -6,7 +6,7 @@ class User < ApplicationRecord
   after_create :assign_default_courses, :create_user_progress
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :trackable
 
   has_many :tasks
   has_many :multi_choice_answers

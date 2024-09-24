@@ -16,7 +16,7 @@ class UserProgressesController < ApplicationController
 
   def index
     @user_progresses = UserProgress.select(:user_id, :score).distinct.includes(:user)
-    @user_courses = UserCourse.select('DISTINCT user_courses.*').includes(:course, :user)
+    @user_courses = UserCourse.select('DISTINCT ON (user_id, course_id) *').includes(:course, :user).order(:user_id, :course_id)
   end
 
   def edit
@@ -44,8 +44,21 @@ class UserProgressesController < ApplicationController
   end
 
   def show
-    @user_progress = UserProgress.find_by(user_id: params[:id])
-    @user = @user_progress.user
+    @course1 = Course.where(name: 'Diagramas de Cuerpo Libre').first
+    @course2 = Course.where(name: 'Vínculos Externos e Internos').first
+    @course3 = Course.where(name: 'Condiciones de Equilibrio y Estabilidad').first
+    @course4 = Course.where(name: 'Tipos de fuerzas más comunes').first
+    @course5 = Course.where(name: 'Rozamiento y Poleas').first
+
+    @user_progress_global = UserProgress.find_by(user_id: params[:id])
+
+    @user_progress_course1 = UserCourse.find_by(user_id: params[:id], course_id: @course1.id)
+    @user_progress_course2 = UserCourse.find_by(user_id: params[:id], course_id: @course2.id)
+    @user_progress_course3 = UserCourse.find_by(user_id: params[:id], course_id: @course3.id)
+    @user_progress_course4 = UserCourse.find_by(user_id: params[:id], course_id: @course4.id)
+    @user_progress_course5 = UserCourse.find_by(user_id: params[:id], course_id: @course5.id)
+
+    @user = @user_progress_global.user
   end
 
   private

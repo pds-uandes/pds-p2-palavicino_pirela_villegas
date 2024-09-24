@@ -49,7 +49,7 @@ class MultiChoiceQuestionsController < ApplicationController
     def update
       respond_to do |format|
         if @multi_choice_question.update(multi_choice_question_params)
-          format.html { redirect_to @multi_choice_question, notice: 'Multi choice question was successfully updated.' }
+          format.html { redirect_to @multi_choice_question, notice: 'Pregunta actualizada correctamente' }
           format.json { render :show, status: :ok, location: @multi_choice_question }
         else
           flash.now[:error] = 'Multi choice question update failed'
@@ -62,7 +62,7 @@ class MultiChoiceQuestionsController < ApplicationController
     def destroy
       @multi_choice_question.destroy
       respond_to do |format|
-        format.html { redirect_to multi_choice_questions_url, notice: 'Multi choice question was successfully destroyed.' }
+        format.html { redirect_to multi_choice_questions_url, notice: 'Pregunta eliminada correctamente.' }
         format.json { head :no_content }
       end
     end

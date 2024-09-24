@@ -1,2 +1,43 @@
-<h1>Progreso de <%= @user.name %></h1>
-<p>Score: <%= @user_progress.score %></p>
+<div style="text-align: center;">
+  <h1 style="color: #004d00; font-size: 3.5rem; font-weight: bold; margin-top: 20px">
+    Progreso de <%= @user.name %>
+  </h1>
+
+  <!-- Último ingreso -->
+  <p style="color: #666; font-size: 1.25rem; margin-top: 10px;">
+    Último ingreso: <%= @user.current_sign_in_at.in_time_zone('America/Santiago').strftime('%d/%m/%Y %H:%M') if @user.current_sign_in_at %>
+    
+    <br>
+
+    <% if @user.current_sign_in_at.present? %>
+      <% tiempo_uso = @user.current_sign_in_at - @user.created_at %>
+      <% horas_uso = (tiempo_uso / 1.hour).to_i %>
+      Tiempo de uso: <%= horas_uso %> horas
+    <% else %>
+      Tiempo de uso: No disponible
+    <% end %>
+
+  </p>
+
+  <!-- Progreso Global -->
+  <div class="container mt-4" style="max-width: 700px; margin: 0 auto;">
+    <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+      <h2 style="font-size: 2rem; font-weight: 700;">Progreso Global</h2>
+      <p style="font-size: 1.25rem;">Score: <%= @user_progress_global.score %></p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle" style="margin-top: 10px;">
+        <path d="M9 11l3 3L22 4"></path>
+        <circle cx="12" cy="12" r="10"></circle>
+      </svg>
+    </div>
+
+    <!-- Progreso por Curso -->
+    <% [@course1, @course2, @course3, @course4, @course5].each_with_index do |course, index| %>
+      <% progress = instance_variable_get("@user_progress_course#{index + 1}") %>
+      <div style="background-color: #004d00; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <h2 style="font-size: 1.5rem; font-weight: 600;">Progreso en '<%= course.name %>'</h2>
+        <p style="font-size: 1.25rem;">Progreso: <%= progress.progress %></p>
+        <span style="font-size: 30px; margin-top: 10px;">✅</span>
+      </div>
+    <% end %>
+
+  </div>

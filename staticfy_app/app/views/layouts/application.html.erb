@@ -54,7 +54,7 @@
 
               <li class="nav-item">
                 <% if current_user.user_progress.present? %>
-                  <%= link_to 'Progreso', user_progress_path(current_user.user_progress), class: 'nav-link' %>
+                  <%= link_to 'Progreso', user_progress_path(current_user.id), class: 'nav-link' %>
                 <% else %>
                   <span class="nav-link disabled">Progreso no disponible</span>
                 <% end %>
@@ -69,7 +69,6 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
                 <li><%= link_to 'Preguntas de selección múltiple', multi_choice_questions_path, class: 'dropdown-item' %></li>
-                <li><%= link_to 'Preguntas numéricas', numeric_questions_path, class: 'dropdown-item' %></li>
                 <li><%= link_to 'Estado de los alumnos', user_progresses_path, class: 'dropdown-item' %></li>
               </ul>
             </li>
@@ -99,6 +98,15 @@
 
     <div>
       <%= yield %>
+    </div>
+
+    <div>
+      <!-- Background SVG -->
+      <div class="text-center" style="margin-top: 30px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="max-width: 100%; height: auto;">
+          <path fill="#28a745" fill-opacity="1" d="M0,160L48,165.3C96,171,192,181,288,160C384,139,480,85,576,74.7C672,64,768,96,864,101.3C960,107,1056,85,1152,96C1248,107,1344,149,1392,170.7L1440,192V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0V160Z"></path>
+        </svg>
+      </div>
     </div>
 
   </body>
