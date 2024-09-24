@@ -15,7 +15,8 @@ class UserProgressesController < ApplicationController
   end
 
   def index
-    @user_progresses = UserProgress.all
+    @user_progresses = UserProgress.select(:user_id, :score).distinct.includes(:user)
+    @user_courses = UserCourse.select('DISTINCT user_courses.*').includes(:course, :user)
   end
 
   def edit
@@ -43,7 +44,8 @@ class UserProgressesController < ApplicationController
   end
 
   def show
-    @user_progress = UserProgress.find_by(user_id: current_user.id)
+    @user_progress = UserProgress.find_by(user_id: params[:id])
+    @user = @user_progress.user
   end
 
   private

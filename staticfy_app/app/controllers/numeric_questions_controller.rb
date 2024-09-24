@@ -1,6 +1,10 @@
 class NumericQuestionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_teacher
   before_action :set_numeric_question, only: %i[show show_hint show_result submit_answer]
+
+  def index
+  end
 
   def show
     @task = @numeric_question.task
@@ -113,5 +117,12 @@ class NumericQuestionsController < ApplicationController
 
   def numeric_question_params
     params.require(:numeric_question).permit(:task_id, :difficulty, :question, :correct_answer, :tolerance, :unit, :hint_1, :hint_2, :hint_3)
+  end
+
+  def authenticate_teacher
+    unless current_user.role == 'teacher'
+      flash[:alert] = 'No tienes permiso para acceder a esta sección.'
+      redirect_to root_path
+    end
   end
 end

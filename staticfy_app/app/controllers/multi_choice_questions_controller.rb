@@ -1,5 +1,6 @@
 class MultiChoiceQuestionsController < ApplicationController
     before_action :authenticate_user!
+    before_action :authenticate_teacher
     before_action :set_multi_choice_question, only: %i[show edit update destroy]
 
     def index
@@ -85,6 +86,13 @@ class MultiChoiceQuestionsController < ApplicationController
 
       def set_multi_choice_question
         @multi_choice_question = MultiChoiceQuestion.find(params[:id])
+      end
+
+      def authenticate_teacher
+        unless current_user.role == 'teacher'
+          flash[:alert] = 'No tienes permiso para acceder a esta sección.'
+          redirect_to root_path
+        end
       end
 
       def multi_choice_question_params
