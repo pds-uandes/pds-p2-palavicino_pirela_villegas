@@ -438,13 +438,13 @@ MCQ10_TASK1_DCL = MultiChoiceQuestion.create(
 NQ1_TASK2_DCL = NumericQuestion.create!(
   task: TASK2_DCL,
   difficulty: 1,
-  question: 'Realiza un diagrama de cuerpo libre (DCL) y calcula la fuerza normal que actúa sobre el cuerpo, sabiendo que tiene una masa de {A} kg.',
+  question: 'Realiza un diagrama de cuerpo libre (DCL) y calcula la fuerza normal que actúa sobre el cuerpo, sabiendo que tiene una masa de {A} kg. (Considere gravedad = 9.8 m/s2)',
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: 'Recuerda realizar el DCL con todas las fuerzas presentes en el sistema.',
+  hint_2: 'Recuerda que la fuerza normal siempre es perpendicular a la superficie.',
+  hint_3: '¡No lo olvides! la fórmula del peso es P = masa x gravedad.',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -461,13 +461,13 @@ NumericTemplate.create!(
 NQ2_TASK3_DCL = NumericQuestion.create!(
   task: TASK3_DCL,
   difficulty: 1,
-  question: 'Realiza un DCL y calcula el valor de la componente vertical (Y) de la fuerza peso, sabiendo que el cuerpo, con una masa de {A} kg, se encuentra sobre un plano inclinado a {B}°.',
+  question: 'Realiza un DCL y calcula el valor de la componente vertical (Y) de la fuerza peso, sabiendo que el cuerpo, con una masa de {A} kg, se encuentra sobre un plano inclinado a {B}°. (Considere gravedad = 9.8 m/s2)',
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! La fórmula del peso es P = masa x gravedad.',
+  hint_2: 'Recuerda definir tus ejes coordenados en la dirección del movimiento del ejercicio',
+  hint_3: 'Puedes descomponer la fuerza del peso en 2 componentes.',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -643,13 +643,13 @@ MCQ5_TASK2_CEE = MultiChoiceQuestion.create(
 NQ1_TASK3_CEE = NumericQuestion.create!(
   task: TASK3_CEE,
   difficulty: 1,
-  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Calcule la fuerza vertical del apoyo fijo.' ,
+  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el inicio. Calcule la fuerza vertical del apoyo fijo.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: 'Recuerda que el apoyo fijo (🔺) es el que se representa con un triángulo y el círculo es un apoyo deslizante (⭕️).',
+  hint_2: 'El apoyo fijo (🔺) tiene una reacción vertical y otra horizontal, mientras que el apoyo deslizante (⭕️) solo tiene una reacción.',
+  hint_3: '¡Recuerda! Necesitas usar 3 ecuaciones del sistema para poder resolverlo',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -666,13 +666,13 @@ NumericTemplate.create!(
 NQ2_TASK4_CEE = NumericQuestion.create!(
   task: TASK4_CEE,
   difficulty: 1,
-  question: 'Calcula la fuerza vertical del apoyo deslizante en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una viela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
+  question: 'Calcula la fuerza vertical del apoyo deslizante en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una biela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! Al haber un vínculo interno el problema se puede dividir en subsistemas.',
+  hint_2: 'Cada subsistema tiene sus propias 3 ecuaciones.',
+  hint_3: '¡Recuerda! Un apoyo empotrado tiene 3 reacciones, un apoyo deslizante 1 reacción y una biela 2 reacciones.',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -913,13 +913,13 @@ MCQ6_TASK2_TFC = MultiChoiceQuestion.create(
 NQ1_TASK3_TFC = NumericQuestion.create!(
   task: TASK3_TFC,
   difficulty: 1,
-  question: 'Determina la fuerza equivalente para una carga triangular que actúa en una segmento de {A} metros de longitud sobre la viga, con una intensidad máxima de {B} N/m en un extremo.' ,
+  question: 'Determina la fuerza equivalente para una carga triangular que actúa en un segmento de {A} metros de longitud sobre la viga, con una intensidad máxima de {B} N/m en un extremo.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! En una carga triangular (🔺) la intensidad mínima siempre es 0 N/m.',
+  hint_2: ' Considera la base del triángulo como la distancia desde donde comienza hasta donde termina la carga.',
+  hint_3: '¡Recuerda! Calcula como si estuvieras calculando el área de un triángulo.',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -940,9 +940,9 @@ NQ2_TASK4_TFC = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'NM',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! El momento es una medida de la tendencia de una fuerza a hacer girar un objeto alrededor de un punto o eje.',
+  hint_2: 'El momento se calcula multiplicando la fuerza aplicada por la distancia perpendicular desde el punto donde se aplica la fuerza hasta el eje de rotación.',
+  hint_3: '¡Recuerda! Calcula el valor para obtener el momento en Newton-metros (Nm).',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -1187,9 +1187,9 @@ NQ1_TASK3_RZP = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! El peso del bloque puede descomponerse en dos componentes.',
+  hint_2: 'El rozamiento estático depende de la fuerza normal y el coeficiente de rozamiento estático. (Normal x coeficiente de rozamiento estático)',
+  hint_3: '¡Recuerda! La fuerza de roce es contraria al movimiento del cuerpo.',
   created_at: Time.now,
   updated_at: Time.now
 )
@@ -1210,9 +1210,9 @@ NQ2_TASK4_RZP = NumericQuestion.create!(
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
-  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
-  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
-  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  hint_1: '¡No olvides! Realiza los DCL del cuerpo y de la polea y haz las ecuaciones de equilibrio.',
+  hint_2: 'Para que la polea comience a girar, la fuerza P aplicada debe superar la resistencia causada por el rozamiento de la polea.',
+  hint_3: '¡Recuerda! Al pasar por la polea las tensiones de cada lado son distintas, siguiendo la relación de T2 = T1 x exp(uB), siendo u el coeficiente de roce en la polea y B el ángulo que recorre la polea.',
   created_at: Time.now,
   updated_at: Time.now
 )
