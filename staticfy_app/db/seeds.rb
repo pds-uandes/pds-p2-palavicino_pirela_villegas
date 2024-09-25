@@ -113,6 +113,13 @@ MCQ1_TASK1_VEI = MultiChoiceQuestion.create(
   correct_answer: 'Movimiento'
 )
 
+MCA1_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ1_TASK1_VEI.id,
+  selected_choice: 'Fuerza',
+  is_correct: false
+)
+
 MCQ2_TASK1_VEI = MultiChoiceQuestion.create(
   task_id: TASK1_VEI.id,
   difficulty: 0,
@@ -124,6 +131,13 @@ MCQ2_TASK1_VEI = MultiChoiceQuestion.create(
   correct_answer: 'Vertical'
 )
 
+MCA2_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ2_TASK1_VEI.id,
+  selected_choice: 'Horizontal',
+  is_correct: false
+)
+
 MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
   task_id: TASK1_VEI.id,
   difficulty: 0,
@@ -133,6 +147,13 @@ MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
   choice_3: '{"value": "Permite el giro, pero restringe el desplazamiento en una dirección.", "why_not": "🚫 No es correcto. Un apoyo empotrado no permite ningún giro."}',
   choice_4: '{"value": "Restringe el giro y el desplazamiento.", "why_not": "⚠️ Casi, pero no del todo. Un empotrado restringe los giros y también los desplazamientos en todas las direcciones."}',
   correct_answer: 'Restricción de los desplazamientos en ambas direcciones y del giro.'
+)
+
+MCA3_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ3_TASK1_VEI.id,
+  selected_choice: 'Restricción de los desplazamientos en ambas direcciones y del giro.',
+  is_correct: true
 )
 
 MCQ4_TASK1_VEI = MultiChoiceQuestion.create(
