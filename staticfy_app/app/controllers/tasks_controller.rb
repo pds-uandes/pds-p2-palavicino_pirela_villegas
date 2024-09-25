@@ -42,7 +42,7 @@ class TasksController < ApplicationController
       user_task.is_finished = true
       user_task.save
 
-      redirect_to courses_path
+      redirect_to courses_path, notice: 'Se ha creado una nueva tarea con las preguntas incorrectas.'
     end
 
     def retry_incorrect
@@ -126,24 +126,23 @@ class TasksController < ApplicationController
     # POST /tasks.json
     def create
       @task = Task.new(task_params)
+      @task.user_id = current_user.id
 
       respond_to do |format|
         if @task.save
-          format.html { redirect_to @task, notice: 'Task was successfully created.' }
+          format.html { redirect_to tasks_path, notice: 'La tarea fue creada correctamente.' }
           format.json { render :show, status: :created, location: @task }
-        else
-          format.html { render :new }
-          format.json { render json: @task.errors, status: :unprocessable_entity }
         end
       end
     end
+
 
     # PATCH/PUT /tasks/1
     # PATCH/PUT /tasks/1.json
     def update
       respond_to do |format|
         if @task.update(task_params)
-          format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+          format.html { redirect_to tasks_path, notice: 'La tarea fue actualizada correctamente.' }
           format.json { render :show, status: :ok, location: @task }
         else
           format.html { render :edit }
@@ -168,8 +167,7 @@ class TasksController < ApplicationController
         @task = Task.find(params[:id])
       end
 
-      # Only allow a list of trusted parameters through.
       def task_params
-        params.require(:task).permit(:user_id, :task_type, :status, :name, :is_finished, :wrong_counter)
+        params.require(:task).permit(:user_id, :task_type, :status, :name, :is_finished, :course_id)
       end
 end

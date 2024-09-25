@@ -68,8 +68,9 @@
 
               </a>
               <ul class="dropdown-menu" aria-labelledby="teacherDropdown">
-                <li><%= link_to 'Preguntas de selección múltiple', multi_choice_questions_path, class: 'dropdown-item' %></li>
                 <li><%= link_to 'Estado de los alumnos', user_progresses_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Preguntas', multi_choice_questions_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Tareas', tasks_path, class: 'dropdown-item' %></li>
               </ul>
             </li>
           <% end %>

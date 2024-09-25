@@ -1,34 +1,36 @@
-<div class="hero-section-tasks">
-  <div class="hero-content-tasks">
-    <h1 class="hero-title-tasks">¡Sigue Adelante y Completa Tus Tareas!</h1>
-    <p class="hero-subtitle-tasks">Cada paso que das te acerca más a tus metas. ¡No te detengas ahora!</p>
-  </div>
-</div>
+<div class="container mt-4">
+  <h1 class="mb-4" style="color: #28a745; font-weight: bold;">Tareas</h1>
 
-<div class="container mt-4" id="tasks" style="display: flex; justify-content: center; align-items: center; flex-direction: column">
-  <div class="game-path">
-    <% @tasks.each_with_index do |task, index| %>
-      <div class="task-node">
-        <div class="task-connector"></div>
-        <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
-        <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
-        <%= link_to link_path, class: 'task-link numeric-question-button' do %>
-          <div class="task-circle <%= task.is_finished ? 'task-completed' : 'task-in-progress' %>">
-            <%= task.is_finished ? '✓' : index + 1 %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="mb-3">
+      <%= link_to 'Nueva Tarea', new_task_path, class: 'btn', style: "background-color: #28a745; color: white; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" %>
   </div>
-</div>
 
-<script>
-  // Selecciona todos los elementos con la clase 'numeric-question-button'
-  document.querySelectorAll('.numeric-question-button').forEach(function(button) {
-    button.onclick = function() {
-      setTimeout(function() {
-        window.location.reload();
-      }, 1000);
-    };
-  });
-</script>
+  <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Tipo de Tarea</th>
+          <th>Curso</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+          <tr>
+          <td><%= task.id %></td>
+          <td><%= task.name %></td>
+          <td><%= task.task_type %></td>
+          <td><%= task.course.present? ? task.course.name : 'Sin Curso' %></td>
+          <td><%= task.status %></td>
+          <td>
+              <%= link_to 'Mostrar', task_path(task), class: 'btn mb-2', style: "background-color: #17a2b8; color: white; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" %>
+              <%= link_to 'Editar', edit_task_path(task), class: 'btn mb-2', style: "background-color: #ffc107; color: black; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" %>
+              <%= button_to 'Eliminar', task_path(task), method: :delete, data: { confirm: '¿Estás seguro?' }, class: 'btn', style: "background-color: #dc3545; color: white; border-radius: 0.5rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" %>
+          </td>
+          </tr>
+      <% end %>
+      </tbody>
+  </table>
+</div>
