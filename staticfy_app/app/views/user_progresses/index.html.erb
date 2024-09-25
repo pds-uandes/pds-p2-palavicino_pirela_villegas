@@ -78,10 +78,10 @@
               <% @user_courses.where(user_id: user_progress.user_id).each do |user_course| %>
                 <div class="d-flex justify-content-between">
                   <span style="font-size: 1rem; color: #333;"><%= user_course.course.name %></span>
-                  <span style="font-size: 1rem; color: #333;"><%= user_course.progress %>%</span>
+                  <span style="font-size: 1rem; color: #333;"><%= user_course.progress * 10 %>%</span>
                 </div>
                 <div class="progress mb-2" style="height: 1.5rem; background-color: #f8f9fa;">
-                  <div class="progress-bar" role="progressbar" style="width: <%= user_course.progress %>%; background-color: #28a745;" aria-valuenow="<%= user_course.progress %>" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <%= user_course.progress * 10 %>%; background-color: #28a745;" aria-valuenow="<%= user_course.progress * 10 %> " aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               <% end %>
             </div>

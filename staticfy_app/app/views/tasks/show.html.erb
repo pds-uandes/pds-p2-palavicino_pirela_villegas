@@ -40,13 +40,8 @@
                 </label>
               </div>
             </div>
-
-
           <% end %>
         </div>
-            <% if @multi_choice_questions.present? && @multi_choice_questions.size == @multi_choice_questions_len %>
-              <%= button_to "Finalizar Tarea / Boton provisional probar metodo finish de task controller", finish_task_path(@task), method: :post, class: "btn btn-success", style: "margin-top: 20px;" %>
-            <% end %>
 
         <div style="text-align: center; margin-top: 2rem;">
           <button id="next-btn" class="btn btn-primary">Siguiente</button>
@@ -78,7 +73,6 @@
 </div>
 
 <script>
-
 function showCustomAlert(message) {
     const alertContainer = document.createElement('div');
     alertContainer.classList.add('alert-js'); 
@@ -123,11 +117,14 @@ document.addEventListener('turbo:load', () => {
 
     let isCorrect = selectedChoice === correctAnswer;
     const correctAnswersCount = isCorrect ? correctAnswers++ : wrongAnswers++;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    // Envío de la respuesta
     fetch(`/multi_choice_answers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        'X-CSRF-Token': csrfToken
       },
       body: JSON.stringify({
         multi_choice_answer: {
@@ -152,10 +149,14 @@ document.addEventListener('turbo:load', () => {
       nextBtn.textContent = 'Siguiente';
     } else {
       taskFinished = true;
+      // Envío para finalizar la tarea
       fetch(`/tasks/${<%= @task.id %>}/finish`, { 
         method: 'POST', 
         body: JSON.stringify({ correctAnswers, wrongAnswers }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
+        }
       }).then(() => {
         nextBtn.style.display = 'none';
         skipBtn.style.display = 'none';
@@ -186,33 +187,21 @@ document.addEventListener('turbo:load', () => {
     const totalQuestions = questions.length;
     wrongAnswers = totalQuestions;
 
+    // Envío para omitir la tarea
     fetch(`/tasks/${<%= @task.id %>}/skip`, { 
       method: 'POST', 
       body: JSON.stringify({ wrongAnswers }), 
-      headers: { 'Content-Type': 'application/json' } 
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      }
     }).then(() => {
-      taskFinished = true;
+      showCustomAlert('La tarea ha sido omitida.');
       nextBtn.style.display = 'none';
       skipBtn.style.display = 'none';
-
-      const resultCard = document.createElement('div');
-      resultCard.className = 'card mt-4';
-      resultCard.innerHTML = `
-        <div class="card-body">
-          <h5 class="card-title">Resultados de la Tarea</h5>
-          <p class="card-text">
-            <strong>Correctas:</strong> 0<br>
-            <strong>Incorrectas:</strong> ${totalQuestions}<br>
-            <strong>Porcentaje de acierto:</strong> 0%
-          </p>
-          <div class="text-center mt-4">
-            <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
-          </div>
-        </div>
-      `;
-      document.querySelector('.card-body').appendChild(resultCard);
     });
   });
-});
 
+  showQuestion(currentIndex);
+});
 </script>

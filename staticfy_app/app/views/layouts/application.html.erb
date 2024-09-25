@@ -100,14 +100,17 @@
       <%= yield %>
     </div>
 
-    <div>
+  <div>
+    <% unless controller_name == 'numeric_questions' && action_name == 'show_result' || action_name == 'show_hint'%>
       <!-- Background SVG -->
       <div class="text-center" style="margin-top: 30px;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="max-width: 100%; height: auto;">
           <path fill="#28a745" fill-opacity="1" d="M0,160L48,165.3C96,171,192,181,288,160C384,139,480,85,576,74.7C672,64,768,96,864,101.3C960,107,1056,85,1152,96C1248,107,1344,149,1392,170.7L1440,192V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0V160Z"></path>
         </svg>
       </div>
-    </div>
+    <% end %>
+  </div>
+
 
   </body>
 </html>
