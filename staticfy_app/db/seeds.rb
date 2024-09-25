@@ -50,7 +50,11 @@ teacher = User.create(
   role: 'teacher',
   password: '123456'
 )
-UserProgress.create(user: teacher, score: 0)
+
+unless UserProgress.exists?(user: teacher, score: 0)
+  UserProgress.create(user: teacher, score: 0)
+end
+
 
 student1 = User.create(
   name: 'Pedro Villegas',
@@ -58,7 +62,10 @@ student1 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student1, score: 0)
+
+unless UserProgress.exists?(user: student1, score: 0)
+  UserProgress.create(user: student1, score: 0)
+end
 
 student2 = User.create(
   name: 'Franco Palavicino',
@@ -66,7 +73,10 @@ student2 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student2, score: 0)
+
+unless UserProgress.exists?(user: student2, score: 0)
+  UserProgress.create(user: student2, score: 0)
+end
 
 student3 = User.create(
   name: 'Andrés Pirela',
@@ -74,7 +84,11 @@ student3 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student3, score: 0)
+
+unless UserProgress.exists?(user: student3, score: 0)
+  UserProgress.create(user: student3, score: 0)
+end
+
 
 
 # --------------------------------- VINCULOS EXTERNOS E INTERNOS (VEI) ---------------------------------

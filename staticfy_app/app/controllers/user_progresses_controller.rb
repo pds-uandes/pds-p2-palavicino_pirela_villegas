@@ -52,7 +52,9 @@ class UserProgressesController < ApplicationController
     @course4 = Course.where(name: 'Tipos de fuerzas más comunes').first
     @course5 = Course.where(name: 'Rozamiento y Poleas').first
 
-    @user_progress_global = UserProgress.find_by(user_id: params[:id])
+    @user_id = params[:id]
+
+    @user_progress_global = UserProgress.where(user_id: params[:id]).first
 
     @user_progress_course1 = UserCourse.find_by(user_id: params[:id], course_id: @course1.id)
     @user_progress_course2 = UserCourse.find_by(user_id: params[:id], course_id: @course2.id)

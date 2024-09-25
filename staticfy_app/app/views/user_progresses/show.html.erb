@@ -5,8 +5,8 @@
 
   <!-- Último ingreso -->
   <p style="color: #666; font-size: 1.25rem; margin-top: 10px;">
-    Último ingreso: <%= @user.current_sign_in_at.in_time_zone('America/Santiago').strftime('%d/%m/%Y %H:%M') if @user.current_sign_in_at %>
-    
+    <% user_view = User.find(@user_id)%>
+    Último ingreso: <%= user_view.current_sign_in_at.in_time_zone('America/Santiago').strftime('%d/%m/%Y %H:%M') if user_view.current_sign_in_at %>
     <br>
 
     <% if @user.current_sign_in_at.present? %>
