@@ -347,6 +347,15 @@ TASK3_CEE = Task.create(
   course_id: COURSE3.id
 )
 
+TASK4_CEE = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 8',
+  is_finished: false,
+  course_id: COURSE3.id
+)
+
 MCQ1_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
   difficulty: 0,
@@ -471,7 +480,7 @@ MCQ5_TASK2_CEE = MultiChoiceQuestion.create(
 NQ1_TASK3_CEE = NumericQuestion.create!(
   task: TASK3_CEE,
   difficulty: 1,
-  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Encuentra las reacciones en los apoyos en ambos extremos de la viga.' ,
+  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Calcule la suma de las reacciones en los apoyos en ambos extremos de la viga.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
@@ -486,6 +495,29 @@ NumericTemplate.create!(
   numeric_question: NQ1_TASK3_CEE,
   diagram_data: 'template7',
   values: '{"forcePosition": [2, 4, 6], "forceMagnitude": [3, 4, 5]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK4_CEE = NumericQuestion.create!(
+  task: TASK4_CEE,
+  difficulty: 1,
+  question: 'Calcula la suma de todas las fuerzas externas e internas en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una viela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_CEE,
+  diagram_data: 'template8',
+  values: '{"forceMagnitude": [300, 400, 600], "longitud": [2, 3, 4]}',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
