@@ -1,0 +1,41 @@
+<svg id="diagram-svg" width="300" height="300"></svg>
+
+<script type="module">
+  import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mysvg = document.getElementById('diagram-svg');
+    
+    const forceMagnitude = 100;
+    const length = 10;
+    const masa =  <%= @masa_9 %>;
+    const masa_diagrama = masa/10
+    const distanceFromCenter = 3;
+
+    function updateDiagram() {
+      mysvg.innerHTML = ''; 
+
+      let draw = (...diagrams) => {
+        Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+      };
+
+      const basePosition = Diagramatics.V2(0, 0.433); 
+
+      const r2 = Diagramatics.square(masa_diagrama)
+        .move_origin('bottom-left')
+        .rotate(Math.PI) 
+        .position(Diagramatics.V2(5+(masa_diagrama/2), 0))
+        .fill('lightblue').stroke('black').strokewidth(2)
+
+      let horizontal = Diagramatics.line(Diagramatics.V2(0, -masa_diagrama), Diagramatics.V2(10, -masa_diagrama))
+        .stroke('black').strokedasharray([5, 5]).strokewidth(2);
+
+      let masaTxt = Diagramatics.annotation.vector(Diagramatics.V2(0, 0), `${masa} Kg`, Diagramatics.V2(0, 0), 0)
+        .position(Diagramatics.V2(5,-(masa_diagrama/2))).stroke('black').strokewidth(1).fill('black');
+
+      draw(horizontal, r2, masaTxt);
+    }
+
+    updateDiagram();
+  });
+</script>

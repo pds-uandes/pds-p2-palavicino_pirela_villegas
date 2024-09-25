@@ -1,0 +1,42 @@
+<svg id="diagram-svg" width="500" height="400"></svg>
+
+<script type="module">
+  import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mysvg = document.getElementById('diagram-svg');
+
+    const angle = <%= @angle_10 %>; 
+    const radian = angle * Math.PI / 180; 
+    const roce = 0.2; 
+    const masa = <%= @masa_10 %>;
+    const masa_diagrama = masa/25
+
+    Diagramatics.default_diagram_style['stroke-width'] = 2;
+    Diagramatics.default_textdata['font-size'] = 21;
+
+    let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(8, 0))
+      .stroke('gray').strokedasharray([5, 5]);
+    let plane = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.Vdir(radian).scale(10))
+      .stroke('gray');
+
+    let sq = Diagramatics.circle(masa_diagrama).move_origin('bottom-center')
+      .position(plane.parametric_point(0.5)).rotate(radian)
+      .fill('lightblue').stroke('black').strokewidth(2)
+    let csq = sq.get_anchor('center-center');
+
+    let angle_annotation = Diagramatics.annotation.angle(
+      [Diagramatics.V2(1, 0), Diagramatics.V2(0, 0), Diagramatics.Vdir(radian)], 
+      `${angle}`, 1, 1.5
+    );
+
+    let masaTxt = Diagramatics.annotation.vector(Diagramatics.V2(0, 0), `${masa} Kg`, Diagramatics.V2(0, 0), 0)
+      .position(Diagramatics.V2(2.5,5)).stroke('black').strokewidth(1).fill('black');
+
+    let draw = (...diagrams) => {
+      Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+    };
+
+    draw(horizontal, sq, masaTxt, plane, angle_annotation);
+  });
+</script>

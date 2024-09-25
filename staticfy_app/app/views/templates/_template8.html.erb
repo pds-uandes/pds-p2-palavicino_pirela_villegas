@@ -48,6 +48,10 @@
         .position(Diagramatics.V2(length, 0.65))
         .fill('black');
 
+      const circle = Diagramatics.circle(0.5)
+        .position(Diagramatics.V2(length + length_2, -0.05))
+        .fill('lightgrey').strokewidth(3); 
+
       const arrow_head_size = 0.15;
       const positionOfForce = Diagramatics.V2(force_x, 3.8-(3-(forceMagnitude/100)));  
       const F_direction = Diagramatics.Vdir(-Math.PI / 2).scale(forceMagnitude/100); 
@@ -64,7 +68,7 @@
       const distanceAnnotation_3 = Diagramatics.annotation.length(Diagramatics.V2(length, 0), Diagramatics.V2(length+length_2, -0), `${length_2} m`,  0.8, 0.5) 
         .stroke('blue');
 
-      draw(r1, r2, wall, F, triangle_base, joint_circle, distanceAnnotation, distanceAnnotation_2, distanceAnnotation_3);
+      draw(r1, r2, wall, F, circle, joint_circle, distanceAnnotation, distanceAnnotation_2, distanceAnnotation_3);
     }
 
     updateDiagram();

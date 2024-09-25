@@ -87,6 +87,10 @@ class NumericQuestionsController < ApplicationController
       set_template7_correct_answer
     elsif @diagram == 'template8'
       set_template8_correct_answer
+    elsif @diagram == 'template9'
+      set_template9_correct_answer
+    elsif @diagram == 'template10'
+      set_template10_correct_answer
     end
   end
 
@@ -178,6 +182,27 @@ class NumericQuestionsController < ApplicationController
 
     # Actualizar solo si es el diagrama correcto
     @numeric_question.update(correct_answer: @answer_template8)
+  end
+
+  def set_template9_correct_answer
+    @masa_9 = @parsed_values['masa'].sample
+    @question_text_9 = @numeric_question.question.gsub('{A}', @masa_9.to_s)
+    result_9 = 2
+    @answer_template9 = result_9.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template9)
+  end
+
+  def set_template10_correct_answer
+    @masa_10 = @parsed_values['masa'].sample
+    @angle_10 = @parsed_values['angle'].sample
+    @question_text_10 = @numeric_question.question.gsub('{A}', @masa_10.to_s).gsub('{B}', @angle_10.to_s)
+    result_10 = 2
+    @answer_template10 = result_10.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template10)
   end
 
   def get_hint(counter)

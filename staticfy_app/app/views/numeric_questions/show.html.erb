@@ -51,6 +51,18 @@
           <div class="container text-center mt-3 mb-5">
             <%= render 'templates/template8' %>
           </div>
+        <% elsif @diagram == 'template9' %>
+        <h5 class="mb-3" style="font-weight: 700;"><%= @question_text_9 %></h5>
+          <p>Considere la respuesta en N (<%= @numeric_question.correct_answer %>)</p>
+          <div class="container text-center mt-3 mb-5">
+            <%= render 'templates/template9' %>
+          </div>
+        <% elsif @diagram == 'template10' %>
+        <h5 class="mb-3" style="font-weight: 700;"><%= @question_text_10 %></h5>
+          <p>Considere la respuesta en N (<%= @numeric_question.correct_answer %>)</p>
+          <div class="container text-center mt-3 mb-5">
+            <%= render 'templates/template10' %>
+          </div>
         <% end %>
         
         <div class="d-flex justify-content-center align-items-center mb-5">

@@ -220,6 +220,24 @@ TASK1_DCL = Task.create(
   course_id: COURSE1.id
 )
 
+TASK2_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 5',
+  is_finished: false,
+  course_id: COURSE1.id
+)
+
+TASK3_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 6',
+  is_finished: false,
+  course_id: COURSE1.id
+)
+
 MCQ1_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
   difficulty: 0,
@@ -318,6 +336,53 @@ MCQ9_TASK1_DCL = MultiChoiceQuestion.create(
   choice_4: '{"value": "Como un punto sin dirección.", "why_not": "Un punto sin dirección no proporciona información útil sobre la aplicación de un momento."}',
   correct_answer: 'Como una flecha curva alrededor de un punto.'
 )
+
+NQ1_TASK2_DCL = NumericQuestion.create!(
+  task: TASK2_DCL,
+  difficulty: 1,
+  question: 'Realiza un diagrama de cuerpo libre (DCL) y calcula la fuerza normal que actúa sobre el cuerpo, sabiendo que tiene una masa de {A} kg.',
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ1_TASK2_DCL,
+  diagram_data: 'template9',
+  values: '{"masa": [30, 40, 50], "forceMagnitude": [3, 4, 5]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK3_DCL = NumericQuestion.create!(
+  task: TASK3_DCL,
+  difficulty: 1,
+  question: 'Realiza un DCL y calcula el valor de la componente vertical (Y) de la fuerza peso, sabiendo que el cuerpo, con una masa de {A} kg, se encuentra sobre un plano inclinado a {B}°.',
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK3_DCL,
+  diagram_data: 'template10',
+  values: '{"masa": [30, 40, 50], "angle": [15, 30, 45]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
 
 # ------------------------------- CONDICIONES DE EQUILIBRIO Y ESTABILIDAD (CEE) --------------------------------
 TASK1_CEE = Task.create(
