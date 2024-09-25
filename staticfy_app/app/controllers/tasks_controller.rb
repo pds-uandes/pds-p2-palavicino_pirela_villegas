@@ -45,6 +45,26 @@ class TasksController < ApplicationController
       redirect_to courses_path
     end
 
+    def retry_incorrect
+      @task = Task.find(params[:id])
+
+      # Recuperar preguntas incorrectamente respondidas
+      incorrect_question_ids = MultiChoiceAnswer.where(user_id: current_user.id, is_correct: false, multi_choice_question_id: @task.multi_choice_questions.ids).pluck(:multi_choice_question_id)
+      @multi_choice_questions = MultiChoiceQuestion.where(id: incorrect_question_ids)
+
+      @questions_with_choices = @multi_choice_questions.each_with_object({}) do |question, hash|
+        hash[question.id] = {
+          choice1: JSON.parse(question.choice_1),
+          choice2: JSON.parse(question.choice_2),
+          choice3: JSON.parse(question.choice_3),
+          choice4: JSON.parse(question.choice_4)
+        }
+      end
+
+      render :show
+    end
+
+
 
     # GET /tasks/1
     # GET /tasks/1.json

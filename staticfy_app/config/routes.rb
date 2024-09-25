@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :tasks do
     post 'finish', on: :member
+    get 'retry_incorrect', on: :member
   end
 
   resources :courses do

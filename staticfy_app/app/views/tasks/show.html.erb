@@ -62,8 +62,17 @@
               <strong>Porcentaje de acierto:</strong> <%= success_rate %>%
             </p>
 
+            <% if incorrect_answers > 0 %>
+              <p class="card-text text-danger">
+                ¿Quieres intentar de nuevo las preguntas que fallaste?
+              </p>
+              <div class="text-center mt-4">
+                <%= link_to 'Rehacer preguntas incorrectas', retry_incorrect_task_path(@task), class: 'btn btn-warning' %>
+              </div>
+            <% end %>
+
             <div class="text-center mt-4">
-              <a href="/tasks" class="btn" style="background-color: #004d00;">Volver al índice de tareas</a>
+              <a href="/courses" class="btn" style="background-color: #004d00;">Volver al índice de cursos</a>
             </div>
           </div>
         </div>
@@ -89,6 +98,7 @@ document.addEventListener('turbo:load', () => {
   const questions = document.querySelectorAll('.question-item');
   const nextBtn = document.getElementById('next-btn');
   const skipBtn = document.getElementById('skip-btn');
+  const retryBtn = document.getElementById('retry-btn');
   let currentIndex = 0;
   let correctAnswers = 0;
   let wrongAnswers = 0;
@@ -171,6 +181,11 @@ document.addEventListener('turbo:load', () => {
               <strong>Incorrectas:</strong> ${wrongAnswers}<br>
               <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
             </p>
+            ${wrongAnswers > 0 ? `
+            <div class="text-center mt-4">
+              <%= link_to 'Rehacer preguntas incorrectas', retry_incorrect_task_path(@task), class: 'btn btn-warning' %>
+            </div>
+            ` : ''}
             <div class="text-center mt-4">
               <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
             </div>
@@ -182,26 +197,17 @@ document.addEventListener('turbo:load', () => {
   });
 
   skipBtn.addEventListener('click', () => {
-    if (taskFinished) return;
+    currentIndex++;
 
-    const totalQuestions = questions.length;
-    wrongAnswers = totalQuestions;
-
-    // Envío para omitir la tarea
-    fetch(`/tasks/${<%= @task.id %>}/skip`, { 
-      method: 'POST', 
-      body: JSON.stringify({ wrongAnswers }), 
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
-      }
-    }).then(() => {
-      showCustomAlert('La tarea ha sido omitida.');
-      nextBtn.style.display = 'none';
-      skipBtn.style.display = 'none';
-    });
+    if (currentIndex < questions.length) {
+      showQuestion(currentIndex);
+    }
   });
 
-  showQuestion(currentIndex);
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      location.href = `/tasks/${<%= @task.id %>}/retry_incorrect`;
+    });
+  }
 });
 </script>
