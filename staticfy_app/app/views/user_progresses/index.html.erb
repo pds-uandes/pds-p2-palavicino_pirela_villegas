@@ -1,25 +1,24 @@
 <div class="container mt-4">
-  <h1 class="mb-4 text-center" style="font-size: 2rem; font-weight: bold;">Avance de los Estudiantes</h1>
+  <h1 class="mb-4 text-center" style="color: #004d00; font-size: 2.5rem; font-weight: bold;">Avance de los Estudiantes</h1>
 
   <div class="row">
     <% @user_progresses.each do |user_progress| %>
       <div class="col-md-4 mb-4">
         <%= link_to user_progress_path(user_progress.user.id), style: "text-decoration: none; color: inherit;" do %>
-          <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem;">
+          <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem; background-color: #f8f9fa;">
             <div class="card-body">
-              <h5 class="card-title" style="font-size: 1.5rem;"><%= user_progress.user.name %></h5>
+              <h5 class="card-title" style="font-size: 1.5rem; color: #28a745; font-weight: 900"><%= user_progress.user.name %></h5>
               <p class="card-text">
-                Puntaje Global: <strong style="font-size: 1.25rem;"><%= user_progress.score %></strong>
+                Puntaje Global: <strong style="font-size: 1.25rem; color: #004d00;"><%= user_progress.score %></strong>
               </p>
 
-              <h6 class="card-subtitle mb-2 text-muted" style="font-size: 1.2rem;">Avance por Módulos</h6>
               <% @user_courses.where(user_id: user_progress.user_id).each do |user_course| %>
                 <div class="d-flex justify-content-between">
-                  <span style="font-size: 1rem;"><%= user_course.course.name %></span>
-                  <span style="font-size: 1rem;"><%= user_course.progress %>%</span>
+                  <span style="font-size: 1rem; color: #333;"><%= user_course.course.name %></span>
+                  <span style="font-size: 1rem; color: #333;"><%= user_course.progress %>%</span>
                 </div>
                 <div class="progress mb-2" style="height: 1.5rem; background-color: #f8f9fa;">
-                  <div class="progress-bar" role="progressbar" style="width: <%= user_course.progress %>%; background-color: #007bff;" aria-valuenow="<%= user_course.progress %>" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <%= user_course.progress %>%; background-color: #28a745;" aria-valuenow="<%= user_course.progress %>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               <% end %>
             </div>

@@ -19,20 +19,43 @@ class TasksController < ApplicationController
       end
     end
 
+    def submit_answer
+      selected_choice = params[:selected_choice]
+      question_id = params[:multi_choice_question_id]
+      task_id = params[:task_id]
+      correct_answer = MultiChoiceQuestion.find(question_id).correct_answer
+
+      is_correct = (selected_choice == correct_answer)
+
+      MultiChoiceAnswer.create!(
+        user_id: current_user.id,
+        multi_choice_question_id: question_id,
+        selected_choice: selected_choice,
+        is_correct: is_correct
+      )
+    end
+
+    # DEPRECATED
+    def finish
+      task = Task.find(params[:id])
+      task.update!(is_finished: true)
+      render json: { message: 'Task finished' }
+    end
+
 
     # GET /tasks/1
     # GET /tasks/1.json
     def show
       @task = Task.find(params[:id])
-    
+
       # Solo cargamos las preguntas de opción múltiple si el tipo de tarea es 'Multi Choice'
       if @task.task_type == 'multi_choice'
         @multi_choice_questions = MultiChoiceQuestion.where(task_id: @task.id)
         @multi_choice_questions_len = @multi_choice_questions.size
-        
+
         # Crear un hash para almacenar las opciones de cada pregunta
         @questions_with_choices = {}
-    
+
         # Parsear las alternativas de cada pregunta
         @multi_choice_questions.each do |question|
           @questions_with_choices[question.id] = {

@@ -114,29 +114,30 @@ document.addEventListener('turbo:load', () => {
     const questionElement = questions[currentIndex];
     const selectedChoice = selectedOption.value;
     const correctAnswer = questionElement.dataset.correctAnswer;
+    const questionId = questionElement.dataset.id;
 
-    const choices = <%= @questions_with_choices.to_json.html_safe %>;
-
-    if (selectedChoice === correctAnswer) {
-      correctAnswers++;
-      showCustomAlert("Respuesta correcta! ✅");  
-    } else {
-      wrongAnswers++;
-      
-      Object.keys(choices).forEach(questionId => {
-        const questionChoices = choices[questionId];
-        
-        for (const choiceKey in questionChoices) {
-          if (questionChoices[choiceKey]['value'] === selectedChoice) {
-            showCustomAlert(questionChoices[choiceKey]['why_not']);  
-            break;
-          }
+    let isCorrect = selectedChoice === correctAnswer;
+    const correctAnswersCount = isCorrect ? correctAnswers++ : wrongAnswers++;
+    fetch(`/multi_choice_answers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({
+        multi_choice_answer: {
+          user_id: <%= current_user.id %>,
+          multi_choice_question_id: questionId,
+          selected_choice: selectedChoice,
+          is_correct: isCorrect
         }
-      });
+      })
+    });
 
-      fetch(`/tasks/${<%= @task.id %>}/increment_wrong_counter`, { 
-        method: 'POST' 
-      });
+    if (isCorrect) {
+      showCustomAlert("Respuesta correcta! ✅");
+    } else {
+      showCustomAlert("Respuesta incorrecta! ❌");
     }
 
     currentIndex++;
@@ -154,24 +155,22 @@ document.addEventListener('turbo:load', () => {
         nextBtn.style.display = 'none';
         skipBtn.style.display = 'none';
 
-        if (!document.querySelector('.card.mt-4')) {
-          const resultCard = document.createElement('div');
-          resultCard.className = 'card mt-4';
-          resultCard.innerHTML = `
-            <div class="card-body">
-              <h5 class="card-title">Resultados de la Tarea</h5>
-              <p class="card-text">
-                <strong>Correctas:</strong> ${correctAnswers}<br>
-                <strong>Incorrectas:</strong> ${wrongAnswers}<br>
-                <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
-              </p>
-              <div class="text-center mt-4">
-                <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
-              </div>
+        const resultCard = document.createElement('div');
+        resultCard.className = 'card mt-4';
+        resultCard.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">Resultados de la Tarea</h5>
+            <p class="card-text">
+              <strong>Correctas:</strong> ${correctAnswers}<br>
+              <strong>Incorrectas:</strong> ${wrongAnswers}<br>
+              <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
+            </p>
+            <div class="text-center mt-4">
+              <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
             </div>
-          `;
-          document.querySelector('.card-body').appendChild(resultCard);
-        }
+          </div>
+        `;
+        document.querySelector('.card-body').appendChild(resultCard);
       });
     }
   });
@@ -180,7 +179,7 @@ document.addEventListener('turbo:load', () => {
     if (taskFinished) return;
 
     const totalQuestions = questions.length;
-    wrongAnswers = totalQuestions; // Se setea el total de respuestas incorrectas a la cantidad de preguntas
+    wrongAnswers = totalQuestions;
 
     fetch(`/tasks/${<%= @task.id %>}/skip`, { 
       method: 'POST', 
@@ -191,27 +190,24 @@ document.addEventListener('turbo:load', () => {
       nextBtn.style.display = 'none';
       skipBtn.style.display = 'none';
 
-      if (!document.querySelector('.card.mt-4')) {
-        const resultCard = document.createElement('div');
-        resultCard.className = 'card mt-4';
-        resultCard.innerHTML = `
-          <div class="card-body">
-            <h5 class="card-title">Resultados de la Tarea</h5>
-            <p class="card-text">
-              <strong>Correctas:</strong> 0<br>
-              <strong>Incorrectas:</strong> ${wrongAnswers}<br>
-              <strong>Porcentaje de acierto:</strong> 0%
-            </p>
-            <div class="text-center mt-4">
-              <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
-            </div>
+      const resultCard = document.createElement('div');
+      resultCard.className = 'card mt-4';
+      resultCard.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">Resultados de la Tarea</h5>
+          <p class="card-text">
+            <strong>Correctas:</strong> 0<br>
+            <strong>Incorrectas:</strong> ${totalQuestions}<br>
+            <strong>Porcentaje de acierto:</strong> 0%
+          </p>
+          <div class="text-center mt-4">
+            <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
           </div>
-        `;
-        document.querySelector('.card-body').appendChild(resultCard);
-      }
+        </div>
+      `;
+      document.querySelector('.card-body').appendChild(resultCard);
     });
   });
-
-  showQuestion(currentIndex);
 });
+
 </script>

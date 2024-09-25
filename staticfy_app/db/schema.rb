@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_021304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +92,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
     t.datetime "updated_at", null: false
     t.string "name", null: false
     t.boolean "is_finished", default: false, null: false
-    t.integer "wrong_counter"
     t.bigint "course_id"
     t.index ["course_id"], name: "index_tasks_on_course_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
@@ -105,6 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_user_courses_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_user_courses_on_user_id_and_course_id", unique: true
     t.index ["user_id"], name: "index_user_courses_on_user_id"
   end
 
@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
     t.integer "score", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "score"], name: "index_user_progresses_on_user_id_and_score", unique: true
     t.index ["user_id"], name: "index_user_progresses_on_user_id"
   end
 
@@ -122,7 +123,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
     t.boolean "is_finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "wrong_counter"
     t.index ["task_id"], name: "index_user_tasks_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_user_tasks_on_user_id_and_task_id", unique: true
     t.index ["user_id"], name: "index_user_tasks_on_user_id"
   end
 
@@ -136,6 +139,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_034621) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

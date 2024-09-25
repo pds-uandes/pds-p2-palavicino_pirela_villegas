@@ -1,6 +1,7 @@
 # ------------------------------------------------------------------
 NumericTemplate.destroy_all
 NumericQuestion.destroy_all
+MultiChoiceAnswer.destroy_all
 MultiChoiceQuestion.destroy_all
 Task.destroy_all
 Course.destroy_all
@@ -50,7 +51,11 @@ teacher = User.create(
   role: 'teacher',
   password: '123456'
 )
-UserProgress.create(user: teacher, score: 0)
+
+unless UserProgress.exists?(user: teacher, score: 0)
+  UserProgress.create(user: teacher, score: 0)
+end
+
 
 student1 = User.create(
   name: 'Pedro Villegas',
@@ -58,7 +63,10 @@ student1 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student1, score: 0)
+
+unless UserProgress.exists?(user: student1, score: 0)
+  UserProgress.create(user: student1, score: 0)
+end
 
 student2 = User.create(
   name: 'Franco Palavicino',
@@ -66,7 +74,10 @@ student2 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student2, score: 0)
+
+unless UserProgress.exists?(user: student2, score: 0)
+  UserProgress.create(user: student2, score: 0)
+end
 
 student3 = User.create(
   name: 'Andrés Pirela',
@@ -74,7 +85,11 @@ student3 = User.create(
   role: 'student',
   password: '123456'
 )
-UserProgress.create(user: student3, score: 0)
+
+unless UserProgress.exists?(user: student3, score: 0)
+  UserProgress.create(user: student3, score: 0)
+end
+
 
 
 # --------------------------------- VINCULOS EXTERNOS E INTERNOS (VEI) ---------------------------------
@@ -84,7 +99,6 @@ TASK1_VEI = Task.create(
   status: 'in_progress',
   name: 'Tarea 1',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE2.id
 )
 
@@ -138,7 +152,6 @@ TASK2_VEI = Task.create(
   status: 'in_progress',
   name: 'Tarea 2',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE2.id
 )
 
@@ -148,7 +161,6 @@ TASK3_VEI = Task.create(
   status: 'in_progress',
   name: 'Tarea 3',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE2.id
 )
 
@@ -205,7 +217,6 @@ TASK1_DCL = Task.create(
   status: 'in_progress',
   name: 'Tarea 4',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE1.id
 )
 
@@ -315,7 +326,6 @@ TASK1_CEE = Task.create(
   status: 'in_progress',
   name: 'Tarea 5',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE3.id
 )
 
@@ -325,7 +335,6 @@ TASK2_CEE = Task.create(
   status: 'in_progress',
   name: 'Tarea 6',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE3.id
 )
 
@@ -457,7 +466,6 @@ TASK1_TFC = Task.create(
   status: 'in_progress',
   name: 'Tarea 7',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE4.id
 )
 
@@ -467,7 +475,6 @@ TASK2_TFC = Task.create(
   status: 'in_progress',
   name: 'Tarea 8',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE4.id
 )
 
@@ -666,7 +673,6 @@ TASK1_RZP = Task.create(
   status: 'in_progress',
   name: 'Tarea 9',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE5.id
 )
 
@@ -676,7 +682,6 @@ TASK2_RZP = Task.create(
   status: 'in_progress',
   name: 'Tarea 10',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE5.id
 )
 
@@ -907,6 +912,8 @@ NumericTemplate.create!(
 
 [student1, student2, student3].each do |student|
   Course.all.each do |crs|
-    UserCourse.create(user: student, course: crs, progress: 0)
+    unless UserCourse.exists?(user: student, course: crs)
+      UserCourse.create(user: student, course: crs, progress: 0)
+    end
   end
 end
