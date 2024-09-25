@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     post 'submit_answer', on: :member
   end
 
+  resources :multi_choice_answers
+
   resources :numeric_questions do
     post 'submit_answer', on: :member
     get 'show_hint', on: :member
@@ -33,4 +35,6 @@ Rails.application.routes.draw do
 
   # Root path route
   root "static_pages#home"
+
+  post '/tasks/:task_id/submit_answer', to: 'tasks#submit_answer', as: 'submit_answer'
 end
