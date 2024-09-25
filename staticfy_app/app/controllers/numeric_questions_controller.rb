@@ -140,7 +140,7 @@ class NumericQuestionsController < ApplicationController
     @longitud_3 = @parsed_values['longitud'].sample
     @force_magnitude_3 = @parsed_values['forceMagnitude'].sample
     @question_text_3 = @numeric_question.question.gsub('{A}', @force_magnitude_3.to_s).gsub('{B}', @longitud_3.to_s)
-    result_3 = 2
+    result_3 = @force_magnitude_3 * @longitud_3
     @answer_template3 = result_3.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -151,7 +151,8 @@ class NumericQuestionsController < ApplicationController
     @longitud_4 = @parsed_values['longitud'].sample
     @force_magnitude_4 = @parsed_values['forceMagnitude'].sample
     @question_text_4 = @numeric_question.question.gsub('{A}', @longitud_4.to_s).gsub('{B}', @force_magnitude_4.to_s)
-    result_4 = 2
+
+    result_4 = 0.5 * @longitud_4 * @force_magnitude_4
     @answer_template4 = result_4.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -163,7 +164,11 @@ class NumericQuestionsController < ApplicationController
     @angle_5 = @parsed_values['angle'].sample
     @roce_5 = @parsed_values['roce'].sample
     @question_text_5 = @numeric_question.question.gsub('{A}', @masa_5.to_s).gsub('{B}', @angle_5.to_s).gsub('{C}', @roce_5.to_s)
-    result_5 = 2
+    fN = @masa_5 * 9.8 * Math.cos(@angle_5 * Math::PI / 180)
+    fr = @roce_5 * fN
+    fwx = @masa_5 * 9.8 * Math.sin(@angle_5 * Math::PI / 180)
+
+    result_5 = fr + fwx
     @answer_template5 = result_5.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -175,7 +180,7 @@ class NumericQuestionsController < ApplicationController
     @roce_6 = @parsed_values['roce'].sample
     @roce_polea_6 = @parsed_values['roce_polea'].sample
     @question_text_6 = @numeric_question.question.gsub('{A}', @masa_6.to_s).gsub('{B}', @roce_6.to_s).gsub('{C}', @roce_polea_6.to_s)
-    result_6 = 2
+    result_6 = @roce_6 * @masa_6 * 9.8 * Math::E**(@roce_polea_6 * Math::PI / 2)
     @answer_template6 = result_6.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -185,8 +190,14 @@ class NumericQuestionsController < ApplicationController
   def set_template7_correct_answer
     @forcePosition_7 = @parsed_values['forcePosition'].sample
     @force_magnitude_7 = @parsed_values['forceMagnitude'].sample
+    @length_7 = 10.0 
+    
+    rb = (@force_magnitude_7 * @forcePosition_7) / @length_7
+    ra = @force_magnitude_7 - rb
+    
+    result_7 = ra 
+  
     @question_text_7 = @numeric_question.question.gsub('{A}', @forcePosition_7.to_s).gsub('{B}', @force_magnitude_7.to_s)
-    result_7 = 2
     @answer_template7 = result_7.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -197,7 +208,12 @@ class NumericQuestionsController < ApplicationController
     @longitud_8 = @parsed_values['longitud'].sample
     @force_magnitude_8 = @parsed_values['forceMagnitude'].sample
     @question_text_8 = @numeric_question.question.gsub('{A}', @force_magnitude_8.to_s).gsub('{B}', @longitud_8.to_s)
-    result_8 = 2
+    @length_8 = 6 
+
+    rb = (@force_magnitude_8 * @longitud_8) /  @length_8
+    rc = rb
+
+    result_8 = rc
     @answer_template8 = result_8.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -207,7 +223,7 @@ class NumericQuestionsController < ApplicationController
   def set_template9_correct_answer
     @masa_9 = @parsed_values['masa'].sample
     @question_text_9 = @numeric_question.question.gsub('{A}', @masa_9.to_s)
-    result_9 = 2
+    result_9 = @masa_9 * 9.8
     @answer_template9 = result_9.round(2)
 
     # Actualizar solo si es el diagrama correcto
@@ -218,7 +234,8 @@ class NumericQuestionsController < ApplicationController
     @masa_10 = @parsed_values['masa'].sample
     @angle_10 = @parsed_values['angle'].sample
     @question_text_10 = @numeric_question.question.gsub('{A}', @masa_10.to_s).gsub('{B}', @angle_10.to_s)
-    result_10 = 2
+    fp = @masa_10 * 9.8
+    result_10 = fp * Math.cos(@angle_10 * Math::PI / 180)
     @answer_template10 = result_10.round(2)
 
     # Actualizar solo si es el diagrama correcto
