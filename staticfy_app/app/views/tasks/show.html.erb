@@ -40,8 +40,13 @@
                 </label>
               </div>
             </div>
+
+
           <% end %>
         </div>
+            <% if @multi_choice_questions.present? && @multi_choice_questions.size == @multi_choice_questions_len %>
+              <%= button_to "Finalizar Tarea / Boton provisional probar metodo finish de task controller", finish_task_path(@task), method: :post, class: "btn btn-success", style: "margin-top: 20px;" %>
+            <% end %>
 
         <div style="text-align: center; margin-top: 2rem;">
           <button id="next-btn" class="btn btn-primary">Siguiente</button>
@@ -166,7 +171,7 @@ document.addEventListener('turbo:load', () => {
               <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
             </p>
             <div class="text-center mt-4">
-              <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
+              <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
             </div>
           </div>
         `;
@@ -201,7 +206,7 @@ document.addEventListener('turbo:load', () => {
             <strong>Porcentaje de acierto:</strong> 0%
           </p>
           <div class="text-center mt-4">
-            <a href="/tasks" class="btn btn-primary">Volver al índice de tareas</a>
+            <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
           </div>
         </div>
       `;

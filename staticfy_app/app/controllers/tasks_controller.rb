@@ -33,13 +33,16 @@ class TasksController < ApplicationController
         selected_choice: selected_choice,
         is_correct: is_correct
       )
+
     end
 
-    # DEPRECATED
     def finish
       task = Task.find(params[:id])
-      task.update!(is_finished: true)
-      render json: { message: 'Task finished' }
+      user_task = UserTask.find_or_initialize_by(user_id: current_user.id, task_id: task.id)
+      user_task.is_finished = true
+      user_task.save
+
+      redirect_to courses_path
     end
 
 
