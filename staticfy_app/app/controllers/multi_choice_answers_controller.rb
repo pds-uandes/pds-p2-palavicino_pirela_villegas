@@ -7,12 +7,40 @@ class MultiChoiceAnswersController < ApplicationController
 
   def create
     @multi_choice_answer = MultiChoiceAnswer.new(multi_choice_answer_params)
-    if @multi_choice_answer.save!
-      flash[:notice] = "MultiChoiceAnswer created successfully"
-      redirect_to root_path
+    @multi_choice_answer.user_id = current_user.id
+  
+    if @multi_choice_answer.save
+      user_course = UserCourse.find_or_initialize_by(user_id: current_user.id, course_id: @multi_choice_answer.multi_choice_question.task.course.id)
+      user_progress = UserProgress.find_by(user_id: current_user.id)
+
+      if @multi_choice_answer.is_correct
+        if @multi_choice_answer.multi_choice_question.difficulty == 0
+          user_course.progress += 1
+          user_progress.score += 1
+          
+        elsif @multi_choice_answer.multi_choice_question.difficulty == 1
+          user_course.progress += 2
+          user_progress.score += 2
+        end
+      else
+        if @multi_choice_answer.multi_choice_question.difficulty == 0
+          user_course.progress -= 1
+          user_progress.score -= 1
+          
+        elsif @multi_choice_answer.multi_choice_question.difficulty == 1
+          user_course.progress -= 2
+          user_progress.score -= 2
+        end
+        user_course.progress = [user_course.progress, 0].max
+        user_progress.score = [user_progress.score, 0].max
+        
+      end
+      user_course.save
+      user_progress.save
+  
+      render json: { success: true }, status: :created
     else
-      render :new
-      flash[:error] = "MultiChoiceAnswer creation failed"
+      render json: { errors: @multi_choice_answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
