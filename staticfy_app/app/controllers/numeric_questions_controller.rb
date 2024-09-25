@@ -79,6 +79,8 @@ class NumericQuestionsController < ApplicationController
       set_template4_correct_answer
     elsif @diagram == 'template5'
       set_template5_correct_answer
+    elsif @diagram == 'template6'
+      set_template6_correct_answer
     elsif @diagram == 'template7'
       set_template7_correct_answer
     end
@@ -127,6 +129,18 @@ class NumericQuestionsController < ApplicationController
 
     # Actualizar solo si es el diagrama correcto
     @numeric_question.update(correct_answer: @answer_template5)
+  end
+
+  def set_template6_correct_answer
+    @masa_6 = @parsed_values['masa'].sample
+    @roce_6 = @parsed_values['roce'].sample
+    @roce_polea_6 = @parsed_values['roce_polea'].sample
+    @question_text_6 = @numeric_question.question.gsub('{A}', @masa_6.to_s).gsub('{B}', @roce_6.to_s).gsub('{C}', @roce_polea_6.to_s)
+    result_6 = 2
+    @answer_template6 = result_6.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template6)
   end
 
   def set_template7_correct_answer

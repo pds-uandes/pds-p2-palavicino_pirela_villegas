@@ -45,10 +45,13 @@
       `${angle}`, 1, 1.5
     );
 
+    let masaTxt = Diagramatics.annotation.vector(Diagramatics.V2(0, 0), `${masa} Kg`, Diagramatics.V2(0, 0), 0)
+      .position(Diagramatics.V2(4, 4)).stroke('black').strokewidth(1).fill('black');
+
     let draw = (...diagrams) => {
       Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
     };
 
-    draw(horizontal, sq, plane, forces_annotation, angle_annotation);
+    draw(horizontal, sq, masaTxt, plane, forces_annotation, angle_annotation);
   });
 </script>

@@ -758,6 +758,15 @@ TASK3_RZP = Task.create(
   course_id: COURSE5.id
 )
 
+TASK4_RZP = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 12',
+  is_finished: false,
+  course_id: COURSE5.id
+)
+
 MCQ1_TASK1_RZP = MultiChoiceQuestion.create(
   task_id: TASK1_RZP.id,
   difficulty: 0,
@@ -963,6 +972,29 @@ NumericTemplate.create!(
   numeric_question: NQ1_TASK3_RZP,
   diagram_data: 'template5',
   values: '{"masa": [3, 4, 5], "angle": [15, 30, 45], "roce": [0.2, 0.4, 0.6]} ',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK4_RZP = NumericQuestion.create!(
+  task: TASK4_RZP,
+  difficulty: 1,
+  question: 'Un bloque de {A} kg se encuentra en reposo sobre una superficie con un coeficiente de rozamiento estático de {B}. Determina la magnitud de la fuerza P necesaria para que una polea, con un coeficiente de rozamiento de {C}, comience a girar.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_RZP,
+  diagram_data: 'template6',
+  values: '{"masa": [3, 4, 5], "roce": [0.2, 0.4, 0.6], "roce_polea": [0.1, 0.2, 0.3]} ',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
