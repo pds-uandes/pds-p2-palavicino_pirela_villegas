@@ -17,16 +17,45 @@
   
     <% if user_view.current_sign_in_at.present? %>
       <% tiempo_uso = user_view.current_sign_in_at - user_view.created_at %>
+      <% minutos_uso = (tiempo_uso / 60).to_i %>
       <% horas_uso = (tiempo_uso / 1.hour).to_i %>
       Tiempo de uso: <%= horas_uso %> horas
     <% else %>
       Tiempo de uso: No disponible
     <% end %>
   </p>
-  
+
+    <!-- Ultimo task  -->
+    <div class="container mt-4" style="max-width: 700px; margin: 0 auto;">
+    <% last_answer = MultiChoiceAnswer.where(user_id: user_view.id).order(created_at: :desc).first %>
+    <% if last_answer.present? %>
+      <% last_question = MultiChoiceQuestion.find_by(id: last_answer.multi_choice_question_id) %>
+      <% if last_question.present? %>
+        <% last_task = last_question.task.name %>
+          <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <h2 style="font-size: 2rem; font-weight: 700;">Última tarea realizada</h2>
+            <p style="font-size: 1.25rem;"><%= last_task %></p>
+            <p><strong style="font-size: 1.25rem;">
+              <%= last_question.question %>
+            </strong></p>
+            <strong style="font-size: 1.25rem; color: <%= last_answer.is_correct ? '#004d00' : '#4d0000' %>;">
+              <%= last_answer.selected_choice %>
+            </strong> 
+            <% if last_answer.is_correct %>
+              <p class="mt-4">✅</p>
+            <% else %>
+              <p class="mt-4">❌</p>
+            <% end %>
+          </div>
+        <% else %>
+        <p>No se encontró la pregunta asociada.</p>
+      <% end %>
+    <% else %>
+      <p>No hay tareas realizadas.</p>
+    <% end %>   
 
   <!-- Progreso Global -->
-  <div class="container mt-4" style="max-width: 700px; margin: 0 auto;">
+
     <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
       <h2 style="font-size: 2rem; font-weight: 700;">Progreso Global</h2>
       <p style="font-size: 1.25rem;">Score: <%= @user_progress_global.score %></p>
@@ -34,6 +63,16 @@
         <path d="M9 11l3 3L22 4"></path>
         <circle cx="12" cy="12" r="10"></circle>
       </svg>
+    </div>
+
+    <!-- Velocidad -->
+    <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+      <h2 style="font-size: 2rem; font-weight: 700;">Velocidad de Aprendizaje</h2>
+      <% if minutos_uso.present? %>
+        <p style="font-size: 1.25rem;"><%= (@user_progress_global.score / minutos_uso.to_f).round(2) %> preguntas corrrectas por minuto</p>
+      <% else %>
+        <p style="font-size: 1.25rem;">No hay datos</p>
+      <% end %>
     </div>
 
     <!-- Progreso por Curso -->

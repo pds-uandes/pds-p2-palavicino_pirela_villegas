@@ -71,6 +71,18 @@
           <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem; background-color: #f8f9fa;">
             <div class="card-body">
               <h5 class="card-title" style="font-size: 1.5rem; color: #28a745; font-weight: 900"><%= user_progress.user.name %></h5>
+              <% user_view = user_progress.user %>
+              <p class="card-text">
+                Tiempo de uso:
+               <% if user_view.current_sign_in_at.present? %>
+                  <% tiempo_uso = user_view.current_sign_in_at - user_view.created_at %>
+                  <% horas_uso = (tiempo_uso / 1.hour).to_i %>
+                  <strong style="color: #004d00;"> <%= horas_uso %> horas </strong> 
+                <% else %>
+                  No disponible
+                <% end %>
+              </p>
+
               <p class="card-text">
                 Puntaje Global: <strong style="font-size: 1.25rem; color: #004d00;"><%= user_progress.score %></strong>
               </p>
