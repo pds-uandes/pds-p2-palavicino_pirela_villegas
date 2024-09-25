@@ -6,38 +6,48 @@
   document.addEventListener('DOMContentLoaded', function() {
     const mysvg = document.getElementById('diagram-svg');
     
-    // Definir los valores para el problema
-    const forceMagnitude = 2; // Fuerza aplicada en Newtons
-    const length = 10; // Longitud de la barra en metros
-    const distanceFromCenter = 4; // Distancia desde la mitad de la barra donde se aplica la fuerza
+    const forceMagnitude = 2; 
+    const length = 10; 
+    const distanceFromCenter = 4;
+    const h = 3
+    const l = 4
 
     function updateDiagram() {
-      mysvg.innerHTML = ''; // Limpiar el SVG antes de dibujar
+      mysvg.innerHTML = '';
 
       let draw = (...diagrams) => {
         Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
       };
 
-      // Configuración de la barra
       const basePosition = Diagramatics.V2(0, 0.433); 
       const r1 = Diagramatics.rectangle(length, 0.3)
         .move_origin('bottom-left')
         .position(basePosition)
         .fill('blue');
 
-      // Líneas de referencia horizontales
       let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(10, 0))
         .stroke('black').strokedasharray([5, 5]).strokewidth(2);
 
-      // Fuerza aplicada perpendicularmente a la barra, hacia abajo
       const arrow_head_size = 0.15;
-      const positionOfForce = Diagramatics.V2((1/3)*4, 3);  // 3 unidades desde el centro, hacia abajo
-      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude); // Apunta hacia abajo, perpendicular
-      const F = Diagramatics.annotation.vector(F_direction, '400 N/m', Diagramatics.V2(2, 2), arrow_head_size)
+      const positionOfForce = Diagramatics.V2((1/3)*4, 3);  
+      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude); 
+      const F = Diagramatics.annotation.vector(F_direction, '400 N/m', Diagramatics.V2(1, 2.5), arrow_head_size)
         .position(positionOfForce)
-        .stroke('black').strokewidth(2).fill('black');
+        .stroke('red').strokewidth(2).fill('red');
 
-      // Triángulo que indica la base del objeto
+
+      const positionOfForce_2 = Diagramatics.V2(0, h+1);  
+      const F_direction_2 = Diagramatics.Vdir(Math.PI / 2).scale(-h); 
+      const F2 = Diagramatics.annotation.vector(F_direction_2, '', Diagramatics.V2(2, 2), arrow_head_size)
+        .position(positionOfForce_2)
+        .stroke('red').strokewidth(2).fill('red');
+
+      const positionOfForce_3 = Diagramatics.V2((2/3)*4, 2);  
+      const F_direction_3 = Diagramatics.Vdir(Math.PI / 2).scale(-h/3); 
+      const F3 = Diagramatics.annotation.vector(F_direction_3, '', Diagramatics.V2(2, 2), arrow_head_size)
+        .position(positionOfForce_3)
+        .stroke('red').strokewidth(2).fill('red');
+
       const triangle_base = Diagramatics.polygon([
         Diagramatics.V2(-0.25, 0),    
         Diagramatics.V2(0.25, 0),     
@@ -56,27 +66,16 @@
 
       const triangle_force = Diagramatics.polygon([
         Diagramatics.V2(0, 0),    
-        Diagramatics.V2(0, 3),     
-        Diagramatics.V2(4, 0)
+        Diagramatics.V2(0, h),     
+        Diagramatics.V2(l, 0)
       ])
         .position(Diagramatics.V2(0, 1))
-        .strokedasharray([5]).fill('red');
+        .strokedasharray([5]).fill('white');
 
-    // Posiciones de los puntos para la anotación de 3 metros
-      const midPoint = Diagramatics.V2(0, 4); // Punto medio de la barra
-      const forcePoint = Diagramatics.V2(0 + distanceFromCenter, 1); // Donde se aplica la fuerza
-
-      // Anotación de la distancia entre el punto medio y donde se aplica la fuerza
-      const distanceAnnotation = Diagramatics.annotation.length(midPoint, forcePoint, '400 N/m', -0.8, 0.5) // Ajustamos el text_offset a -0.5 para que el texto esté sobre la línea
+      const distanceAnnotation = Diagramatics.annotation.length(Diagramatics.V2(0, -0), Diagramatics.V2(l,-0), 'l', 0.8, 0.5) 
         .stroke('blue');
-
-      // Círculo en el eje de rotación
-      const joint_circle = Diagramatics.circle(0.25)
-        .position(Diagramatics.V2(length / 2, 0))
-        .fill('white').strokewidth(5); 
-
-      // Dibujar los componentes
-      draw(horizontal, r1,  triangle_base, triangle_base_2, triangle_force, F);
+        
+      draw(horizontal, r1,  triangle_base, triangle_base_2, triangle_force, F, F2, F3, distanceAnnotation);
     }
 
     updateDiagram();
