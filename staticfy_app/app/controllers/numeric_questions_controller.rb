@@ -75,6 +75,8 @@ class NumericQuestionsController < ApplicationController
       set_template1_correct_answer
     elsif @diagram == 'template2'
       set_template2_correct_answer
+    elsif @diagram == 'template4'
+      set_template4_correct_answer
     elsif @diagram == 'template7'
       set_template7_correct_answer
     end
@@ -102,10 +104,21 @@ class NumericQuestionsController < ApplicationController
     @numeric_question.update(correct_answer: @answer_template2)
   end
 
+  def set_template4_correct_answer
+    @longitud_4 = @parsed_values['longitud'].sample
+    @force_magnitude_4 = @parsed_values['forceMagnitude'].sample
+    @question_text_4 = @numeric_question.question.gsub('{A}', @longitud_4.to_s).gsub('{B}', @force_magnitude_4.to_s)
+    result_4 = 2
+    @answer_template4 = result_4.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template4)
+  end
+
   def set_template7_correct_answer
-    @forcePosition = @parsed_values['forcePosition'].sample
+    @forcePosition_7 = @parsed_values['forcePosition'].sample
     @force_magnitude_7 = @parsed_values['forceMagnitude'].sample
-    @question_text_7 = @numeric_question.question.gsub('{A}', @forcePosition.to_s).gsub('{B}', @force_magnitude_7.to_s)
+    @question_text_7 = @numeric_question.question.gsub('{A}', @forcePosition_7.to_s).gsub('{B}', @force_magnitude_7.to_s)
     result_7 = 2
     @answer_template7 = result_7.round(2)
 

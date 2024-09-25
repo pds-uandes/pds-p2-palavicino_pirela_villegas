@@ -7,11 +7,9 @@
     const mysvg = document.getElementById('diagram-svg');
 
     // Valores fijos
-    const angle = 45;  // Ángulo en grados
-    const radian = angle * Math.PI / 180;  // Convertir a radianes
-    const forceMagnitude = 3;  // Magnitud de la fuerza en Newtons
+    const forceMagnitude =  <%= @force_magnitude_7 %>;  // Magnitud de la fuerza en Newtons
     const length = 10;  // Longitud del objeto
-    const force_x = 6;
+    const forcePosition = <%= @forcePosition_7 %>;
 
     function updateDiagram() {
       mysvg.innerHTML = '';  // Limpiar el SVG antes de dibujar
@@ -42,16 +40,16 @@
         .fill('white').strokewidth(5); 
 
       const arrow_head_size = 0.15;
-      const positionOfForce = Diagramatics.V2(force_x, 3.8);  // 3 unidades desde el centro, hacia abajo
-      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude); // Apunta hacia abajo, perpendicular
-      const F = Diagramatics.annotation.vector(F_direction, '500 N', Diagramatics.V2(1, 2), arrow_head_size)
+      const positionOfForce = Diagramatics.V2(forcePosition, 0.8+forceMagnitude);  
+      const F_direction = Diagramatics.Vdir(-Math.PI / 2).scale(forceMagnitude); 
+      const F = Diagramatics.annotation.vector(F_direction, `${forceMagnitude} N`, Diagramatics.V2(1, 2), arrow_head_size)
         .position(positionOfForce)
         .stroke('red').strokewidth(2).fill('red');
 
-      const distanceAnnotation = Diagramatics.annotation.length(Diagramatics.V2(0, -0), Diagramatics.V2(length, -0), `${length} m`,  0.8, 0.5) // Ajustamos el text_offset a -0.5 para que el texto esté sobre la línea
+      const distanceAnnotation = Diagramatics.annotation.length(Diagramatics.V2(0, -0), Diagramatics.V2(length, -0), `${length} m`,  0.8, 0.5) 
         .stroke('blue');
 
-      const distanceAnnotation_2 = Diagramatics.annotation.length(Diagramatics.V2(0, 0.5), Diagramatics.V2(force_x-0.1, 0.5), `${force_x} m`,  -0.8, 0.5) // Ajustamos el text_offset a -0.5 para que el texto esté sobre la línea
+      const distanceAnnotation_2 = Diagramatics.annotation.length(Diagramatics.V2(0, 0.5), Diagramatics.V2(forcePosition-0.1, 0.5), `${forcePosition} m`,  -0.8, 0.5) 
         .stroke('blue');
 
       draw(r1, F, triangle_base, joint_circle, distanceAnnotation, distanceAnnotation_2);

@@ -6,11 +6,11 @@
   document.addEventListener('DOMContentLoaded', function() {
     const mysvg = document.getElementById('diagram-svg');
     
-    const forceMagnitude = 2; 
+    const forceMagnitude =  <%= @force_magnitude_4 %>;
     const length = 10; 
     const distanceFromCenter = 4;
-    const h = 3
-    const l = 4
+    const h = forceMagnitude/100
+    const l = <%= @longitud_4 %>;
 
     function updateDiagram() {
       mysvg.innerHTML = '';
@@ -29,9 +29,10 @@
         .stroke('black').strokedasharray([5, 5]).strokewidth(2);
 
       const arrow_head_size = 0.15;
-      const positionOfForce = Diagramatics.V2((1/3)*4, 3);  
-      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude); 
-      const F = Diagramatics.annotation.vector(F_direction, '400 N/m', Diagramatics.V2(1, 2.5), arrow_head_size)
+      let m1 = (h/3)*2
+      const positionOfForce = Diagramatics.V2((1/3)*l, 1+m1); 
+      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-m1); 
+      const F = Diagramatics.annotation.vector(F_direction, `${forceMagnitude} N/m`, Diagramatics.V2(1, 2.5), arrow_head_size)
         .position(positionOfForce)
         .stroke('red').strokewidth(2).fill('red');
 
@@ -42,8 +43,9 @@
         .position(positionOfForce_2)
         .stroke('red').strokewidth(2).fill('red');
 
-      const positionOfForce_3 = Diagramatics.V2((2/3)*4, 2);  
-      const F_direction_3 = Diagramatics.Vdir(Math.PI / 2).scale(-h/3); 
+      let m3 = h/3
+      const positionOfForce_3 = Diagramatics.V2((2/3)*l, m3+1);  
+      const F_direction_3 = Diagramatics.Vdir(Math.PI / 2).scale(-m3); 
       const F3 = Diagramatics.annotation.vector(F_direction_3, '', Diagramatics.V2(2, 2), arrow_head_size)
         .position(positionOfForce_3)
         .stroke('red').strokewidth(2).fill('red');
@@ -72,7 +74,7 @@
         .position(Diagramatics.V2(0, 1))
         .strokedasharray([5]).fill('white');
 
-      const distanceAnnotation = Diagramatics.annotation.length(Diagramatics.V2(0, -0), Diagramatics.V2(l,-0), 'l', 0.8, 0.5) 
+      const distanceAnnotation = Diagramatics.annotation.length(Diagramatics.V2(0, -0), Diagramatics.V2(l,-0), `${l} m`, 0.8, 0.5) 
         .stroke('blue');
         
       draw(horizontal, r1,  triangle_base, triangle_base_2, triangle_force, F, F2, F3, distanceAnnotation);
