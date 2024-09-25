@@ -691,7 +691,6 @@ TASK3_RZP = Task.create(
   status: 'in_progress',
   name: 'Tarea 11',
   is_finished: false,
-  wrong_counter: 0,
   course_id: COURSE5.id
 )
 
