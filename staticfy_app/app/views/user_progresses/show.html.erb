@@ -5,19 +5,25 @@
 
   <!-- Último ingreso -->
   <p style="color: #666; font-size: 1.25rem; margin-top: 10px;">
-    <% user_view = User.find(@user_id)%>
-    Último ingreso: <%= user_view.current_sign_in_at.in_time_zone('America/Santiago').strftime('%d/%m/%Y %H:%M') if user_view.current_sign_in_at %>
+    <% user_view = User.find(@user_id) %>
+    
+    Último ingreso: 
+    <% if user_view.current_sign_in_at.present? %>
+      <%= user_view.current_sign_in_at.in_time_zone('America/Santiago').strftime('%d/%m/%Y %H:%M') %>
+    <% else %>
+      No disponible
+    <% end %>
     <br>
-
-    <% if @user.current_sign_in_at.present? %>
-      <% tiempo_uso = @user.current_sign_in_at - @user.created_at %>
+  
+    <% if user_view.current_sign_in_at.present? %>
+      <% tiempo_uso = user_view.current_sign_in_at - user_view.created_at %>
       <% horas_uso = (tiempo_uso / 1.hour).to_i %>
       Tiempo de uso: <%= horas_uso %> horas
     <% else %>
       Tiempo de uso: No disponible
     <% end %>
-
   </p>
+  
 
   <!-- Progreso Global -->
   <div class="container mt-4" style="max-width: 700px; margin: 0 auto;">
