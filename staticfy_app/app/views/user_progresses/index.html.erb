@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem; background-color: #f8f9fa;">
         <div class="card-body">
-          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Pregunta con más errores</h5>
+          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Pregunta con más respuestas incorrectas</h5>
           <p class="card-text">
             <strong><%= @most_wrong_question.question %></strong><br>
             Pertenece a <strong><%= @most_wrong_question.course_name %></strong><br>
@@ -34,10 +34,9 @@
     <div class="col-md-6">
       <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem; background-color: #f8f9fa;">
         <div class="card-body">
-          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Curso con mayor puntaje promedio</h5>
-          <p class="card-text">
+          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Curso con mejor rendimiento</h5>
+          <p class="card-text" style="font-size: 1.3rem">
             <strong><%= @highest_average_score_course.name %></strong><br>
-            Puntaje promedio: <span style="font-size: 1.25rem; color: #004d00;"><%= @highest_average_score_course.avg_score.round(2) %></span>
           </p>
         </div>
       </div>
@@ -46,10 +45,9 @@
     <div class="col-md-6">
       <div class="card shadow" style="border: 1px solid #e0e0e0; border-radius: 0.5rem; background-color: #f8f9fa;">
         <div class="card-body">
-          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Curso con menor puntaje promedio</h5>
-          <p class="card-text">
+          <h5 class="card-title" style="font-size: 1.25rem; color: #28a745; font-weight: 900;">Curso con peor rendimiento</h5>
+          <p class="card-text" style="font-size: 1.3rem">
             <strong><%= @lowest_average_score_course.name %></strong><br>
-            Puntaje promedio: <span style="font-size: 1.25rem; color: #004d00;"><%= @lowest_average_score_course.avg_score.round(2) %></span>
           </p>
         </div>
       </div>

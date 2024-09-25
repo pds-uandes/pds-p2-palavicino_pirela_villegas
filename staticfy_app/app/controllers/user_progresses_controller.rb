@@ -46,7 +46,7 @@ class UserProgressesController < ApplicationController
     @highest_average_score_course = UserCourse
       .joins(:course)
       .group('courses.id, courses.name')
-      .select('courses.id, courses.name, AVG(user_courses.progress) as avg_score')
+      .select('courses.id, courses.name, SUM(user_courses.progress) as avg_score')
       .order('avg_score DESC')
       .limit(1)
       .first
