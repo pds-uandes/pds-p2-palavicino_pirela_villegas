@@ -1,0 +1,28 @@
+<div class="container mt-4" style="max-width: 800px; margin: auto;">
+  <h1 class="text-center mb-4">Mis Respuestas a Preguntas de Opción Múltiple</h1>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Pregunta</th>
+        <th>Respuesta Seleccionada</th>
+        <th>¿Correcta?</th>
+        <th>Fecha de Creación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @multi_choice_answers.each do |answer| %>
+        <tr class="<%= answer.is_correct ? 'table-success' : 'table-danger' %>">
+          <td><%= answer.multi_choice_question.question %></td>
+          <td><%= answer.selected_choice %></td>
+          <td><%= answer.is_correct ? "Sí" : "No" %></td>
+          <td><%= answer.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @multi_choice_answers.empty? %>
+    <div class="alert alert-info mt-3 text-center">No has respondido a ninguna pregunta aún.</div>
+  <% end %>
+</div>

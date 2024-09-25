@@ -17,7 +17,7 @@ class MultiChoiceAnswersController < ApplicationController
   end
 
   def index
-    @multiChoiceAnswers = MultiChoiceAnswer.all
+    @multi_choice_answers = MultiChoiceAnswer.all
   end
 
   def edit
