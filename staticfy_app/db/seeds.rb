@@ -680,6 +680,16 @@ TASK2_RZP = Task.create(
   course_id: COURSE5.id
 )
 
+TASK3_RZP = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 11',
+  is_finished: false,
+  wrong_counter: 0,
+  course_id: COURSE5.id
+)
+
 MCQ1_TASK1_RZP = MultiChoiceQuestion.create(
   task_id: TASK1_RZP.id,
   difficulty: 0,
@@ -865,6 +875,29 @@ MCQ7_TASK2_RZP = MultiChoiceQuestion.create(
   choice_3: '{"value": "Fuerza normal", "why_not": ""}',
   choice_4: '{"value": "Aceleración", "why_not": "La aceleración no se utiliza para calcular la fuerza de rozamiento en este contexto."}',
   correct_answer: 'Fuerza normal'
+)
+
+NQ1_TASK3_RZP = NumericQuestion.create!(
+  task: TASK3_RZP,
+  difficulty: 1,
+  question: 'Una viga horizontal de {A} metros de longitud soporta una carga puntual de {B} N aplicada en el centro. Encuentra las reacciones en los apoyos en ambos extremos de la viga.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ1_TASK3_RZP,
+  diagram_data: 'template7',
+  values: '{"forcePosition": [2, 4, 6], "forceMagnitude": [3, 4, 5]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
 )
 
 
