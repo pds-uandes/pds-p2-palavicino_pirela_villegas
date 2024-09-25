@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   end
 
   resources :multi_choice_questions
-  resources :tasks
+
+  resources :tasks do
+    post 'finish', on: :member
+  end
 
   resources :courses do
     resources :tasks

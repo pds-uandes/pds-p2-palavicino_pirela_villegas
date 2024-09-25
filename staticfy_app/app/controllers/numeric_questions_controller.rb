@@ -40,8 +40,16 @@ class NumericQuestionsController < ApplicationController
       user_task = UserTask.find_or_initialize_by(user_id: current_user.id, task_id: @numeric_question.task_id)
       user_task.is_finished = true
       user_task.save
-      # Hacer lo mismo para las multi_choice
 
+      # Sumar puntaje para su avance en el Course y global
+      numeric_question_course = @numeric_question.task.course
+      user_course = UserCourse.find_or_initialize_by(user_id: current_user.id, course_id: numeric_question_course.id)
+      user_course.progress += 3
+      user_course.save
+
+      user_progress = UserProgress.find_by(user_id: current_user.id)
+      user_progress.score += 3
+      user_progress.save
 
       flash[:notice] = "¡Respuesta correcta! Tu respuesta fue: #{@user_answer}. La respuesta correcta es: #{correct_answer}"
       session[:attempts] = 0

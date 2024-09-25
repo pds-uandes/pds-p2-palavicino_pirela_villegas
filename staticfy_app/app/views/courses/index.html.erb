@@ -1,52 +1,90 @@
 <div class="container mt-4">
   <div class="container" style="display: flex; flex-direction: column; align-items: center">
-    
+
+    <% course1 = Course.find_by(name: 'Diagramas de Cuerpo Libre') %>
+    <% course2 = Course.find_by(name: 'Vínculos Externos e Internos') %>
+    <% course3 = Course.find_by(name: 'Condiciones de Equilibrio y Estabilidad') %>
+    <% course4 = Course.find_by(name: 'Tipos de fuerzas más comunes') %>
+    <% course5 = Course.find_by(name: 'Rozamiento y Poleas') %>
+
+    <% user_course1 = UserCourse.find_by(user_id: current_user.id, course_id: course1.id) %>
+    <% user_course2 = UserCourse.find_by(user_id: current_user.id, course_id: course2.id) %>
+    <% user_course3 = UserCourse.find_by(user_id: current_user.id, course_id: course3.id) %>
+    <% user_course4 = UserCourse.find_by(user_id: current_user.id, course_id: course4.id) %>
+    <% user_course5 = UserCourse.find_by(user_id: current_user.id, course_id: course5.id) %>
+
+    <% course3_enabled = user_course1.progress > 7 && user_course2.progress > 7 %>
+    <% course4_enabled = course3_enabled && user_course3.progress > 7 %>
+    <% course5_enabled = course4_enabled && user_course4.progress > 7 %>
+
     <% @courses.each_with_index do |course, index| %>
-      <div class="course-card" style="background-color: #28a745; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" onclick="toggleTasks(<%= index %>)">
-        <div class="course-header" style="flex: 1;">
-          <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
-          <p class="course-description" style="font-size: 1rem; margin-bottom: 15px; margin-right: 10px"><%= course.description %></p>
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+      <% user_course = UserCourse.find_by(user_id: current_user.id, course_id: course.id) %>
+
+      <% if (course.id == course1.id || course.id == course2.id) || 
+           (course.id == course3.id && course3_enabled) || 
+           (course.id == course4.id && course4_enabled) || 
+           (course.id == course5.id && course5_enabled) %>
+
+        <div class="course-card" style="background-color: #28a745; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" onclick="toggleTasks(<%= index %>)">
+          <div class="course-header" style="flex: 1;">
+            <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
+            <p class="course-description" style="font-size: 1rem; margin-bottom: 15px; margin-right: 10px"><%= course.description %></p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
               <path d="M1.5 5.5l7 7 7-7H1.5z"/>
-          </svg>
-        </div>        
-      </div>
-
-      <div id="tasks-<%= index %>" class="game-path" style="display: block; margin-bottom: 20px;">
-        <% course.tasks.each_with_index do |task, task_index| %>
-          <div class="task-node">
-            <div class="task-connector"></div>
-
-            <!-- Aqui se usa la nueva tabla para marcarle solo al current_user.id sus tasks finalizadas-->
-            <% user_task = UserTask.find_by(user_id: current_user.id, task_id: task.id) %>
-            <% is_finished = user_task.present? && user_task.is_finished %>
-            <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
-            <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
-            <!-- La actualizacion a is_finished se hace en submit_answer del controlador de numeric_questions -->
-            <!-- HACER LO MISMO PARA LAS MULTI_CHOICE!!! -->
-
-
-            <% if is_finished %>
-              <div class="task-circle task-completed" style="pointer-events: none;">
-                ✓
-              </div>
-            <% else %>
-              <%= link_to link_path, class: 'task-link numeric-question-button' do %>
-                <div class="task-circle task-in-progress">
-                  <%= task_index + 1 %>
-                </div>
-              <% end %>
-            <% end %>
+            </svg>
           </div>
-        <% end %>
-      </div>
+        </div>
+
+        <div id="tasks-<%= index %>" class="game-path" style="display: block; margin-bottom: 20px;">
+          <% course.tasks.each_with_index do |task, task_index| %>
+            <div class="task-node">
+              <div class="task-connector"></div>
+
+              <% user_task = UserTask.find_by(user_id: current_user.id, task_id: task.id) %>
+              <% is_finished = user_task.present? && user_task.is_finished %>
+              <% numeric_questions = NumericQuestion.where(task_id: task.id) %>
+              <% link_path = task.task_type == 'multi_choice' ? task_path(task) : (numeric_questions.first.present? ? numeric_question_path(numeric_questions.first) : '#') %>
+
+              <% if is_finished %>
+                <div class="task-circle task-completed" style="pointer-events: none;">
+                  ✓
+                </div>
+              <% else %>
+                <%= link_to link_path, class: 'task-link numeric-question-button' do %>
+                  <div class="task-circle task-in-progress">
+                    <%= task_index + 1 %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="course-card" style="background-color: #dc3545; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+          <div class="course-header" style="flex: 1;">
+            <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
+            <p style="color: lightgray;">Este curso no está habilitado.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+              <path d="M2.5 0l1 1h9l1-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zM0 3v10h16V3H0zm1 1h14v8H1V4z"/>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Ocultar las tareas para cursos deshabilitados -->
+        <div id="tasks-<%= index %>" class="game-path" style="display: none; margin-bottom: 20px;">
+          <% course.tasks.each_with_index do |task, task_index| %>
+            <div class="task-node">
+              <div class="task-connector"></div>
+              <p style="color: gray;">Tareas no disponibles.</p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
 
 <script>
-  // Selecciona todos los elementos con la clase 'numeric-question-button'
   document.querySelectorAll('.numeric-question-button').forEach(function(button) {
     button.onclick = function() {
       setTimeout(function() {
@@ -55,13 +93,8 @@
     };
   });
 
-
   function toggleTasks(index) {
     var tasksDiv = document.getElementById('tasks-' + index);
-    if (tasksDiv.style.display === 'none') {
-      tasksDiv.style.display = 'block';
-    } else {
-      tasksDiv.style.display = 'none';
-    }
+    tasksDiv.style.display = tasksDiv.style.display === 'none' ? 'block' : 'none';
   }
 </script>

@@ -104,7 +104,7 @@ TASK1_VEI = Task.create(
 
 MCQ1_TASK1_VEI = MultiChoiceQuestion.create(
   task_id: TASK1_VEI.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Un vínculo es una restricción al ______ de un cuerpo, que impide su movimiento respecto de algún grado de libertad.',
   choice_1: '{"value": "Equilibrio", "why_not": "🤔 No del todo. Recuerda que el equilibrio es la condición en la que todas las fuerzas y momentos se compensan mutuamente. Aquí estamos hablando de una restricción."}',
   choice_2: '{"value": "Movimiento", "why_not": ""}',
@@ -113,15 +113,29 @@ MCQ1_TASK1_VEI = MultiChoiceQuestion.create(
   correct_answer: 'Movimiento'
 )
 
+MCA1_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ1_TASK1_VEI.id,
+  selected_choice: 'Fuerza',
+  is_correct: false
+)
+
 MCQ2_TASK1_VEI = MultiChoiceQuestion.create(
   task_id: TASK1_VEI.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Un apoyo deslizante restringe el desplazamiento en la dirección ______.',
   choice_1: '{"value": "Horizontal", "why_not": "❌ No es correcto. Un apoyo deslizante permite el movimiento en la dirección horizontal."}',
   choice_2: '{"value": "Vertical", "why_not": ""}',
   choice_3: '{"value": "De giro", "why_not": "🌀 Casi, pero no. Un apoyo deslizante no restringe la rotación del cuerpo."}',
   choice_4: '{"value": "Axial", "why_not": "⬆️ No exactamente. Un apoyo deslizante permite el movimiento axial y no lo restringe."}',
   correct_answer: 'Vertical'
+)
+
+MCA2_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ2_TASK1_VEI.id,
+  selected_choice: 'Horizontal',
+  is_correct: false
 )
 
 MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
@@ -133,6 +147,13 @@ MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
   choice_3: '{"value": "Permite el giro, pero restringe el desplazamiento en una dirección.", "why_not": "🚫 No es correcto. Un apoyo empotrado no permite ningún giro."}',
   choice_4: '{"value": "Restringe el giro y el desplazamiento.", "why_not": "⚠️ Casi, pero no del todo. Un empotrado restringe los giros y también los desplazamientos en todas las direcciones."}',
   correct_answer: 'Restricción de los desplazamientos en ambas direcciones y del giro.'
+)
+
+MCA3_TASK1_VEI = MultiChoiceAnswer.create(
+  user_id: student1.id,
+  multi_choice_question_id: MCQ3_TASK1_VEI.id,
+  selected_choice: 'Restricción de los desplazamientos en ambas direcciones y del giro.',
+  is_correct: true
 )
 
 MCQ4_TASK1_VEI = MultiChoiceQuestion.create(
@@ -166,7 +187,7 @@ TASK3_VEI = Task.create(
 
 NQ1_TASK2_VEI = NumericQuestion.create!(
   task: TASK2_VEI,
-  difficulty: 1,
+  difficulty: 2,
   question: '¿Calcule el valor de la fuerza vertical aplicada por el apoyo fijo, dado que el ángulo de inclinación es {A}° y se le está aplicando una fuerza de {B} N perpendicular a la viga?',
   correct_answer: '20',
   tolerance: 0.1,
@@ -180,7 +201,7 @@ NQ1_TASK2_VEI = NumericQuestion.create!(
 
 NQ2_TASK2_VEI = NumericQuestion.create!(
   task: TASK3_VEI,
-  difficulty: 1,
+  difficulty: 2,
   question: '¿Calcule el valor de la fuerza horizontal aplicada por el apoyo fijo, dado que se aplica una fuerza de {B} N a un ángulo de inclinación de {A}° respecto a la viga?',
   correct_answer: '20',
   tolerance: 0.1,
@@ -251,7 +272,7 @@ MCQ1_TASK1_DCL = MultiChoiceQuestion.create(
 
 MCQ2_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Un diagrama de cuerpo libre es una representación gráfica que muestra todas las ______ que actúan sobre un cuerpo o sistema.',
   choice_1: '{"value": "Fuerzas", "why_not": ""}',
   choice_2: '{"value": "Velocidades", "why_not": "Las velocidades son la tasa de cambio de posición, pero no son relevantes para un diagrama de cuerpo libre."}',
@@ -262,7 +283,7 @@ MCQ2_TASK1_DCL = MultiChoiceQuestion.create(
 
 MCQ3_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'En un diagrama de cuerpo libre, las fuerzas se representan como vectores que tienen magnitud, dirección y ______.',
   choice_1: '{"value": "Punto de aplicación", "why_not": "Aunque el punto de aplicación es crucial en la física de fuerzas, no es lo que se completa en esta oración."}',
   choice_2: '{"value": "Sentido", "why_not": ""}',
@@ -273,7 +294,7 @@ MCQ3_TASK1_DCL = MultiChoiceQuestion.create(
 
 MCQ4_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Para dibujar un DCL correctamente, se deben eliminar todos los ______ del entorno y reemplazarlos con las fuerzas que ejercen.',
   choice_1: '{"value": "Ejes", "why_not": "Los ejes son útiles para orientar el análisis del problema, no se eliminan."}',
   choice_2: '{"value": "Apoyos", "why_not": ""}',
@@ -284,7 +305,7 @@ MCQ4_TASK1_DCL = MultiChoiceQuestion.create(
 
 MCQ5_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'El primer paso para construir un diagrama de cuerpo libre es aislar el cuerpo o ______ que se está analizando.',
   choice_1: '{"value": "Vector", "why_not": "Los vectores representan fuerzas y no el cuerpo que se analiza."}',
   choice_2: '{"value": "Partícula", "why_not": "Una partícula se refiere a un modelo simplificado del cuerpo, pero no siempre es aplicable en cuerpos rígidos."}',
@@ -295,7 +316,7 @@ MCQ5_TASK1_DCL = MultiChoiceQuestion.create(
 
 MCQ6_TASK2_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Las reacciones en los apoyos se representan en el DCL como ______ que equilibran las fuerzas externas aplicadas al cuerpo.',
   choice_1: '{"value": "Momentos", "why_not": "Aunque los momentos son importantes, no representan las reacciones en los apoyos de manera directa."}',
   choice_2: '{"value": "Áreas", "why_not": "Las áreas no son formas de representar las fuerzas o reacciones."}',
@@ -423,7 +444,7 @@ TASK4_CEE = Task.create(
 
 MCQ1_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Un cuerpo se encuentra en equilibrio cuando la suma de fuerzas y _______ es igual a cero.',
   choice_1: '{"value": "Masa", "why_not": "La masa es una medida de inercia y no se suma como una fuerza en el equilibrio."}',
   choice_2: '{"value": "Momentos", "why_not": ""}',
@@ -434,7 +455,7 @@ MCQ1_TASK1_CEE = MultiChoiceQuestion.create(
 
 MCQ2_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'En un sistema isostático, el número de ecuaciones es _______ al número de incógnitas.',
   choice_1: '{"value": "Mayor", "why_not": "Si el número de ecuaciones fuera mayor, el sistema sería hiperestático, no isostático."}',
   choice_2: '{"value": "Menor", "why_not": "Si el número de ecuaciones fuera menor, el sistema sería inestable o indeterminado."}',
@@ -445,7 +466,7 @@ MCQ2_TASK1_CEE = MultiChoiceQuestion.create(
 
 MCQ3_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'En un sistema de dos dimensiones, se usan _______ ecuaciones de equilibrio para resolver un problema estático.',
   choice_1: '{"value": "Tres", "why_not": ""}',
   choice_2: '{"value": "Dos", "why_not": "Aunque dos ecuaciones pueden resolver algunos problemas, no son suficientes para un análisis completo en 2D."}',
@@ -456,7 +477,7 @@ MCQ3_TASK1_CEE = MultiChoiceQuestion.create(
 
 MCQ4_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Un sistema estructural se dice que es inestable si el número de incógnitas es _______ al número de ecuaciones.',
   choice_1: '{"value": "Mayor", "why_not": "Si las incógnitas fueran mayores, sería un sistema hiperestático, no inestable."}',
   choice_2: '{"value": "Menor", "why_not": ""}',
@@ -467,7 +488,7 @@ MCQ4_TASK1_CEE = MultiChoiceQuestion.create(
 
 MCQ5_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'La resultante de fuerzas en un sistema en equilibrio es igual a _______. ',
   choice_1: '{"value": "Uno", "why_not": "La resultante de fuerzas en equilibrio no puede ser un número cualquiera."}',
   choice_2: '{"value": "Cero", "why_not": ""}',
@@ -478,7 +499,7 @@ MCQ5_TASK1_CEE = MultiChoiceQuestion.create(
 
 MCQ6_TASK1_CEE = MultiChoiceQuestion.create(
   task_id: TASK1_CEE.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'La resultante de fuerzas en un sistema en equilibrio es igual a _______.',
   choice_1: '{"value": "Uno", "why_not": "La resultante de fuerzas en equilibrio no puede ser un número cualquiera."}',
   choice_2: '{"value": "Cero", "why_not": ""}',
@@ -737,7 +758,7 @@ MCQ10_TASK1_TFC = MultiChoiceQuestion.create(
 
 MCQ11_TASK1_TFC = MultiChoiceQuestion.create(
   task_id: TASK1_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: '¿Cuál de las siguientes es una característica de la fuerza de rozamiento dinámico?',
   choice_1: '{"value": "Es mayor que la fuerza de rozamiento estático.", "why_not": "Por lo general, la fuerza de rozamiento estático es mayor que la dinámica."}',
   choice_2: '{"value": "Es proporcional a la velocidad.", "why_not": "La fuerza de rozamiento dinámico no es directamente proporcional a la velocidad; depende de otros factores."}',
@@ -748,7 +769,7 @@ MCQ11_TASK1_TFC = MultiChoiceQuestion.create(
 
 MCQ1_TASK2_TFC = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Una _______ es una fuerza que actúa en un solo punto de un cuerpo.',
   choice_1: '{"value": "Carga distribuida", "why_not": "Esto describe una fuerza que se aplica en varias partes, no en un solo punto."}',
   choice_2: '{"value": "Fuerza puntual", "why_not": ""}',
@@ -759,7 +780,7 @@ MCQ1_TASK2_TFC = MultiChoiceQuestion.create(
 
 MCQ2_TASK2_TFC = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Una _______ se distribuye a lo largo de una parte o toda la longitud de un cuerpo.',
   choice_1: '{"value": "Fuerza puntual", "why_not": "Esta fuerza actúa en un único punto, no se distribuye."}',
   choice_2: '{"value": "Fuerza axial", "why_not": "Aunque se refiere a fuerzas a lo largo de un eje, no se distribuye."}',
@@ -770,7 +791,7 @@ MCQ2_TASK2_TFC = MultiChoiceQuestion.create(
 
 MCQ3_TASK2_TF = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Las fuerzas _______ actúan sobre el volumen de un cuerpo tridimensional.',
   choice_1: '{"value": "Axiales", "why_not": "Las fuerzas axiales actúan a lo largo de un eje, no sobre el volumen."}',
   choice_2: '{"value": "Distribuidas", "why_not": ""}',
@@ -781,7 +802,7 @@ MCQ3_TASK2_TF = MultiChoiceQuestion.create(
 
 MCQ4_TASK2_TFC = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'El _______ es un tipo de fuerza que se genera cuando un cuerpo rota alrededor de un punto fijo.',
   choice_1: '{"value": "Momento", "why_not": ""}',
   choice_2: '{"value": "Peso", "why_not": "El peso es una fuerza que actúa hacia abajo debido a la gravedad, no es específico de la rotación."}',
@@ -792,7 +813,7 @@ MCQ4_TASK2_TFC = MultiChoiceQuestion.create(
 
 MCQ5_TASK2_TFC = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Las cargas distribuidas sobre un área se miden en _______.',
   choice_1: '{"value": "N/m²", "why_not": ""}',
   choice_2: '{"value": "N/m³", "why_not": "Esta unidad se refiere a la densidad, no a cargas distribuidas."}',
@@ -803,7 +824,7 @@ MCQ5_TASK2_TFC = MultiChoiceQuestion.create(
 
 MCQ6_TASK2_TFC = MultiChoiceQuestion.create(
   task_id: TASK2_TFC.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Las fuerzas que se pueden reemplazar por una fuerza equivalente producen el mismo _______ global sobre el sistema.',
   choice_1: '{"value": "Desplazamiento", "why_not": "Aunque puede haber un desplazamiento, la equivalencia se refiere al efecto global."}',
   choice_2: '{"value": "Efecto", "why_not": ""}',
@@ -1007,7 +1028,7 @@ MCQ10_TASK1_RZP = MultiChoiceQuestion.create(
 
 MCQ1_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'La fuerza de _______ se opone al movimiento relativo entre dos superficies en contacto.',
   choice_1: '{"value": "Peso", "why_not": "La fuerza de peso actúa hacia abajo debido a la gravedad y no se opone al movimiento relativo."}',
   choice_2: '{"value": "Rozamiento", "why_not": ""}',
@@ -1018,7 +1039,7 @@ MCQ1_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ2_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'El _______ de rozamiento estático es mayor que el dinámico.',
   choice_1: '{"value": "Coeficiente", "why_not": ""}',
   choice_2: '{"value": "Área", "why_not": "El área de contacto no determina la comparación entre los coeficientes de rozamiento estático y dinámico."}',
@@ -1029,7 +1050,7 @@ MCQ2_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ3_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'El rozamiento _______ ocurre cuando un objeto rueda sobre una superficie.',
   choice_1: '{"value": "Estático", "why_not": "El rozamiento estático ocurre cuando el objeto no se mueve respecto a la superficie."}',
   choice_2: '{"value": "Dinámico", "why_not": "El rozamiento dinámico se refiere al deslizamiento, no a la rodadura."}',
@@ -1040,7 +1061,7 @@ MCQ3_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ4_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'La fuerza de rozamiento dinámico es proporcional a la _______ normal.',
   choice_1: '{"value": "Fuerza", "why_not": ""}',
   choice_2: '{"value": "Velocidad", "why_not": "La fuerza de rozamiento dinámico no es proporcional a la velocidad."}',
@@ -1051,7 +1072,7 @@ MCQ4_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ5_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'En una polea, el _______ ayuda a cambiar la dirección de la fuerza aplicada.',
   choice_1: '{"value": "Peso", "why_not": "El peso del objeto no afecta directamente el mecanismo de la polea."}',
   choice_2: '{"value": "Rozamiento", "why_not": "El rozamiento se relaciona con la resistencia al movimiento, no con la función de la polea."}',
@@ -1062,7 +1083,7 @@ MCQ5_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ6_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'Si no hay _______ entre dos superficies, no habrá fuerza de rozamiento.',
   choice_1: '{"value": "Velocidad", "why_not": "La velocidad no es un requisito para que exista rozamiento."}',
   choice_2: '{"value": "Contacto", "why_not": ""}',
@@ -1073,7 +1094,7 @@ MCQ6_TASK2_RZP = MultiChoiceQuestion.create(
 
 MCQ7_TASK2_RZP = MultiChoiceQuestion.create(
   task_id: TASK2_RZP.id,
-  difficulty: 0,
+  difficulty: 1,
   question: 'La fórmula para calcular la fuerza de rozamiento es _______ por el coeficiente de rozamiento.',
   choice_1: '{"value": "Masa", "why_not": "La masa por sí sola no se relaciona directamente con la fuerza de rozamiento."}',
   choice_2: '{"value": "Área", "why_not": "El área no es un factor en la fórmula para calcular la fuerza de rozamiento."}',

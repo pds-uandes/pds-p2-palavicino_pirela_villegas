@@ -18,6 +18,7 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.all
+    @user_courses = UserCourse.all
   end
 
   def edit

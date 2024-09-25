@@ -19,7 +19,48 @@ class UserProgressesController < ApplicationController
   def index
     @user_progresses = UserProgress.select(:user_id, :score).distinct.includes(:user)
     @user_courses = UserCourse.select('DISTINCT ON (user_id, course_id) *').includes(:course, :user).order(:user_id, :course_id)
+
+    # Pregunta de alternativa con mayor tasa de error
+    @most_wrong_question = MultiChoiceAnswer
+    .joins(multi_choice_question: { task: :course })
+    .group('multi_choice_questions.id, multi_choice_questions.question, courses.name')
+    .select('multi_choice_questions.id, multi_choice_questions.question, courses.name as course_name, COUNT(*) as wrong_count')
+    .where(is_correct: false)
+    .order('wrong_count DESC')
+    .limit(1)
+    .first
+
+
+    # Pregunta de alternativa con menor tasa de error
+    @least_wrong_question = MultiChoiceAnswer
+    .joins(multi_choice_question: { task: :course })
+    .group('multi_choice_questions.id, multi_choice_questions.question, courses.name')
+    .select('multi_choice_questions.id, multi_choice_questions.question, courses.name as course_name, COUNT(*) as correct_count')
+    .where(is_correct: true)
+    .order('correct_count ASC')
+    .limit(1)
+    .first
+
+
+    # Curso con mayor puntaje promedio
+    @highest_average_score_course = UserCourse
+      .joins(:course)
+      .group('courses.id, courses.name')
+      .select('courses.id, courses.name, AVG(user_courses.progress) as avg_score')
+      .order('avg_score DESC')
+      .limit(1)
+      .first
+
+    # Curso con menor puntaje promedio
+    @lowest_average_score_course = UserCourse
+      .joins(:course)
+      .group('courses.id, courses.name')
+      .select('courses.id, courses.name, AVG(user_courses.progress) as avg_score')
+      .order('avg_score ASC')
+      .limit(1)
+      .first
   end
+
 
   def edit
     @user_progress = UserProgress.find(params[:id])
