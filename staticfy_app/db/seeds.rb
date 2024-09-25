@@ -241,6 +241,24 @@ TASK1_DCL = Task.create(
   course_id: COURSE1.id
 )
 
+TASK2_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 5',
+  is_finished: false,
+  course_id: COURSE1.id
+)
+
+TASK3_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 6',
+  is_finished: false,
+  course_id: COURSE1.id
+)
+
 MCQ1_TASK1_DCL = MultiChoiceQuestion.create(
   task_id: TASK1_DCL.id,
   difficulty: 0,
@@ -340,6 +358,53 @@ MCQ9_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Como una flecha curva alrededor de un punto.'
 )
 
+NQ1_TASK2_DCL = NumericQuestion.create!(
+  task: TASK2_DCL,
+  difficulty: 1,
+  question: 'Realiza un diagrama de cuerpo libre (DCL) y calcula la fuerza normal que actúa sobre el cuerpo, sabiendo que tiene una masa de {A} kg.',
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ1_TASK2_DCL,
+  diagram_data: 'template9',
+  values: '{"masa": [30, 40, 50], "forceMagnitude": [3, 4, 5]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK3_DCL = NumericQuestion.create!(
+  task: TASK3_DCL,
+  difficulty: 1,
+  question: 'Realiza un DCL y calcula el valor de la componente vertical (Y) de la fuerza peso, sabiendo que el cuerpo, con una masa de {A} kg, se encuentra sobre un plano inclinado a {B}°.',
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK3_DCL,
+  diagram_data: 'template10',
+  values: '{"masa": [30, 40, 50], "angle": [15, 30, 45]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+
 # ------------------------------- CONDICIONES DE EQUILIBRIO Y ESTABILIDAD (CEE) --------------------------------
 TASK1_CEE = Task.create(
   user_id: teacher.id,
@@ -355,6 +420,24 @@ TASK2_CEE = Task.create(
   task_type: 'multi_choice',
   status: 'in_progress',
   name: 'Tarea 6',
+  is_finished: false,
+  course_id: COURSE3.id
+)
+
+TASK3_CEE = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 7',
+  is_finished: false,
+  course_id: COURSE3.id
+)
+
+TASK4_CEE = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 8',
   is_finished: false,
   course_id: COURSE3.id
 )
@@ -480,6 +563,52 @@ MCQ5_TASK2_CEE = MultiChoiceQuestion.create(
   correct_answer: 'Fuerza equivalente.'
 )
 
+NQ1_TASK3_CEE = NumericQuestion.create!(
+  task: TASK3_CEE,
+  difficulty: 1,
+  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Calcule la suma de las reacciones en los apoyos en ambos extremos de la viga.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ1_TASK3_CEE,
+  diagram_data: 'template7',
+  values: '{"forcePosition": [2, 4, 6], "forceMagnitude": [3, 4, 5]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK4_CEE = NumericQuestion.create!(
+  task: TASK4_CEE,
+  difficulty: 1,
+  question: 'Calcula la suma de todas las fuerzas externas e internas en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una viela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_CEE,
+  diagram_data: 'template8',
+  values: '{"forceMagnitude": [300, 400, 600], "longitud": [2, 3, 4]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
 # ------------------------------- TIPOS DE FUERZAS MÁS COMUNES (TFC) --------------------------------
 TASK1_TFC = Task.create(
   user_id: teacher.id,
@@ -495,6 +624,24 @@ TASK2_TFC = Task.create(
   task_type: 'multi_choice',
   status: 'in_progress',
   name: 'Tarea 8',
+  is_finished: false,
+  course_id: COURSE4.id
+)
+
+TASK3_TFC = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 9',
+  is_finished: false,
+  course_id: COURSE4.id
+)
+
+TASK4_TFC = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 10',
   is_finished: false,
   course_id: COURSE4.id
 )
@@ -686,6 +833,51 @@ MCQ6_TASK2_TFC = MultiChoiceQuestion.create(
   correct_answer: 'Efecto'
 )
 
+NQ1_TASK3_TFC = NumericQuestion.create!(
+  task: TASK3_TFC,
+  difficulty: 1,
+  question: 'Determina la fuerza equivalente para una carga triangular que actúa en una segmento de {A} metros de longitud sobre la viga, con una intensidad máxima de {B} N/m en un extremo.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ1_TASK3_TFC,
+  diagram_data: 'template4',
+  values: '{"longitud": [3, 4, 5], "forceMagnitude": [300, 500, 600]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NQ2_TASK4_TFC = NumericQuestion.create!(
+  task: TASK4_TFC,
+  difficulty: 1,
+  question: 'Calcula el momento generado por una fuerza de {A} N aplicada a {B} metros del eje de rotación.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_TFC,
+  diagram_data: 'template3',
+  values: '{"forceMagnitude": [150, 200, 300], "longitud": [2, 3, 4]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
 # ------------------------------- ROZAMIENTO Y POLEAS (RZP) --------------------------------
 
 TASK1_RZP = Task.create(
@@ -711,6 +903,15 @@ TASK3_RZP = Task.create(
   task_type: 'numeric',
   status: 'in_progress',
   name: 'Tarea 11',
+  is_finished: false,
+  course_id: COURSE5.id
+)
+
+TASK4_RZP = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 12',
   is_finished: false,
   course_id: COURSE5.id
 )
@@ -904,8 +1105,8 @@ MCQ7_TASK2_RZP = MultiChoiceQuestion.create(
 
 NQ1_TASK3_RZP = NumericQuestion.create!(
   task: TASK3_RZP,
-  difficulty: 2,
-  question: 'Una viga horizontal de {A} metros de longitud soporta una carga puntual de {B} N aplicada en el centro. Encuentra las reacciones en los apoyos en ambos extremos de la viga.' ,
+  difficulty: 1,
+  question: 'Un bloque de {A} kg está en reposo en una pendiente con un ángulo de {B}°. El coeficiente de rozamiento estático es {C}. ¿Cuál es la fuerza mínima necesaria para iniciar el movimiento?' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
@@ -918,13 +1119,35 @@ NQ1_TASK3_RZP = NumericQuestion.create!(
 
 NumericTemplate.create!(
   numeric_question: NQ1_TASK3_RZP,
-  diagram_data: 'template7',
-  values: '{"forcePosition": [2, 4, 6], "forceMagnitude": [3, 4, 5]}',
+  diagram_data: 'template5',
+  values: '{"masa": [3, 4, 5], "angle": [15, 30, 45], "roce": [0.2, 0.4, 0.6]} ',
   magnitudes: '{"force": "N"}',
   created_at: Time.now,
   updated_at: Time.now
 )
 
+NQ2_TASK4_RZP = NumericQuestion.create!(
+  task: TASK4_RZP,
+  difficulty: 1,
+  question: 'Un bloque de {A} kg se encuentra en reposo sobre una superficie con un coeficiente de rozamiento estático de {B}. Determina la magnitud de la fuerza P necesaria para que una polea, con un coeficiente de rozamiento de {C}, comience a girar.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_RZP,
+  diagram_data: 'template6',
+  values: '{"masa": [3, 4, 5], "roce": [0.2, 0.4, 0.6], "roce_polea": [0.1, 0.2, 0.3]} ',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
 
 # ------------------------------------------------------------------
 # Para que los 3 estudiantes inicialmente tengan progreso 0 en los courses.

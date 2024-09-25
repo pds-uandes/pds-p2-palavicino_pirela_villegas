@@ -83,8 +83,22 @@ class NumericQuestionsController < ApplicationController
       set_template1_correct_answer
     elsif @diagram == 'template2'
       set_template2_correct_answer
+    elsif @diagram == 'template3'
+      set_template3_correct_answer
+    elsif @diagram == 'template4'
+      set_template4_correct_answer
+    elsif @diagram == 'template5'
+      set_template5_correct_answer
+    elsif @diagram == 'template6'
+      set_template6_correct_answer
     elsif @diagram == 'template7'
       set_template7_correct_answer
+    elsif @diagram == 'template8'
+      set_template8_correct_answer
+    elsif @diagram == 'template9'
+      set_template9_correct_answer
+    elsif @diagram == 'template10'
+      set_template10_correct_answer
     end
   end
 
@@ -110,15 +124,93 @@ class NumericQuestionsController < ApplicationController
     @numeric_question.update(correct_answer: @answer_template2)
   end
 
+  def set_template3_correct_answer
+    @longitud_3 = @parsed_values['longitud'].sample
+    @force_magnitude_3 = @parsed_values['forceMagnitude'].sample
+    @question_text_3 = @numeric_question.question.gsub('{A}', @force_magnitude_3.to_s).gsub('{B}', @longitud_3.to_s)
+    result_3 = 2
+    @answer_template3 = result_3.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template3)
+  end
+
+  def set_template4_correct_answer
+    @longitud_4 = @parsed_values['longitud'].sample
+    @force_magnitude_4 = @parsed_values['forceMagnitude'].sample
+    @question_text_4 = @numeric_question.question.gsub('{A}', @longitud_4.to_s).gsub('{B}', @force_magnitude_4.to_s)
+    result_4 = 2
+    @answer_template4 = result_4.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template4)
+  end
+
+  def set_template5_correct_answer
+    @masa_5 = @parsed_values['masa'].sample
+    @angle_5 = @parsed_values['angle'].sample
+    @roce_5 = @parsed_values['roce'].sample
+    @question_text_5 = @numeric_question.question.gsub('{A}', @masa_5.to_s).gsub('{B}', @angle_5.to_s).gsub('{C}', @roce_5.to_s)
+    result_5 = 2
+    @answer_template5 = result_5.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template5)
+  end
+
+  def set_template6_correct_answer
+    @masa_6 = @parsed_values['masa'].sample
+    @roce_6 = @parsed_values['roce'].sample
+    @roce_polea_6 = @parsed_values['roce_polea'].sample
+    @question_text_6 = @numeric_question.question.gsub('{A}', @masa_6.to_s).gsub('{B}', @roce_6.to_s).gsub('{C}', @roce_polea_6.to_s)
+    result_6 = 2
+    @answer_template6 = result_6.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template6)
+  end
+
   def set_template7_correct_answer
-    @forcePosition = @parsed_values['forcePosition'].sample
+    @forcePosition_7 = @parsed_values['forcePosition'].sample
     @force_magnitude_7 = @parsed_values['forceMagnitude'].sample
-    @question_text_7 = @numeric_question.question.gsub('{A}', @forcePosition.to_s).gsub('{B}', @force_magnitude_7.to_s)
+    @question_text_7 = @numeric_question.question.gsub('{A}', @forcePosition_7.to_s).gsub('{B}', @force_magnitude_7.to_s)
     result_7 = 2
     @answer_template7 = result_7.round(2)
 
     # Actualizar solo si es el diagrama correcto
     @numeric_question.update(correct_answer: @answer_template7)
+  end
+
+  def set_template8_correct_answer
+    @longitud_8 = @parsed_values['longitud'].sample
+    @force_magnitude_8 = @parsed_values['forceMagnitude'].sample
+    @question_text_8 = @numeric_question.question.gsub('{A}', @force_magnitude_8.to_s).gsub('{B}', @longitud_8.to_s)
+    result_8 = 2
+    @answer_template8 = result_8.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template8)
+  end
+
+  def set_template9_correct_answer
+    @masa_9 = @parsed_values['masa'].sample
+    @question_text_9 = @numeric_question.question.gsub('{A}', @masa_9.to_s)
+    result_9 = 2
+    @answer_template9 = result_9.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template9)
+  end
+
+  def set_template10_correct_answer
+    @masa_10 = @parsed_values['masa'].sample
+    @angle_10 = @parsed_values['angle'].sample
+    @question_text_10 = @numeric_question.question.gsub('{A}', @masa_10.to_s).gsub('{B}', @angle_10.to_s)
+    result_10 = 2
+    @answer_template10 = result_10.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template10)
   end
 
   def get_hint(counter)

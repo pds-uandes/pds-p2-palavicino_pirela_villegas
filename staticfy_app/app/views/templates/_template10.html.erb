@@ -6,10 +6,11 @@
   document.addEventListener('DOMContentLoaded', function() {
     const mysvg = document.getElementById('diagram-svg');
 
-    const angle = <%= @angle_5 %>; 
+    const angle = <%= @angle_10 %>; 
     const radian = angle * Math.PI / 180; 
-    const roce = <%= @roce_5 %>; 
-    const masa = <%= @masa_5 %>; 
+    const roce = 0.2; 
+    const masa = <%= @masa_10 %>;
+    const masa_diagrama = masa/25
 
     Diagramatics.default_diagram_style['stroke-width'] = 2;
     Diagramatics.default_textdata['font-size'] = 21;
@@ -19,26 +20,10 @@
     let plane = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.Vdir(radian).scale(10))
       .stroke('gray');
 
-    let sq = Diagramatics.square(0.75*masa).move_origin('bottom-center')
+    let sq = Diagramatics.circle(masa_diagrama).move_origin('bottom-center')
       .position(plane.parametric_point(0.5)).rotate(radian)
-      .fill('lightblue').stroke('none');
+      .fill('lightblue').stroke('black').strokewidth(2)
     let csq = sq.get_anchor('center-center');
-
-    let arrow_head_size = 0.12;
-
-    let vx = Diagramatics.V2(1, 0);
-    let vy = Diagramatics.V2(0, 1);
-    let vnx = Diagramatics.V2(-1, 0);
-    let vny = Diagramatics.V2(0, -1);
-
-    let forces_annotation = Diagramatics.diagram_combine( 
-      Diagramatics.annotation.vector(Diagramatics.Vdir(radian).scale(4*roce), `u = ${roce}`, Diagramatics.V2(0.0, -0.6), arrow_head_size)
-        .position(plane.parametric_point(0.6)),
-      Diagramatics.annotation.vector(Diagramatics.Vdir(radian).scale(2), 'F', Diagramatics.V2(-0.5, -1.0), arrow_head_size)
-        .move_origin(Diagramatics.Vdir(radian).scale(2))
-        .position(sq.parametric_point(0.5, 3)) 
-        .stroke('red').strokewidth(2).fill('red')
-    );
 
     let angle_annotation = Diagramatics.annotation.angle(
       [Diagramatics.V2(1, 0), Diagramatics.V2(0, 0), Diagramatics.Vdir(radian)], 
@@ -46,12 +31,12 @@
     );
 
     let masaTxt = Diagramatics.annotation.vector(Diagramatics.V2(0, 0), `${masa} Kg`, Diagramatics.V2(0, 0), 0)
-      .position(Diagramatics.V2(4, 4)).stroke('black').strokewidth(1).fill('black');
+      .position(Diagramatics.V2(2.5,5)).stroke('black').strokewidth(1).fill('black');
 
     let draw = (...diagrams) => {
       Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
     };
 
-    draw(horizontal, sq, masaTxt, plane, forces_annotation, angle_annotation);
+    draw(horizontal, sq, masaTxt, plane, angle_annotation);
   });
 </script>
