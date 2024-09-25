@@ -566,7 +566,7 @@ MCQ5_TASK2_CEE = MultiChoiceQuestion.create(
 NQ1_TASK3_CEE = NumericQuestion.create!(
   task: TASK3_CEE,
   difficulty: 1,
-  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Calcule la suma de las reacciones en los apoyos en ambos extremos de la viga.' ,
+  question: 'Una viga horizontal de 10 metros de longitud soporta una carga puntual de {B} N aplicada a {A} metros desde el incio. Calcule la fuerza vertical del apoyo fijo.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
@@ -589,7 +589,7 @@ NumericTemplate.create!(
 NQ2_TASK4_CEE = NumericQuestion.create!(
   task: TASK4_CEE,
   difficulty: 1,
-  question: 'Calcula la suma de todas las fuerzas externas e internas en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una viela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
+  question: 'Calcula la fuerza vertical del apoyo deslizante en una estructura isostática que consta de una viga de 9 metros con un apoyo empotrado, una viela, un apoyo deslizante, y una fuerza de {A} N aplicada a {B} metros del apoyo empotrado.' ,
   correct_answer: '20',
   tolerance: 0.1,
   unit: 'N',
@@ -862,7 +862,7 @@ NQ2_TASK4_TFC = NumericQuestion.create!(
   question: 'Calcula el momento generado por una fuerza de {A} N aplicada a {B} metros del eje de rotación.' ,
   correct_answer: '20',
   tolerance: 0.1,
-  unit: 'N',
+  unit: 'NM',
   hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
   hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
   hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
