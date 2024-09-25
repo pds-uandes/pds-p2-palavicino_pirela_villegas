@@ -64,6 +64,28 @@ class TasksController < ApplicationController
       render :show
     end
 
+    def create_incorrect
+      original_task = Task.find(params[:id])
+      # Recuperar preguntas incorrectamente respondidas
+      incorrect_question_ids = MultiChoiceAnswer.where(user_id: current_user.id, is_correct: false, multi_choice_question_id: original_task.multi_choice_questions.ids).pluck(:multi_choice_question_id)
+
+      # Crear una nueva tarea
+      new_task = Task.create!(
+        user_id: current_user.id,
+        task_type: 'multi_choice',
+        status: 'in_progress',
+        name: "Repetición de Tarea ##{original_task.id}",
+        is_finished: false,
+        course_id: original_task.course_id
+      )
+
+      # Asociar las preguntas incorrectas a la nueva tarea
+      incorrect_question_ids.each do |question_id|
+        MultiChoiceQuestion.find(question_id).update!(task_id: new_task.id)
+      end
+
+      redirect_to courses_path, 'Se ha creado una nueva tarea con las preguntas incorrectas.'
+    end
 
 
     # GET /tasks/1
@@ -71,12 +93,10 @@ class TasksController < ApplicationController
     def show
       @task = Task.find(params[:id])
 
-      # Solo cargamos las preguntas de opción múltiple si el tipo de tarea es 'Multi Choice'
       if @task.task_type == 'multi_choice'
         @multi_choice_questions = MultiChoiceQuestion.where(task_id: @task.id)
         @multi_choice_questions_len = @multi_choice_questions.size
 
-        # Crear un hash para almacenar las opciones de cada pregunta
         @questions_with_choices = {}
 
         # Parsear las alternativas de cada pregunta

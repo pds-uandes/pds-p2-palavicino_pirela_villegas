@@ -12,33 +12,14 @@
               </div>
               <h5 class="mb-3" style="font-weight: 700;"><%= question.question %></h5>
               
-              <div class="form-check" style="margin-bottom: 0.75rem;">
-                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice1_<%= index %>" value="<%= @questions_with_choices[question.id][:choice1]['value'] %>">
-                <label class="form-check-label" for="choice1_<%= index %>" style="font-size: 1rem;">
-                  <%= @questions_with_choices[question.id][:choice1]['value'] %>
-                </label>
-              </div>
-              
-              <div class="form-check" style="margin-bottom: 0.75rem;">
-                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice2_<%= index %>" value="<%= @questions_with_choices[question.id][:choice2]['value'] %>">
-                <label class="form-check-label" for="choice2_<%= index %>" style="font-size: 1rem;">
-                  <%= @questions_with_choices[question.id][:choice2]['value'] %>
-                </label>
-              </div>
-              
-              <div class="form-check" style="margin-bottom: 0.75rem;">
-                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice3_<%= index %>" value="<%= @questions_with_choices[question.id][:choice3]['value'] %>">
-                <label class="form-check-label" for="choice3_<%= index %>" style="font-size: 1rem;">
-                  <%= @questions_with_choices[question.id][:choice3]['value'] %>
-                </label>
-              </div>
-              
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice4_<%= index %>" value="<%= @questions_with_choices[question.id][:choice4]['value'] %>">
-                <label class="form-check-label" for="choice4_<%= index %>" style="font-size: 1rem;">
-                  <%= @questions_with_choices[question.id][:choice4]['value'] %>
-                </label>
-              </div>
+              <% (1..4).each do |choice_number| %>
+                <div class="form-check" style="margin-bottom: 0.75rem;">
+                  <input class="form-check-input" type="radio" name="choice_<%= index %>" id="choice<%= choice_number %>_<%= index %>" value="<%= @questions_with_choices[question.id][:"choice#{choice_number}"]['value'] %>">
+                  <label class="form-check-label" for="choice<%= choice_number %>_<%= index %>" style="font-size: 1rem;">
+                    <%= @questions_with_choices[question.id][:"choice#{choice_number}"]['value'] %>
+                  </label>
+                </div>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -64,11 +45,11 @@
 
             <% if incorrect_answers > 0 %>
               <p class="card-text text-danger">
-                ¿Quieres intentar de nuevo las preguntas que fallaste?
+                Has fallado <%= incorrect_answers %> preguntas. ¿Quieres crear una nueva tarea con las preguntas incorrectas?
               </p>
-              <div class="text-center mt-4">
-                <%= link_to 'Rehacer preguntas incorrectas', retry_incorrect_task_path(@task), class: 'btn btn-warning' %>
-              </div>
+<div class="text-center mt-4">
+  <%= button_to 'Crear nueva tarea con preguntas incorrectas', create_incorrect_task_path(@task), method: :post, class: 'btn btn-warning' %>
+</div>
             <% end %>
 
             <div class="text-center mt-4">
@@ -98,7 +79,6 @@ document.addEventListener('turbo:load', () => {
   const questions = document.querySelectorAll('.question-item');
   const nextBtn = document.getElementById('next-btn');
   const skipBtn = document.getElementById('skip-btn');
-  const retryBtn = document.getElementById('retry-btn');
   let currentIndex = 0;
   let correctAnswers = 0;
   let wrongAnswers = 0;
@@ -181,11 +161,12 @@ document.addEventListener('turbo:load', () => {
               <strong>Incorrectas:</strong> ${wrongAnswers}<br>
               <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
             </p>
-            ${wrongAnswers > 0 ? `
-            <div class="text-center mt-4">
-              <%= link_to 'Rehacer preguntas incorrectas', retry_incorrect_task_path(@task), class: 'btn btn-warning' %>
-            </div>
+              ${wrongAnswers > 0 ? `
+              <div class="text-center mt-4">
+                <%= button_to 'Crear nueva tarea con preguntas incorrectas', create_incorrect_task_path(@task), method: :post, class: 'btn btn-warning' %>
+              </div>
             ` : ''}
+
             <div class="text-center mt-4">
               <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
             </div>
@@ -203,11 +184,5 @@ document.addEventListener('turbo:load', () => {
       showQuestion(currentIndex);
     }
   });
-
-  if (retryBtn) {
-    retryBtn.addEventListener('click', () => {
-      location.href = `/tasks/${<%= @task.id %>}/retry_incorrect`;
-    });
-  }
 });
 </script>
