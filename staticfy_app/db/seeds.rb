@@ -167,6 +167,72 @@ MCQ4_TASK1_VEI = MultiChoiceQuestion.create(
   correct_answer: 'Biela'
 )
 
+MCQ5_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 0,
+  question: '¿Qué es una biela en el contexto de vínculos?',
+  choice_1: '{"value": "Un tipo de conexión que permite el movimiento en todas las direcciones.", "why_not": "Una biela no permite movimiento en todas las direcciones"}',
+  choice_2: '{"value": "Una restricción que solo permite el desplazamiento longitudinal en la dirección de la biela.", "why_not": ""}',
+  choice_3: '{"value": "Un tipo de apoyo que restringe el giro pero permite el desplazamiento.", "why_not": "Una biela no está diseñada para restringir el giro"}',
+  choice_4: '{"value": "Un dispositivo que restringe todos los grados de libertad de un cuerpo.", "why_not": "Una biela no restringe todos los grados de libertad"}',
+  correct_answer: 'Una restricción que solo permite el desplazamiento longitudinal en la dirección de la biela.'
+)
+
+MCQ6_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 0,
+  question: '¿Qué tipo de conexión no restringe el giro pero sí los desplazamientos en ambas direcciones?',
+  choice_1: '{"value": "Conexión rígida", "why_not": "Una conexión rígida restringe tanto el giro como los desplazamientos en todas las direcciones, no solo los desplazamientos."}',
+  choice_2: '{"value": "Biela", "why_not": "Una biela permite el desplazamiento longitudinal en su dirección, pero no está diseñada para restringir los desplazamientos en ambas direcciones ni el giro."}',
+  choice_3: '{"value": "Conexión rotulada", "why_not": ""}',
+  choice_4: '{"value": "Apoyo deslizante", "why_not": "Un apoyo deslizante permite el deslizamiento en una dirección y restringe el movimiento en la dirección perpendicular."}',
+  correct_answer: 'Conexión rotulada'
+)
+
+MCQ7_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 1,
+  question: 'Una conexión rotulada genera ______ vínculos pero permite el giro.',
+  choice_1: '{"value": "Uno", "why_not": "Una conexión rotulada no restringe únicamente un grado de libertad; más bien, afecta dos direcciones del movimiento."}',
+  choice_2: '{"value": "Dos", "why_not": ""}',
+  choice_3: '{"value": "Tres", "why_not": "Una conexión rotulada no restringe tres grados de libertad; se limita a restringir dos direcciones y permitir el giro."}',
+  choice_4: '{"value": "Ningún", "why_not": "Una conexión rotulada no está diseñada para no generar vínculos; efectivamente genera restricciones en los desplazamientos."}',
+  correct_answer: 'Dos'
+)
+
+MCQ8_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 1,
+  question: 'Un apoyo empotrado restringe tanto los desplazamientos como el ______ del cuerpo.',
+  choice_1: '{"value": "Peso", "why_not": "El peso es una fuerza que actúa sobre el cuerpo debido a la gravedad, pero no está relacionado con la restricción del movimiento proporcionada por un apoyo empotrado."}',
+  choice_2: '{"value": "Giro", "why_not": ""}',
+  choice_3: '{"value": "Centro de masa", "why_not": "El centro de masa es un punto teórico en el cuerpo donde se puede considerar que actúa toda la masa."}',
+  choice_4: '{"value": "Área", "why_not": "El área se refiere a la medida de la superficie del cuerpo, y no es relevante en el contexto de las restricciones de un apoyo empotrado."}',
+  correct_answer: 'Giro'
+)
+
+MCQ9_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 1,
+  question: 'Un apoyo empotrado restringe tanto los desplazamientos como el ______ del cuerpo.',
+  choice_1: '{"value": "Peso", "why_not": "El peso es una fuerza que actúa sobre el cuerpo debido a la gravedad, pero no está relacionado con la restricción del movimiento proporcionada por un apoyo empotrado."}',
+  choice_2: '{"value": "Giro", "why_not": ""}',
+  choice_3: '{"value": "Centro de masa", "why_not": "El centro de masa es un punto teórico en el cuerpo donde se puede considerar que actúa toda la masa."}',
+  choice_4: '{"value": "Área", "why_not": "El área se refiere a la medida de la superficie del cuerpo, y no es relevante en el contexto de las restricciones de un apoyo empotrado."}',
+  correct_answer: 'Giro'
+)
+
+MCQ10_TASK1_VEI = MultiChoiceQuestion.create(
+  task_id: TASK1_VEI.id,
+  difficulty: 1,
+  question: '¿Cuál es la característica principal de un apoyo deslizante?',
+  choice_1: '{"value": "Permite el desplazamiento en todas las direcciones, pero restringe el giro.", "why_not": "Un apoyo deslizante no permite el desplazamiento en todas las direcciones; restringe el desplazamiento en una dirección."}',
+  choice_2: '{"value": "Restringe el desplazamiento en una dirección y permite el deslizamiento en la otra.", "why_not": ""}',
+  choice_3: '{"value": "Restringe tanto el desplazamiento como el giro.", "why_not": "Un apoyo deslizante no restringe el desplazamiento en ambas direcciones."}',
+  choice_4: '{"value": "No restringe el desplazamiento ni el giro.", "why_not": "Un apoyo deslizante restringe el desplazamiento en una dirección."}',
+  correct_answer: 'Restringe el desplazamiento en una dirección y permite el deslizamiento en la otra.'
+)
+
 TASK2_VEI = Task.create(
   user_id: teacher.id,
   task_type: 'numeric',
@@ -356,6 +422,17 @@ MCQ9_TASK1_DCL = MultiChoiceQuestion.create(
   choice_3: '{"value": "Como un vector perpendicular al plano.", "why_not": "Un vector perpendicular puede representar fuerzas, pero no captura la naturaleza de un momento aplicado."}',
   choice_4: '{"value": "Como un punto sin dirección.", "why_not": "Un punto sin dirección no proporciona información útil sobre la aplicación de un momento."}',
   correct_answer: 'Como una flecha curva alrededor de un punto.'
+)
+
+MCQ10_TASK1_DCL = MultiChoiceQuestion.create(
+  task_id: TASK1_DCL.id,
+  difficulty: 0,
+  question: 'En un diagrama de cuerpo libre, ¿qué se debe tener en cuenta al representar las fuerzas? ',
+  choice_1: '{"value": "La dirección y el color de las fuerzas.", "why_not": "El color no tiene relevancia física en un diagrama de cuerpo libre (DCL)."}',
+  choice_2: '{"value": "Sólo la magnitud de las fuerzas.", "why_not": "En un DCL, no solo es importante la magnitud de las fuerzas."}',
+  choice_3: '{"value": "La magnitud, dirección y punto de aplicación de las fuerzas.", "why_not": ""}',
+  choice_4: '{"value": "El momento angular asociado a cada fuerza.", "why_not": "Los momentos angulares son importantes en ciertos análisis dinámicos, pero en un DCL no."}',
+  correct_answer: 'La magnitud, dirección y punto de aplicación de las fuerzas.'
 )
 
 NQ1_TASK2_DCL = NumericQuestion.create!(
@@ -1150,13 +1227,25 @@ NumericTemplate.create!(
 )
 
 # ------------------------------------------------------------------
-# Para que los 3 estudiantes inicialmente tengan progreso 0 en los courses.
-# Esto se hace también cada vez que se crea un nuevo user en su modelo.
+
+# Este usuario tiene score 100% en todos los modulos, por lo que puede acceder a todos.
+teacher_music = User.create(
+  name: 'Rodrigo Music',
+  email: 'rmusic@miuandes.cl',
+  role: 'teacher',
+  password: '123456'
+)
 
 [student1, student2, student3].each do |student|
   Course.all.each do |crs|
     unless UserCourse.exists?(user: student, course: crs)
       UserCourse.create(user: student, course: crs, progress: 0)
     end
+  end
+end
+
+Course.all.each do |crs|
+  unless UserCourse.exists?(user: teacher_music, course: crs)
+    UserCourse.create(user: teacher_music, course: crs, progress: 10)
   end
 end

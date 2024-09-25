@@ -32,24 +32,26 @@ class NumericQuestionsController < ApplicationController
     @unit_of_measurement = params[:unit_of_measurement].to_s.upcase
     correct_answer = @numeric_question.correct_answer.to_f
     correct_unit = @numeric_question.unit.to_s.upcase
+    user_progress = UserProgress.find_by(user_id: current_user.id)
+    user_task = UserTask.find_or_initialize_by(user_id: current_user.id, task_id: @numeric_question.task_id)
+    numeric_question_course = @numeric_question.task.course
+    user_course = UserCourse.find_or_initialize_by(user_id: current_user.id, course_id: numeric_question_course.id)
 
     if (@user_answer - correct_answer).abs <= @numeric_question.tolerance && @unit_of_measurement == correct_unit
       session[:is_correct] = true
 
       # Aqui se marca como finalizada la tarea con la nueva tabla user_task
-      user_task = UserTask.find_or_initialize_by(user_id: current_user.id, task_id: @numeric_question.task_id)
       user_task.is_finished = true
       user_task.save
 
       # Sumar puntaje para su avance en el Course y global
-      numeric_question_course = @numeric_question.task.course
-      user_course = UserCourse.find_or_initialize_by(user_id: current_user.id, course_id: numeric_question_course.id)
       user_course.progress += 3
-      user_course.save
-
-      user_progress = UserProgress.find_by(user_id: current_user.id)
       user_progress.score += 3
+
+      user_course.progress = [user_course.progress, 10].min
+
       user_progress.save
+      user_course.save
 
       flash[:notice] = "¡Respuesta correcta! Tu respuesta fue: #{@user_answer}. La respuesta correcta es: #{correct_answer}"
       session[:attempts] = 0
@@ -63,6 +65,16 @@ class NumericQuestionsController < ApplicationController
       else
         flash[:alert] = "Has agotado los hints!"
         session[:attempts] = 0
+
+        user_course.progress -= 3
+        user_progress.score -= 3
+
+        user_course.progress = [user_course.progress, 0].max
+        user_progress.score = [user_progress.score, 0].max
+
+        user_progress.save
+        user_course.save
+
         redirect_to show_result_numeric_question_path(@numeric_question)
       end
     end

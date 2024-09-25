@@ -13,9 +13,13 @@
     <% user_course4 = UserCourse.find_by(user_id: current_user.id, course_id: course4.id) %>
     <% user_course5 = UserCourse.find_by(user_id: current_user.id, course_id: course5.id) %>
 
-    <% course3_enabled = user_course1.progress > 7 && user_course2.progress > 7 %>
-    <% course4_enabled = course3_enabled && user_course3.progress > 7 %>
-    <% course5_enabled = course4_enabled && user_course4.progress > 7 %>
+    <% if current_user.role == 'teacher' %>
+      <% course3_enabled = course4_enabled = course5_enabled = true %>
+    <% else %>
+      <% course3_enabled = user_course1.progress > 7 && user_course2.progress > 7 %>
+      <% course4_enabled = course3_enabled && user_course3.progress > 7 %>
+      <% course5_enabled = course4_enabled && user_course4.progress > 7 %>
+    <% end %>
 
     <% @courses.each_with_index do |course, index| %>
       <% user_course = UserCourse.find_by(user_id: current_user.id, course_id: course.id) %>
@@ -23,11 +27,14 @@
       <% if (course.id == course1.id || course.id == course2.id) || 
            (course.id == course3.id && course3_enabled) || 
            (course.id == course4.id && course4_enabled) || 
-           (course.id == course5.id && course5_enabled) %>
+           (course.id == course5.id && course5_enabled) || current_user.role == 'teacher' %>
 
         <div class="course-card" style="background-color: #28a745; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px; cursor: pointer;" onclick="toggleTasks(<%= index %>)">
           <div class="course-header" style="flex: 1;">
-            <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
+            <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700">
+              <%= course.name %> 
+              <span style="margin-left: 5px; font-weight: 800"><%= [UserCourse.find_by(user_id: current_user.id, course_id: course.id).progress * 10, 100].min %>%</span>
+            </h2>
             <p class="course-description" style="font-size: 1rem; margin-bottom: 15px; margin-right: 10px"><%= course.description %></p>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
               <path d="M1.5 5.5l7 7 7-7H1.5z"/>
@@ -63,13 +70,13 @@
         <div class="course-card" style="background-color: #dc3545; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; color: white; width: 100%; max-width: 700px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
           <div class="course-header" style="flex: 1;">
             <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 700"><%= course.name %></h2>
-            <p style="color: lightgray;">Este curso no está habilitado.</p>
+            <p style="color: lightgray;">Este curso no está habilitado. Debes tener mínimo 80% de progreso en los módulos anteriores.</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
               <path d="M2.5 0l1 1h9l1-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zm0 1v1h11v-1h-11zM0 3v10h16V3H0zm1 1h14v8H1V4z"/>
             </svg>
           </div>
         </div>
-        
+
         <!-- Ocultar las tareas para cursos deshabilitados -->
         <div id="tasks-<%= index %>" class="game-path" style="display: none; margin-bottom: 20px;">
           <% course.tasks.each_with_index do |task, task_index| %>
