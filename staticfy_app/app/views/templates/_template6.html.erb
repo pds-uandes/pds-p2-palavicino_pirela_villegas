@@ -1,0 +1,55 @@
+<svg id="diagram-svg" width="500" height="400"></svg>
+
+<script type="module">
+  import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mysvg = document.getElementById('diagram-svg');
+
+    let porigin = Diagramatics.V2(0, 0);
+    let ppulley = Diagramatics.V2(-0.4, 0.6);
+
+    let pulley_radius = 0.6;
+    let pulley = Diagramatics.circle(pulley_radius).position(ppulley)
+      .fill('lightgrey').stroke('grey').strokewidth(2);
+
+    let floor = Diagramatics.rectangle(5, 0.2)
+      .move_origin('bottom-right').position(Diagramatics.V2(5, 0))
+      .fill('lightgray').stroke('none');
+
+    let wall = Diagramatics.rectangle(0.2, -3) 
+      .move_origin('bottom-right')
+      .position(Diagramatics.V2(0.2, -3)) 
+      .fill('lightgray').stroke('none');
+
+    let pBox = Diagramatics.V2(3, 0.2);
+    let box = Diagramatics.square(2)
+      .move_origin('bottom-center')
+      .position(pBox)
+      .fill('lightblue').stroke('none');
+
+    let rope = Diagramatics.line(Diagramatics.V2(-0.3, 1.2), box.get_anchor('center-left'))
+      .stroke('black').strokewidth(1);
+
+    const arrow_head_size = 0.15;
+    const positionOfForce = Diagramatics.V2(-1, 0.5); 
+    const F_direction = Diagramatics.Vdir(-Math.PI / 2).scale(2);
+    const F = Diagramatics.annotation.vector(F_direction, ' P', Diagramatics.V2(-0.5, 0), arrow_head_size)
+      .position(positionOfForce)
+      .stroke('black').strokewidth(1).fill('black');
+
+
+    let forceDirection = Diagramatics.V2(1, 0).scale(2);
+    let forces_annotation = Diagramatics.annotation.vector(forceDirection, 'u = 0.4', Diagramatics.V2(0.0, -0.3), arrow_head_size)
+      .position(Diagramatics.V2(3, 0.2)).stroke('black').strokewidth(1).fill('black');
+
+    let annotationText = Diagramatics.annotation.vector(Diagramatics.V2(0, 0), 'us = 0.4', Diagramatics.V2(0.0, -0.3), 0)
+      .position(Diagramatics.V2(-1, 1.7)).stroke('black').strokewidth(1).fill('black');
+  
+    let draw = (...diagrams) => {
+      Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+    };
+
+    draw(floor, wall, pulley, box, rope, F, forces_annotation, annotationText);
+  });
+</script>

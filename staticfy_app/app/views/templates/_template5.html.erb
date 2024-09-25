@@ -1,0 +1,53 @@
+<svg id="diagram-svg" width="500" height="400"></svg>
+
+<script type="module">
+  import * as Diagramatics from 'https://cdn.jsdelivr.net/npm/diagramatics@1.5/dist/diagramatics.min.js';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mysvg = document.getElementById('diagram-svg');
+
+    Diagramatics.default_diagram_style['stroke-width'] = 2;
+    Diagramatics.default_textdata['font-size'] = 21;
+    let angle = Diagramatics.to_radian(30); 
+
+    let horizontal = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.V2(8, 0))
+      .stroke('gray').strokedasharray([5, 5]);
+    let plane = Diagramatics.line(Diagramatics.V2(0, 0), Diagramatics.Vdir(angle).scale(10))
+      .stroke('gray');
+
+    let sq = Diagramatics.square(4).move_origin('bottom-center')
+      .position(plane.parametric_point(0.5)).rotate(angle)
+      .fill('lightblue').stroke('none');
+    let csq = sq.get_anchor('center-center');
+
+    let arrow_head_size = 0.12;
+
+    let vx = Diagramatics.V2(1, 0);
+    let vy = Diagramatics.V2(0, 1);
+    let vnx = Diagramatics.V2(-1, 0);
+    let vny = Diagramatics.V2(0, -1);
+
+    let forces_annotation = Diagramatics.diagram_combine(
+      Diagramatics.annotation.vector(vny.scale(3.5), 'Mg', Diagramatics.V2(0.6, 0.2), arrow_head_size)
+        .position(csq), 
+      Diagramatics.annotation.vector(Diagramatics.Vdir(angle + Math.PI / 2).scale(5), 'N', Diagramatics.V2(0.6, 0.2), arrow_head_size)
+        .position(plane.parametric_point(0.6)), 
+      Diagramatics.annotation.vector(Diagramatics.Vdir(angle).scale(2), 'u = 0.4', Diagramatics.V2(0.0, -0.6), arrow_head_size)
+        .position(plane.parametric_point(0.6)),
+      Diagramatics.annotation.vector(Diagramatics.Vdir(angle).scale(2), 'F', Diagramatics.V2(-0.5, -1.0), arrow_head_size)
+        .move_origin(Diagramatics.Vdir(angle).scale(2))
+        .position(sq.parametric_point(0.5, 3)) 
+    );
+
+    let angle_annotation = Diagramatics.annotation.angle(
+      [Diagramatics.V2(1, 0), Diagramatics.V2(0, 0), Diagramatics.Vdir(angle)], 
+      '\\theta', 1, 1.5
+    );
+
+    let draw = (...diagrams) => {
+      Diagramatics.draw_to_svg(mysvg, Diagramatics.diagram_combine(...diagrams));
+    };
+
+    draw(horizontal, sq, plane, forces_annotation, angle_annotation);
+  });
+</script>
