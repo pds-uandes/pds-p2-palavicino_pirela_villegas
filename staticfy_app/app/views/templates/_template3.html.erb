@@ -6,10 +6,10 @@
   document.addEventListener('DOMContentLoaded', function() {
     const mysvg = document.getElementById('diagram-svg');
     
-    const forceMagnitude = 5; 
+    const forceMagnitude = <%= @force_magnitude_3 %>;
     const length = 10;
-    const length_2 = 3; 
-    const distanceFromCenter = 4; 
+    const length_2 = 3;
+    const distanceFromCenter = <%= @longitud_3 %>;
 
     function updateDiagram() {
       mysvg.innerHTML = ''; 
@@ -35,7 +35,7 @@
 
       const arrow_head_size = 0.15;
       const positionOfForce = Diagramatics.V2(length / 2 + distanceFromCenter, 0.433);  
-      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude); 
+      const F_direction = Diagramatics.Vdir(Math.PI / 2).scale(-forceMagnitude/100); 
       const F = Diagramatics.annotation.vector(F_direction, `${forceMagnitude} N`, Diagramatics.V2(1, 1), arrow_head_size)
         .position(positionOfForce)
         .stroke('red').strokewidth(2).fill('red');
@@ -51,7 +51,7 @@
       const midPoint = Diagramatics.V2(length / 2, 1); 
       const forcePoint = Diagramatics.V2(length / 2 + distanceFromCenter, 1); 
 
-      const distanceAnnotation = Diagramatics.annotation.length(midPoint, forcePoint, '3 m', -0.3, 0.5) 
+      const distanceAnnotation = Diagramatics.annotation.length(midPoint, forcePoint, `${distanceFromCenter} m`, -0.3, 0.5) 
 
       const joint_circle = Diagramatics.circle(0.25)
         .position(Diagramatics.V2(length / 2, 0))

@@ -75,6 +75,8 @@ class NumericQuestionsController < ApplicationController
       set_template1_correct_answer
     elsif @diagram == 'template2'
       set_template2_correct_answer
+    elsif @diagram == 'template3'
+      set_template3_correct_answer
     elsif @diagram == 'template4'
       set_template4_correct_answer
     elsif @diagram == 'template5'
@@ -106,6 +108,17 @@ class NumericQuestionsController < ApplicationController
 
     # Actualizar solo si es el diagrama correcto
     @numeric_question.update(correct_answer: @answer_template2)
+  end
+
+  def set_template3_correct_answer
+    @longitud_3 = @parsed_values['longitud'].sample
+    @force_magnitude_3 = @parsed_values['forceMagnitude'].sample
+    @question_text_3 = @numeric_question.question.gsub('{A}', @force_magnitude_3.to_s).gsub('{B}', @longitud_3.to_s)
+    result_3 = 2
+    @answer_template3 = result_3.round(2)
+
+    # Actualizar solo si es el diagrama correcto
+    @numeric_question.update(correct_answer: @answer_template3)
   end
 
   def set_template4_correct_answer

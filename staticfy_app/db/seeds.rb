@@ -519,6 +519,15 @@ TASK3_TFC = Task.create(
   course_id: COURSE4.id
 )
 
+TASK4_TFC = Task.create(
+  user_id: teacher.id,
+  task_type: 'numeric',
+  status: 'in_progress',
+  name: 'Tarea 10',
+  is_finished: false,
+  course_id: COURSE4.id
+)
+
 MCQ1_TASK1_TFC = MultiChoiceQuestion.create(
   task_id: TASK1_TFC.id,
   difficulty: 0,
@@ -729,6 +738,28 @@ NumericTemplate.create!(
   updated_at: Time.now
 )
 
+NQ2_TASK4_TFC = NumericQuestion.create!(
+  task: TASK4_TFC,
+  difficulty: 1,
+  question: 'Calcula el momento generado por una fuerza de {A} N aplicada a {B} metros del eje de rotación.' ,
+  correct_answer: '20',
+  tolerance: 0.1,
+  unit: 'N',
+  hint_1: '¡No olvides! Los apoyos fijos (🔺) ejercen fuerza tanto en el eje horizontal como en el vertical.',
+  hint_2: 'Los apoyos deslizantes (⭕️) solo aplican una fuerza. ¿En qué dirección crees que es?',
+  hint_3: '¡Recuerda! Las fuerzas diagonales se pueden descomponer en componentes horizontales y verticales. ¿Estás usando el coseno o el seno?',
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
+NumericTemplate.create!(
+  numeric_question: NQ2_TASK4_TFC,
+  diagram_data: 'template3',
+  values: '{"forceMagnitude": [150, 200, 300], "longitud": [2, 3, 4]}',
+  magnitudes: '{"force": "N"}',
+  created_at: Time.now,
+  updated_at: Time.now
+)
 # ------------------------------- ROZAMIENTO Y POLEAS (RZP) --------------------------------
 
 TASK1_RZP = Task.create(
