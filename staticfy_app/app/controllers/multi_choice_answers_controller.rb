@@ -17,8 +17,14 @@ class MultiChoiceAnswersController < ApplicationController
   end
 
   def index
-    @multiChoiceAnswers = MultiChoiceAnswer.all
+    if params[:course_id]
+      @multi_choice_answers_filtered = MultiChoiceAnswer.joins(multi_choice_question: { task: :course })
+                                                        .where(courses: { id: params[:course_id] })
+    else
+      @multi_choice_answers = MultiChoiceAnswer.all
+    end
   end
+
 
   def edit
     if current_multi_choice_answer.id == params[:id]

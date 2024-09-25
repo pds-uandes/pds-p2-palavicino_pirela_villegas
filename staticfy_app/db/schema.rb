@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_25_002243) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_021304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +92,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_25_002243) do
     t.datetime "updated_at", null: false
     t.string "name", null: false
     t.boolean "is_finished", default: false, null: false
-    t.integer "wrong_counter"
     t.bigint "course_id"
     t.index ["course_id"], name: "index_tasks_on_course_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
@@ -124,7 +123,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_25_002243) do
     t.boolean "is_finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "wrong_counter"
     t.index ["task_id"], name: "index_user_tasks_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_user_tasks_on_user_id_and_task_id", unique: true
     t.index ["user_id"], name: "index_user_tasks_on_user_id"
   end
 
