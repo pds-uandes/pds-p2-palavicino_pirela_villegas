@@ -93,10 +93,9 @@ document.addEventListener('turbo:load', () => {
     const questionId = questionElement.dataset.id;
 
     let isCorrect = selectedChoice === correctAnswer;
-    const correctAnswersCount = isCorrect ? correctAnswers++ : wrongAnswers++;
+    isCorrect ? correctAnswers++ : wrongAnswers++;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    // Envío de la respuesta
     fetch(`/multi_choice_answers`, {
       method: 'POST',
       headers: {
@@ -111,15 +110,22 @@ document.addEventListener('turbo:load', () => {
           is_correct: isCorrect
         }
       })
+    }).then(response => {
+      if (response.ok) {
+        if (isCorrect) {
+          showCustomAlert("Respuesta correcta! ✅");
+        } else {
+          const choiceNumber = Array.from(questionElement.querySelectorAll('input[type="radio"]')).findIndex(input => input === selectedOption) + 1;
+          const whyNotMessage = <%= @questions_with_choices.to_json.html_safe %>[questionId][`choice${choiceNumber}`].why_not;
+          showCustomAlert(`${whyNotMessage || "No hay explicación disponible."}`);
+        }
+      } else {
+        showCustomAlert("Error al enviar la respuesta.");
+      }
+    }).catch(error => {
+      console.error('Error en la solicitud:', error);
+      showCustomAlert("Ocurrió un error al enviar la respuesta.");
     });
-
-    if (isCorrect) {
-      showCustomAlert("Respuesta correcta! ✅");
-    } else {
-      const choiceNumber = Array.from(questionElement.querySelectorAll('input[type="radio"]')).findIndex(input => input === selectedOption) + 1;
-      const whyNotMessage = <%= @questions_with_choices.to_json.html_safe %>[questionId][`choice${choiceNumber}`].why_not;
-      showCustomAlert(`${whyNotMessage || "No hay explicación disponible."}`);
-    }
 
     currentIndex++;
 
@@ -128,7 +134,6 @@ document.addEventListener('turbo:load', () => {
       nextBtn.textContent = 'Siguiente';
     } else {
       taskFinished = true;
-      // Envío para finalizar la tarea
       fetch(`/tasks/${<%= @task.id %>}/finish`, { 
         method: 'POST', 
         body: JSON.stringify({ correctAnswers, wrongAnswers }),
@@ -151,7 +156,6 @@ document.addEventListener('turbo:load', () => {
               <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
             </p>
 
-
             <div class="text-center align-items-center align-content-center mt-4">
               <%= button_to courses_path, method: :get, class: 'btn btn-outline-success d-flex align-items-center justify-content-center' do %>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16" style="margin-right: 8px;">
@@ -170,11 +174,26 @@ document.addEventListener('turbo:load', () => {
   });
 
   skipBtn.addEventListener('click', () => {
-    currentIndex++;
+    const courseId = <%= @task.course_id %>; 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    if (currentIndex < questions.length) {
-      showQuestion(currentIndex);
-    }
+    fetch(`/user_courses/reduce_progress`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      body: JSON.stringify({
+        course_id: courseId,
+        user_id: <%= current_user.id %>
+      })
+    }).then(response => {
+      if (response.ok) {
+        window.location.href = "<%= courses_path %>";
+      }
+    })
   });
+
+  showQuestion(currentIndex);
 });
 </script>

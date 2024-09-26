@@ -18,6 +18,16 @@ class UserCoursesController < ApplicationController
     @user_courses = UserCourse.all
   end
 
+  def reduce_progress
+    user_course = UserCourse.find_by(user_id: params[:user_id], course_id: params[:course_id])
+
+    if user_course && user_course.progress > 0
+      user_course.update(progress: user_course.progress - 1)
+    else
+      render json: { message: 'No se pudo reducir el progreso' }, status: :unprocessable_entity
+    end
+  end
+
   def edit
     @user_course = UserCourse.find(params[:id])
   end

@@ -47,4 +47,5 @@ Rails.application.routes.draw do
   root "static_pages#home"
 
   post '/tasks/:task_id/submit_answer', to: 'tasks#submit_answer', as: 'submit_answer'
+  post 'user_courses/reduce_progress', to: 'user_courses#reduce_progress'
 end
