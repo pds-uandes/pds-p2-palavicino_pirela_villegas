@@ -44,6 +44,7 @@
 
         <div id="tasks-<%= index %>" class="game-path" style="display: block; margin-bottom: 20px;">
           <% course.tasks.each_with_index do |task, task_index| %>
+            <% if task.multi_choice_questions.any? || task.numeric_question %>
             <div class="task-node">
               <div class="task-connector"></div>
 
@@ -65,6 +66,7 @@
               <% end %>              
             <% end %>
             </div>
+            <% end %>
           <% end %>
         </div>
       <% else %>
