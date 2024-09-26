@@ -42,19 +42,6 @@
               <strong>Incorrectas:</strong> <%= incorrect_answers %><br>
               <strong>Porcentaje de acierto:</strong> <%= success_rate %>%
             </p>
-
-            <% if incorrect_answers > 0 %>
-              <p class="card-text text-danger">
-                Has fallado <%= incorrect_answers %> preguntas. ¿Quieres crear una nueva tarea con las preguntas incorrectas?
-              </p>
-<div class="text-center mt-4">
-  <%= button_to 'Crear nueva tarea con preguntas incorrectas', create_incorrect_task_path(@task), method: :post, class: 'btn btn-warning' %>
-</div>
-            <% end %>
-
-<div class="text-center mt-4">
-  <%= button_to 'Volver al índice de cursos', courses_path, method: :get, class: 'btn' %>
-</div>
           </div>
         </div>
       <% end %>
@@ -129,7 +116,9 @@ document.addEventListener('turbo:load', () => {
     if (isCorrect) {
       showCustomAlert("Respuesta correcta! ✅");
     } else {
-      showCustomAlert("Respuesta incorrecta! ❌");
+      const choiceNumber = Array.from(questionElement.querySelectorAll('input[type="radio"]')).findIndex(input => input === selectedOption) + 1;
+      const whyNotMessage = <%= @questions_with_choices.to_json.html_safe %>[questionId][`choice${choiceNumber}`].why_not;
+      showCustomAlert(`${whyNotMessage || "No hay explicación disponible."}`);
     }
 
     currentIndex++;
@@ -161,14 +150,17 @@ document.addEventListener('turbo:load', () => {
               <strong>Incorrectas:</strong> ${wrongAnswers}<br>
               <strong>Porcentaje de acierto:</strong> ${(correctAnswers / questions.length * 100).toFixed(2)}%
             </p>
-              ${wrongAnswers > 0 ? `
-              <div class="text-center mt-4">
-                <%= button_to 'Crear nueva tarea con preguntas incorrectas', create_incorrect_task_path(@task), method: :post, class: 'btn btn-warning' %>
-              </div>
-            ` : ''}
 
-            <div class="text-center mt-4">
-              <%= button_to 'Volver al índice de cursos', courses_path, method: :get, class: 'btn' %>
+
+            <div class="text-center align-items-center align-content-center mt-4">
+              <%= button_to courses_path, method: :get, class: 'btn btn-outline-success d-flex align-items-center justify-content-center' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16" style="margin-right: 8px;">
+                  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zM8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0z"/>
+                  <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 1-.708 0L4.646 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 8l2.647 2.646a.5.5 0 0 1 0 .708z"/>
+                  <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h5.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+                Volver al índice de cursos
+              <% end %>
             </div>
           </div>
         `;

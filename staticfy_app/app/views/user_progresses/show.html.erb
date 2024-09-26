@@ -31,20 +31,18 @@
     <% if last_answer.present? %>
       <% last_question = MultiChoiceQuestion.find_by(id: last_answer.multi_choice_question_id) %>
       <% if last_question.present? %>
-        <% last_task = last_question.task.name %>
           <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-size: 2rem; font-weight: 700;">Última tarea realizada</h2>
-            <p style="font-size: 1.25rem;"><%= last_task %></p>
-            <p><strong style="font-size: 1.25rem;">
-              <%= last_question.question %>
+            <p class="mt-4"><strong style="font-size: 1.25rem">
+              "<%= last_question.question %>"
             </strong></p>
-            <strong style="font-size: 1.25rem; color: <%= last_answer.is_correct ? '#004d00' : '#4d0000' %>;">
+            <strong style="font-size: 1.25rem; color: white; font-weight: 900">
               <%= last_answer.selected_choice %>
             </strong> 
             <% if last_answer.is_correct %>
-              <p class="mt-4">✅</p>
+              <p class="mt-4" style="font-size: 30px;">✅</p>
             <% else %>
-              <p class="mt-4">❌</p>
+              <p class="mt-4" style="font-size: 30px;">❌</p>
             <% end %>
           </div>
         <% else %>
@@ -59,7 +57,7 @@
     <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
       <h2 style="font-size: 2rem; font-weight: 700;">Progreso Global</h2>
       <p style="font-size: 1.25rem;">Score: <%= @user_progress_global.score %></p>
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle" style="margin-top: 10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle" style="margin-top: 10px;">
         <path d="M9 11l3 3L22 4"></path>
         <circle cx="12" cy="12" r="10"></circle>
       </svg>
@@ -69,7 +67,7 @@
     <div style="background-color: #28a745; border-radius: 10px; padding: 20px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
       <h2 style="font-size: 2rem; font-weight: 700;">Velocidad de Aprendizaje</h2>
       <% if minutos_uso.present? %>
-        <p style="font-size: 1.25rem;"><%= (@user_progress_global.score / minutos_uso.to_f).round(2) %> preguntas correctas por minuto</p>
+        <p style="font-size: 1.25rem;"><%= (@user_progress_global.score / tiempo_uso.to_f).round(2) %> preguntas correctas por segundo</p>
       <% else %>
         <p style="font-size: 1.25rem;">No hay datos</p>
       <% end %>
