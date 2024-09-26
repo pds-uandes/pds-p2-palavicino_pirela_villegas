@@ -27,10 +27,10 @@ class CoursesController < ApplicationController
         Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1] })
       when 3..4
         Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1, 2] })
-      when 5..6
+      when 5
         Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1, 2, 3] })
       when 6..7
-        Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1, 2, 3, 4] })
+        Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1, 2, 3, 4, 5] })
       when 7..10
         Course.includes(tasks: :multi_choice_questions).where(id: user_course.course_id).where(tasks: { difficulty: [0, 1, 2, 3, 4, 5] })
       end
