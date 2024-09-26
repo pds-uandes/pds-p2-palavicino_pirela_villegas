@@ -93,6 +93,16 @@ end
 
 
 # --------------------------------- VINCULOS EXTERNOS E INTERNOS (VEI) ---------------------------------
+EASY1_VEI = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'EASY_1_VEI',
+  is_finished: false,
+  course_id: COURSE2.id,
+  difficulty: 0
+)
+
 TASK1_VEI = Task.create(
   user_id: teacher.id,
   task_type: 'multi_choice',
@@ -138,8 +148,8 @@ MCA2_TASK1_VEI = MultiChoiceAnswer.create(
   is_correct: false
 )
 
-MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
-  task_id: TASK1_VEI.id,
+MCQ1_EASY1_VEI = MultiChoiceQuestion.create(
+  task_id: EASY1_VEI.id,
   difficulty: 0,
   question: '¿Cuál de las siguientes opciones define mejor un apoyo empotrado?',
   choice_1: '{"value": "Restricción del giro, pero no de los desplazamientos.", "why_not": "🔄 Incorrecto. Un apoyo empotrado restringe tanto los giros como los desplazamientos."}',
@@ -151,13 +161,13 @@ MCQ3_TASK1_VEI = MultiChoiceQuestion.create(
 
 MCA3_TASK1_VEI = MultiChoiceAnswer.create(
   user_id: student1.id,
-  multi_choice_question_id: MCQ3_TASK1_VEI.id,
+  multi_choice_question_id: MCQ1_EASY1_VEI.id,
   selected_choice: 'Restricción de los desplazamientos en ambas direcciones y del giro.',
   is_correct: true
 )
 
-MCQ4_TASK1_VEI = MultiChoiceQuestion.create(
-  task_id: TASK1_VEI.id,
+MCQ2_EASY1_VEI = MultiChoiceQuestion.create(
+  task_id: EASY1_VEI.id,
   difficulty: 0,
   question: '¿Qué tipo de conexión permite la transmisión de fuerza axial, pero no permite la transmisión de momento ni de fuerza de corte cuando está orientada en la dirección horizontal?',
   choice_1: '{"value": "Conexión rígida", "why_not": "🔧 Incorrecto. Una conexión rígida permite la transmisión de momentos, fuerzas axiales y de corte."}',
@@ -167,8 +177,8 @@ MCQ4_TASK1_VEI = MultiChoiceQuestion.create(
   correct_answer: 'Biela'
 )
 
-MCQ5_TASK1_VEI = MultiChoiceQuestion.create(
-  task_id: TASK1_VEI.id,
+MCQ3_EASY1_VEI = MultiChoiceQuestion.create(
+  task_id: EASY1_VEI.id,
   difficulty: 0,
   question: '¿Qué es una biela en el contexto de vínculos?',
   choice_1: '{"value": "Un tipo de conexión que permite el movimiento en todas las direcciones.", "why_not": "Una biela no permite movimiento en todas las direcciones"}',
@@ -298,6 +308,48 @@ NumericTemplate.create!(
 )
 
 # ------------------------------- DIAGRAMA DE CUERPO LIBRE (DCL) --------------------------------
+
+EASY1_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'EASY_1_DCL',
+  is_finished: false,
+  course_id: COURSE1.id,
+  difficulty: 0
+)
+
+EASY2_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'EASY_2_DCL',
+  is_finished: false,
+  course_id: COURSE1.id,
+  difficulty: 0
+)
+
+MID1_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'MID_1_DCL',
+  is_finished: false,
+  course_id: COURSE1.id,
+  difficulty: 1
+)
+
+MID2_DCL = Task.create(
+  user_id: teacher.id,
+  task_type: 'multi_choice',
+  status: 'in_progress',
+  name: 'MID_2_DCL',
+  is_finished: false,
+  course_id: COURSE1.id,
+  difficulty: 1
+)
+
+
 TASK1_DCL = Task.create(
   user_id: teacher.id,
   task_type: 'multi_choice',
@@ -325,8 +377,8 @@ TASK3_DCL = Task.create(
   course_id: COURSE1.id
 )
 
-MCQ1_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ1_EASY1_DCL = MultiChoiceQuestion.create(
+  task_id: EASY1_DCL.id,
   difficulty: 0,
   question: '¿Qué es un diagrama de cuerpo libre?',
   choice_1: '{"value": "Una representación gráfica de las fuerzas y momentos aplicados a un cuerpo.", "why_not": ""}',
@@ -336,8 +388,8 @@ MCQ1_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Una representación gráfica de las fuerzas y momentos aplicados a un cuerpo.'
 )
 
-MCQ2_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ1_MID1_DCL = MultiChoiceQuestion.create(
+  task_id: MID1_DCL.id,
   difficulty: 1,
   question: 'Un diagrama de cuerpo libre es una representación gráfica que muestra todas las ______ que actúan sobre un cuerpo o sistema.',
   choice_1: '{"value": "Fuerzas", "why_not": ""}',
@@ -347,8 +399,8 @@ MCQ2_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Fuerzas'
 )
 
-MCQ3_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ2_MID1_DCL = MultiChoiceQuestion.create(
+  task_id: MID1_DCL.id,
   difficulty: 1,
   question: 'En un diagrama de cuerpo libre, las fuerzas se representan como vectores que tienen magnitud, dirección y ______.',
   choice_1: '{"value": "Punto de aplicación", "why_not": "Aunque el punto de aplicación es crucial en la física de fuerzas, no es lo que se completa en esta oración."}',
@@ -358,8 +410,8 @@ MCQ3_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Sentido'
 )
 
-MCQ4_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ3_MID1_DCL = MultiChoiceQuestion.create(
+  task_id: MID1_DCL.id,
   difficulty: 1,
   question: 'Para dibujar un DCL correctamente, se deben eliminar todos los ______ del entorno y reemplazarlos con las fuerzas que ejercen.',
   choice_1: '{"value": "Ejes", "why_not": "Los ejes son útiles para orientar el análisis del problema, no se eliminan."}',
@@ -369,8 +421,8 @@ MCQ4_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Apoyos'
 )
 
-MCQ5_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ1_MID2_DCL = MultiChoiceQuestion.create(
+  task_id: MID2_DCL.id,
   difficulty: 1,
   question: 'El primer paso para construir un diagrama de cuerpo libre es aislar el cuerpo o ______ que se está analizando.',
   choice_1: '{"value": "Vector", "why_not": "Los vectores representan fuerzas y no el cuerpo que se analiza."}',
@@ -380,8 +432,8 @@ MCQ5_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Sistema'
 )
 
-MCQ6_TASK2_CEE = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ2_MID2_DCL = MultiChoiceQuestion.create(
+  task_id: MID2_DCL.id,
   difficulty: 1,
   question: 'Las reacciones en los apoyos se representan en el DCL como ______ que equilibran las fuerzas externas aplicadas al cuerpo.',
   choice_1: '{"value": "Momentos", "why_not": "Aunque los momentos son importantes, no representan las reacciones en los apoyos de manera directa."}',
@@ -391,8 +443,8 @@ MCQ6_TASK2_CEE = MultiChoiceQuestion.create(
   correct_answer: 'Vectores'
 )
 
-MCQ7_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ2_EASY1_DCL = MultiChoiceQuestion.create(
+  task_id: EASY1_DCL.id,
   difficulty: 0,
   question: '¿Qué información NO se debe incluir en un diagrama de cuerpo libre?',
   choice_1: '{"value": "Las fuerzas externas aplicadas al cuerpo.", "why_not": "Las fuerzas externas son esenciales en un DCL para entender las interacciones."}',
@@ -402,8 +454,8 @@ MCQ7_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Las dimensiones del cuerpo.'
 )
 
-MCQ8_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ3_EASY1_DCL = MultiChoiceQuestion.create(
+  task_id: EASY1_DCL.id,
   difficulty: 0,
   question: '¿Cuál de los siguientes elementos es esencial para un diagrama de cuerpo libre?',
   choice_1: '{"value": "La masa del cuerpo.", "why_not": "La masa es importante en el análisis, pero no es un elemento que se represente directamente en el diagrama."}',
@@ -413,8 +465,8 @@ MCQ8_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Las fuerzas aplicadas al cuerpo.'
 )
 
-MCQ9_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ1_EASY2_DCL = MultiChoiceQuestion.create(
+  task_id: EASY2_DCL.id,
   difficulty: 0,
   question: 'En un diagrama de cuerpo libre, ¿cómo se representa un momento aplicado al cuerpo?',
   choice_1: '{"value": "Como una fuerza en dirección opuesta.", "why_not": "Un momento no se puede representar simplemente como una fuerza opuesta; requiere una representación diferente."}',
@@ -424,8 +476,8 @@ MCQ9_TASK1_DCL = MultiChoiceQuestion.create(
   correct_answer: 'Como una flecha curva alrededor de un punto.'
 )
 
-MCQ10_TASK1_DCL = MultiChoiceQuestion.create(
-  task_id: TASK1_DCL.id,
+MCQ2_EASY2_DCL = MultiChoiceQuestion.create(
+  task_id: EASY2_DCL.id,
   difficulty: 0,
   question: 'En un diagrama de cuerpo libre, ¿qué se debe tener en cuenta al representar las fuerzas? ',
   choice_1: '{"value": "La dirección y el color de las fuerzas.", "why_not": "El color no tiene relevancia física en un diagrama de cuerpo libre (DCL)."}',

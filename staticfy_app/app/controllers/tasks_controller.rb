@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: %i[show edit update destroy]
+    before_action :set_task
     before_action :authenticate_user!
 
     # GET /tasks
@@ -37,12 +37,21 @@ class TasksController < ApplicationController
     end
 
     def finish
+      incorrect_questions = MultiChoiceAnswer.where(user_id: current_user.id, is_correct: false, multi_choice_question_id: @task.multi_choice_questions.ids)
+      len_questions = @task.multi_choice_questions.length * incorrect_questions.length
+      puts incorrect_questions
+
+
       task = Task.find(params[:id])
       user_task = UserTask.find_or_initialize_by(user_id: current_user.id, task_id: task.id)
-      user_task.is_finished = true
-      user_task.save
 
-      redirect_to courses_path, notice: 'Se ha creado una nueva tarea con las preguntas incorrectas.'
+      if (incorrect_questions.length.to_f / len_questions) > 0.5
+        user_task.is_finished = true
+        user_task.save
+        redirect_to courses_path, notice: 'Se te desbloquearon más preguntas de acuerdo a tu aprendizaje.'
+      else
+        redirect_to courses_path, notice: 'Vuelve a intentarlo para desbloquear más preguntas de acuerdo a tu aprendizaje.'
+      end
     end
 
     def retry_incorrect

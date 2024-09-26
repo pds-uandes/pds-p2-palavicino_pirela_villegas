@@ -52,9 +52,9 @@
 </div>
             <% end %>
 
-            <div class="text-center mt-4">
-              <a href="/courses" class="btn" style="background-color: #004d00;">Volver al índice de cursos</a>
-            </div>
+<div class="text-center mt-4">
+  <%= button_to 'Volver al índice de cursos', finish_task_path(@task), method: :post, class: 'btn', data: { confirm: '¿Estás seguro de que deseas volver al índice de cursos y finalizar la tarea?' } %>
+</div>
           </div>
         </div>
       <% end %>
@@ -168,7 +168,7 @@ document.addEventListener('turbo:load', () => {
             ` : ''}
 
             <div class="text-center mt-4">
-              <a href="/courses" class="btn btn-primary">Volver al índice de cursos</a>
+              <%= button_to 'Volver al índice de cursos', finish_task_path(@task), method: :post, class: 'btn', data: { confirm: '¿Estás seguro de que deseas volver al índice de cursos y finalizar la tarea?' } %>
             </div>
           </div>
         `;

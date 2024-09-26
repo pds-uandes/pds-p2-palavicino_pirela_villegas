@@ -57,12 +57,13 @@
                   ✓
                 </div>
               <% else %>
-                <%= link_to link_path, class: 'task-link numeric-question-button' do %>
-                  <div class="task-circle task-in-progress">
-                    <%= task_index + 1 %>
-                  </div>
-                <% end %>
-              <% end %>
+
+              <%= link_to link_path, class: 'task-link numeric-question-button' do %>
+                <div class="task-circle task-in-progress">
+                  <%= task_index + 1 %>
+                </div>
+              <% end %>              
+            <% end %>
             </div>
           <% end %>
         </div>
