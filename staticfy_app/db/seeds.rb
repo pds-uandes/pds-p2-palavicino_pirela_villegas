@@ -518,6 +518,18 @@ MCQ2_EASY2_DCL = MultiChoiceQuestion.create(
   correct_answer: 'La magnitud, dirección y punto de aplicación de las fuerzas.'
 )
 
+MCQ3_EASY2_DCL = MultiChoiceQuestion.create(
+  task_id: EASY2_DCL.id,
+  difficulty: 0,
+  question: '¿Cuál de los siguientes enunciados es verdadero respecto a un diagrama de cuerpo libre (DCL)?',
+  choice_1: '{"value": "En un DCL, se incluyen todas las fuerzas que actúan sobre el cuerpo, incluyendo reacciones y fuerzas externas.", "why_not": ""}',
+  choice_2: '{"value": "Un DCL solo representa las fuerzas internas del cuerpo.", "why_not": "Un DCL debe incluir todas las fuerzas externas que actúan sobre el cuerpo."}',
+  choice_3: '{"value": "Las fuerzas deben ser representadas con líneas punteadas.", "why_not": "En un DCL, las fuerzas se representan con líneas continuas."}',
+  choice_4: '{"value": "Es irrelevante el punto de aplicación de las fuerzas en un DCL.", "why_not": "El punto de aplicación es crucial para el análisis de las fuerzas en el cuerpo."}',
+  correct_answer: 'En un DCL, se incluyen todas las fuerzas que actúan sobre el cuerpo, incluyendo reacciones y fuerzas externas.'
+)
+
+
 NQ1_TASK2_DCL = NumericQuestion.create!(
   task: TASK2_DCL,
   difficulty: 2,
